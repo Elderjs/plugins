@@ -238,7 +238,6 @@ const plugin = {
         }
       },
     },
-
     {
       hook: 'buildComplete',
       name: 'killBuild',

@@ -13,16 +13,19 @@ Further Reading: (If you're unfamiliar with why you'd want to use critical path 
 
 ## Install
 
+```bash
+npm install --save @elderjs/plugin-critical-path-css
+```
 
 ## Config
 
 
-Once installed, open your `elder.config.js` and configure the plugin by adding 'elder-plugin-critical-path-css' to your plugin object.
+Once installed, open your `elder.config.js` and configure the plugin by adding `@elderjs/plugin-critical-path-css` to your plugin object.
 
 ```javascript
 plugins: {
 
-  'elder-plugin-critical-path-css': {
+  '@elderjs/plugin-critical-path-css': {
     cssFile: './src/assets/style.css', // location of your website's css file. also accepts an array of files.
     rebuild: false, // set to true to rebuild the critical path css on next build. NOTE: completely overwrites allRequests.
     folder: `./src/assets/critical/`, // relative to root of the project.
@@ -61,7 +64,7 @@ If you pass an array, the css from multiple pages is deduplicated and compressed
 
 ```javascript
 plugins: {
-  'elder-plugin-critical-path-css': {
+  '@elderjs/plugin-critical-path-css': {
     requests: { // used to specify the specific requests you want used for critical path css generation.
       home: [{slug:'/'}],
       blog: [{slug: 'my-first-blog'}, {slug: 'elderjs-rocks'}]

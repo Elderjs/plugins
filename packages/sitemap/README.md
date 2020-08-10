@@ -1,4 +1,4 @@
-# Elder.js Plugin: Critical Path CSS
+# Elder.js Plugin: Sitemap
 
 Easily generate a sitemap for your Elder.js website.
 
@@ -11,16 +11,19 @@ Currently there is a hard limit of 50,000 urls per sub-sitemap.
 
 ## Install
 
+```bash
+npm install --save @elderjs/plugin-sitemap
+```
 
 ## Config
 
 
-Once installed, open your `elder.config.js` and configure the plugin by adding 'elder-plugin-critical-path-css' to your plugin object.
+Once installed, open your `elder.config.js` and configure the plugin by adding `@elderjs/plugin-sitemap` to your plugin object.
 
 ```javascript
 plugins: {
 
-  'elder-plugin-sitemap': {
+  '@elderjs/plugin-sitemap': {
     origin: '', // the https://yourdomain.com
     exclude: [], // an array of permalinks or permalink prefixes. So you can do ['500'] and it will match /500**
     routeDetails: {}, // set custom priority and change freq if not it falls back to default
@@ -35,7 +38,7 @@ plugins: {
 
 ```javascript
 plugins: {
-  'elder-plugin-sitemap': {
+  '@elderjs/plugin-sitemap': {
     origin: '', // the https://yourdomain.com
     exclude: [], // an array of permalinks or permalink prefixes. So you can do ['500'] and it will match /500**
     routeDetails: {
@@ -48,13 +51,14 @@ plugins: {
         changfreq: 'monthly',
       }
     }, // set custom priority and change freq if not it falls back to default
-    lastUpdate: {
+    lastUpdate: { // configurable last update for each route type.
       home: '2020-01-01',
       blog: async ({ query, request }) => {
+        // receives the query prop from hooks. This allows you to hit your db or api or anything else configured on your query object.
         // return a date object.
         return new Date(Date.now());
       }
-    }, // configurable last update for each route type.
+    }, 
   },
 }
 ```

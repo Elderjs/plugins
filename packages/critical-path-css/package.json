@@ -1,0 +1,43 @@
+{
+  "name": "@elderjs/plugin-critical-path-css",
+  "version": "0.0.1",
+  "description": "Easily generate critical path css for your Elder.js powered website.",
+  "keywords": [
+    "elder.js",
+    "elderjs",
+    "svelte",
+    "ssg",
+    "critical",
+    "path",
+    "css",
+    "critical",
+    "path",
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Nick Reese <npm@nicholasreese.com>",
+  "homepage": "https://elderguide.com/tech/elderjs/",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elderjs/plugins.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Elderjs/plugins/issues"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1"
+  }
+}

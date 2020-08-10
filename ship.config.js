@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
   monorepo: { mainVersionFile: 'lerna.json', packagesToBump: ['packages/*'], packagesToPublish: ['packages/*'] },
+  publishCommand: () => 'npm publish --tag latest --access public',
   buildCommand: () => null,
   versionUpdated: ({ version, dir }) => {
     // update lerna.json

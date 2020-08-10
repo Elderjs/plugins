@@ -11,7 +11,8 @@
     "jest": "^26.1.0",
     "lerna": "^3.20.2",
     "prettier": "^2.0.5",
-    "shipjs": "0.20.1"
+    "shipjs": "0.20.1",
+    "dot-prop": ">=5.1.1"
   },
   "scripts": {
     "release": "shipjs prepare"

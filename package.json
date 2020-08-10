@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "dot-prop": ">=5.1.1",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
@@ -9,12 +10,12 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.1.0",
-    "lerna": "^3.20.2",
+    "lerna": "^3.22.1",
     "prettier": "^2.0.5",
-    "shipjs": "0.20.1",
-    "dot-prop": ">=5.1.1"
+    "shipjs": "0.20.1"
   },
   "scripts": {
     "release": "shipjs prepare"
-  }
+  },
+  "version": "0.0.1"
 }

@@ -53,7 +53,6 @@ plugins: {
 }
 ```
 
-
 ### Generating Critical Path CSS For Specific Pages On a Route
 
 By default the plugin selects the first 'request' it finds that matches a route to generate critical path css for.

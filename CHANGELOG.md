@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/Elderjs/plugins/compare/v0.0.3...v0.0.4) (2020-08-11)
+
+
+### Bug Fixes
+
+* 🐛 critical path css should go first not last on cssStack ([9c6971d](https://github.com/Elderjs/plugins/commit/9c6971d13b0da2154d4c16e87855cb7143ba3089))
+
+
+
 ## [0.0.3](https://github.com/Elderjs/plugins/compare/v0.0.2...v0.0.3) (2020-08-10)
 
 

@@ -1,3 +1,12 @@
+## [0.0.7](https://github.com/Elderjs/plugins/compare/v0.0.6...v0.0.7) (2020-08-11)
+
+
+### Bug Fixes
+
+* 🐛 Fix css specificity issue with adding critical path css ([a852aa7](https://github.com/Elderjs/plugins/commit/a852aa7eef75bae113d73e28a7583d6169104377))
+
+
+
 ## [0.0.6](https://github.com/Elderjs/plugins/compare/v0.0.5...v0.0.6) (2020-08-11)
 
 

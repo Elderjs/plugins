@@ -27,6 +27,3 @@ cd elderjs-plugin
 ## Adding Your Plugin:
 
 If you've got a plugin you'd like to see on this page, please create a pull request updating this readme. 
-
-
-

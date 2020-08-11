@@ -146,7 +146,7 @@ const plugin = {
             cssStack.push({
               source: 'hooksjs',
               string: critCss,
-              priority: 100,
+              priority: 1,
             });
 
             return { cssStack };

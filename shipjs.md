@@ -1,6 +1,7 @@
 # How to get shipjs working
 * You need to create a 'v0.0.0' tag and release.
 * run `shipjs setup` ... follow the config options
+* add an .env to your repo with your gh token.
 
 # Overview
 

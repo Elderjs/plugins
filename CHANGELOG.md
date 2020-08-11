@@ -1,3 +1,12 @@
+## [0.0.6](https://github.com/Elderjs/plugins/compare/v0.0.5...v0.0.6) (2020-08-11)
+
+
+### Bug Fixes
+
+* 🐛 add in missing deps for critical path css ([fef9619](https://github.com/Elderjs/plugins/commit/fef96196f937d07965e9da9a15191f868ffc67ed))
+
+
+
 ## [0.0.5](https://github.com/Elderjs/plugins/compare/v0.0.4...v0.0.5) (2020-08-11)
 
 

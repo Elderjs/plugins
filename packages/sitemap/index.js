@@ -96,11 +96,11 @@ const plugin = {
                   // must be YYYY-MM-DD;
                   req.lastUpdate = new Date(Date.parse(plugin.config.lastUpdate[req.route]));
                 } else {
-                  console.log('default', req);
+                  console.log('Using default fallback', req);
                   req.lastUpdate = defaultSitemapDate;
                 }
               } else {
-                console.log('default', req);
+                console.log('Using default fallback', req);
                 req.lastUpdate = defaultSitemapDate;
               }
 

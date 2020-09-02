@@ -1,0 +1,32 @@
+{
+  "name": "@elderjs/plugin-sitemap",
+  "version": "0.0.7",
+  "description": "Easily generate a sitemap for your Elder.js powered website.",
+  "keywords": [
+    "elder.js",
+    "elderjs",
+    "svelte",
+    "ssg",
+    "static",
+    "browser",
+    "reload",
+    "dev"
+  ],
+  "author": "Nick Reese <npm@nicholasreese.com>",
+  "homepage": "https://elderguide.com/tech/elderjs/",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elderjs/plugins.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Elderjs/plugins/issues"
+  },
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "@elderjs/plugin-sitemap",
+  "name": "@elderjs/browser-reload",
   "version": "0.0.7",
-  "description": "Easily generate a sitemap for your Elder.js powered website.",
+  "description": "Reload your browser when your Elder.js server restarts.",
   "keywords": [
     "elder.js",
     "elderjs",

@@ -1,3 +1,12 @@
+## [0.0.9](https://github.com/Elderjs/plugins/compare/v0.0.8...v0.0.9) (2020-09-09)
+
+
+### Bug Fixes
+
+* 🐛 Elder.js was processing stacks backwards, this fixes ([9c23f39](https://github.com/Elderjs/plugins/commit/9c23f39ff7eb263aafcd81ac92e07673f8ab8902))
+
+
+
 ## [0.0.8](https://github.com/Elderjs/plugins/compare/v0.0.7...v0.0.8) (2020-09-02)
 
 

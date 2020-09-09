@@ -30,7 +30,7 @@ function formatDate(date) {
 const defaultSitemapDate = new Date(Date.now());
 
 const plugin = {
-  name: 'elder-plugin-sitemap',
+  name: 'elderjs-plugin-sitemap',
   description: 'Builds a sitemap for all pages on your site.',
   init: (plugin) => {
     // most of the bootstrap is not due to init() not being async.

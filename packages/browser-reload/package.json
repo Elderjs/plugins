@@ -1,16 +1,16 @@
 {
-  "name": "@elderjs/plugin-sitemap",
+  "name": "@elderjs/browser-reload",
   "version": "0.0.8",
-  "description": "Easily generate a sitemap for your Elder.js powered website.",
+  "description": "Reload your browser when your Elder.js server restarts.",
   "keywords": [
     "elder.js",
     "elderjs",
     "svelte",
     "ssg",
     "static",
-    "site",
-    "generator",
-    "sitemap"
+    "browser",
+    "reload",
+    "dev"
   ],
   "author": "Nick Reese <npm@nicholasreese.com>",
   "homepage": "https://elderguide.com/tech/elderjs/",
@@ -27,6 +27,6 @@
     "url": "https://github.com/Elderjs/plugins/issues"
   },
   "dependencies": {
-    "fs-extra": "^9.0.1"
+    "socket.io": "^2.3.0"
   }
 }

@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const plugin = {
-  name: 'elder-plugin-critical-path-css',
+  name: 'elderjs-plugin-critical-path-css',
   description: `Easily generate critical path css for your Elder.js websites using [critical](https://github.com/addyosmani/critical).
 
   While Svelte does a great job of scoping CSS usually you'll have a site wide css file to hold common styles.

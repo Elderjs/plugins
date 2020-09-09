@@ -1,3 +1,12 @@
+## [0.0.8](https://github.com/Elderjs/plugins/compare/v0.0.7...v0.0.8) (2020-09-02)
+
+
+### Features
+
+* add browser-reload plugin ([6479bf8](https://github.com/Elderjs/plugins/commit/6479bf8b39f13874200cbab61a8aa829436f992d))
+
+
+
 ## [0.0.7](https://github.com/Elderjs/plugins/compare/v0.0.6...v0.0.7) (2020-08-11)
 
 

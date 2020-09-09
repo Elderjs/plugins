@@ -138,7 +138,7 @@ const plugin = {
       hook: 'stacks',
       name: 'addCriticalPathCssToCssStack',
       description: `If a route has a critical path css file it adds it to the cssStack so it is included. Highest priority because css after it will overwrite the critical path css.`,
-      priority: 1,
+      priority: 100,
       run: async ({ plugin, request, cssStack }) => {
         if (!plugin.internal.disable) {
           const critCss = plugin.internal.criticalPathCss[request.route];
@@ -146,7 +146,7 @@ const plugin = {
             cssStack.push({
               source: 'hooksjs',
               string: critCss,
-              priority: 1,
+              priority: 100,
             });
 
             return { cssStack };

@@ -1,3 +1,12 @@
+## [0.0.11](https://github.com/Elderjs/plugins/compare/v0.0.10...v0.0.11) (2020-09-10)
+
+
+### Bug Fixes
+
+* 🐛 or not and in logic ([61d0f39](https://github.com/Elderjs/plugins/commit/61d0f39575537da7eec9438f849341b0e3f9bde1))
+
+
+
 ## [0.0.10](https://github.com/Elderjs/plugins/compare/v0.0.9...v0.0.10) (2020-09-10)
 
 

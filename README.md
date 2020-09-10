@@ -7,6 +7,7 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 
 * [Critical Path CSS](https://github.com/Elderjs/plugins/tree/master/packages/critical-path-css) Quickly and easily generate and include critical path css for your Elder.js website.
 * [Sitemap](https://github.com/Elderjs/plugins/tree/master/packages/sitemap) Automatically generate the latest sitemap for your Elder.js website on build.
+* [Browser Reload](https://github.com/Elderjs/plugins/tree/master/packages/browser-reload) Reload the browser when your Elder.js server restarts. 
 
 
 ## Other Plugins:

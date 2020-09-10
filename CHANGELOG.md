@@ -1,3 +1,12 @@
+## [0.0.10](https://github.com/Elderjs/plugins/compare/v0.0.9...v0.0.10) (2020-09-10)
+
+
+### Features
+
+* 🎸 disable critical path from the head during generation ([9af2cb0](https://github.com/Elderjs/plugins/commit/9af2cb0434ac970a4e45012a9a10c5b74bb0b0ec))
+
+
+
 ## [0.0.9](https://github.com/Elderjs/plugins/compare/v0.0.8...v0.0.9) (2020-09-09)
 
 

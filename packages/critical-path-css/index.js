@@ -140,7 +140,7 @@ const plugin = {
       description: `If a route has a critical path css file it adds it to the cssStack so it is included. Highest priority because css after it will overwrite the critical path css.`,
       priority: 100,
       run: async ({ plugin, request, cssStack }) => {
-        if (!plugin.internal.disable) {
+        if (!plugin.internal.disable && !plugin.config.rebuilding) {
           const critCss = plugin.internal.criticalPathCss[request.route];
           if (critCss) {
             cssStack.push({

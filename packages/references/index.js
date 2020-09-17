@@ -14,7 +14,7 @@ const plugin = {
     {
       shortcode: 'ref',
       run: ({ plugin, content, request }) => {
-        const count = plugin.references.length + 1;
+        const count = plugin.references[request.permalink].length + 1;
         plugin.references[request.permalink].push(`
         <li id='cite_note-${count}'>
         <cite>${content}</cite>

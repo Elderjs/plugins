@@ -103,7 +103,7 @@ root
 ## Setup:
 
 ```bash
-npm install --save @elderjs/plugin-images
+npm install --save @elderjs/plugin-images vanilla-lazyload
 ```
 
 ### Add To `elder.config.js`:

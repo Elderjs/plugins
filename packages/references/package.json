@@ -1,0 +1,29 @@
+{
+  "name": "@elderjs/plugin-references",
+  "version": "0.0.13",
+  "description": "Adds {{ref}} and {{referenceList}} shortcodes to Elder.js allowing you to add wikipedia style references to your content.",
+  "keywords": [
+    "elder.js",
+    "elderjs",
+    "svelte",
+    "ssg",
+    "static",
+    "references",
+    "reference"
+  ],
+  "author": "Nick Reese <npm@nicholasreese.com>",
+  "homepage": "https://elderguide.com/tech/elderjs/",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elderjs/plugins.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Elderjs/plugins/issues"
+  },
+  "dependencies": {}
+}

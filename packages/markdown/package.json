@@ -1,17 +1,15 @@
 {
-  "name": "@elderjs/plugin-images",
+  "name": "@elderjs/plugin-markdown",
   "version": "0.0.13",
-  "description": "Easily generate and manage responsive images for your Elder.js site.",
+  "description": "Easily create routes from your markdown files on your Elder.js site using the remark ecosystem.",
   "keywords": [
-    "elderjs",
     "elder.js",
-    "Svelte",
-    "responsive",
-    "picture",
-    "lqip",
-    "sharp",
-    "generator",
-    "sapper"
+    "elderjs",
+    "svelte",
+    "ssg",
+    "static",
+    "markdown",
+    "remark"
   ],
   "author": "Nick Reese <npm@nicholasreese.com>",
   "homepage": "https://elderguide.com/tech/elderjs/",
@@ -27,16 +25,14 @@
   "bugs": {
     "url": "https://github.com/Elderjs/plugins/issues"
   },
-  "peerDependencies": {
-    "vanilla-lazyload": "^17.1.2"
-  },
   "dependencies": {
-    "fs-extra": "^9.0.1",
-    "svgo": "^1.3.2",
-    "sharp": "^0.26.0",
-    "potrace": "^2.1.8",
-    "mini-svg-data-uri": "^1.2.3",
-    "workerpool": "^6.0.0",
+    "remark": "^12.0.1",
+    "remark-extract-frontmatter": "^2.0.3",
+    "remark-fenced-divs": "^1.1.1",
+    "remark-frontmatter": "^2.0.0",
+    "remark-html": "^12.0.0",
+    "remark-unwrap-images": "^2.0.0",
+    "yaml": "^1.10.0",
     "glob": "^7.1.6"
   }
 }

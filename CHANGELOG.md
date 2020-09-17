@@ -1,3 +1,12 @@
+# [0.1.0](https://github.com/Elderjs/plugins/compare/v0.0.14...v0.1.0) (2020-09-17)
+
+
+### Features
+
+* 🎸 add reference and markdown plugins ([0777c31](https://github.com/Elderjs/plugins/commit/0777c3141b84616fd12810f154c61c5975f25b7d))
+
+
+
 ## [0.0.14](https://github.com/Elderjs/plugins/compare/v0.0.13...v0.0.14) (2020-09-17)
 
 

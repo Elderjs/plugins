@@ -30,7 +30,7 @@ function formatDate(date) {
 const defaultSitemapDate = new Date(Date.now());
 
 const plugin = {
-  name: 'elderjs-plugin-sitemap',
+  name: '@elderjs/plugin-sitemap',
   description: 'Builds a sitemap for all pages on your site.',
   init: (plugin) => {
     // most of the bootstrap is not due to init() not being async.
@@ -137,9 +137,16 @@ const plugin = {
               });
               xml += SITEMAP_FOOTER;
 
-              fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
-                encoding: 'utf-8',
-              });
+              // todo: remove after v1.
+              if (settings.locations && settings.locations.public) {
+                fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
+                  encoding: 'utf-8',
+                });
+              } else if (settings.distDir) {
+                fs.writeFileSync(path.resolve(settings.distDir, `./${indexFileName}`), xml, {
+                  encoding: 'utf-8',
+                });
+              }
               console.log(`${indexFileName}: ${routeRequests.length} pages`);
             }
 
@@ -149,13 +156,18 @@ const plugin = {
             }
             indexXml += SITEMAP_INDEX_FOOTER;
 
-            const sitemap = path.resolve(process.cwd(), settings.locations.public, './sitemap.xml');
+            // todo: remove after v1.
+            if (settings.locations && settings.locations.public) {
+              fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, './sitemap.xml'), indexXml, {
+                encoding: 'utf-8',
+              });
+            } else if (settings.distDir) {
+              fs.writeFileSync(path.resolve(settings.distDir, './sitemap.xml'), indexXml, {
+                encoding: 'utf-8',
+              });
+            }
 
             console.log(`Writing root sitemap to ${sitemap}`);
-
-            fs.writeFileSync(sitemap, indexXml, {
-              encoding: 'utf-8',
-            });
 
             // split requests into template specific
 

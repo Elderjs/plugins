@@ -1,3 +1,12 @@
+## [0.0.14](https://github.com/Elderjs/plugins/compare/v0.0.13...v0.0.14) (2020-09-17)
+
+
+### Bug Fixes
+
+* 🐛 missing * ([4104190](https://github.com/Elderjs/plugins/commit/41041900c9bcf0716e3ff21f9c35d9c43b40d744))
+
+
+
 ## [0.0.13](https://github.com/Elderjs/plugins/compare/v0.0.12...v0.0.13) (2020-09-17)
 
 

@@ -2,6 +2,8 @@
 
 In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugins.
 
+> All plugins require the latest Elder.js RC or V1.0.0 depending on when you are reading this.
+
 ## Official Plugins:
 
 - [Images](https://github.com/Elderjs/plugins/tree/master/packages/images) Easily add and manage responsive images with your Elder.js website.

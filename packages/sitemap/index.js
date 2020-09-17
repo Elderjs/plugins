@@ -167,7 +167,7 @@ const plugin = {
               });
             }
 
-            console.log(`Writing root sitemap to ${sitemap}`);
+            console.log(`Writing root sitemap`);
 
             // split requests into template specific
 

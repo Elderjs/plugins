@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/Elderjs/plugins/compare/v0.1.1...v0.1.2) (2020-09-17)
+
+
+### Bug Fixes
+
+* 🐛 fix error with path ([578a4d4](https://github.com/Elderjs/plugins/commit/578a4d4063fa8bbdebce169d6e96a52acb8367c3))
+
+
+
 ## [0.1.1](https://github.com/Elderjs/plugins/compare/v0.1.0...v0.1.1) (2020-09-17)
 
 

@@ -1,3 +1,12 @@
+## [0.1.1](https://github.com/Elderjs/plugins/compare/v0.1.0...v0.1.1) (2020-09-17)
+
+
+### Bug Fixes
+
+* 🐛 nan on references ([acecc99](https://github.com/Elderjs/plugins/commit/acecc9964872290da7017c1b1ca9950e3df68cbe))
+
+
+
 # [0.1.0](https://github.com/Elderjs/plugins/compare/v0.0.14...v0.1.0) (2020-09-17)
 
 

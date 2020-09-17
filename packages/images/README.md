@@ -4,7 +4,7 @@ Easily generate responsive images for your Elder.js site.
 
 Offers much of the functionality of the well known `gatsby-image` plugin for [Elder.js](https://github.com/Elderjs/elderjs).
 
-> **strong** For a demo of this plugin in action visit: [nicholasreese.com](https://nicholasreese.com) and look at the header and post images.
+> **demo** For a demo of this plugin in action visit: [nicholasreese.com](https://nicholasreese.com) and look at the header and post images.
 
 > This plugin works on several sites but hasn't been thoroughly tested for all edge cases. PRs are welcome.
 

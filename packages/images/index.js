@@ -9,7 +9,7 @@ const imageStore = require('./utils/imageStore');
 const imageFileTypes = ['jpg', 'jpeg', 'png'];
 
 const plugin = {
-  name: 'elderjs-plugin-images',
+  name: '@elderjs/plugin-images',
   description: 'Resizes images. ',
   init: (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
@@ -81,7 +81,7 @@ const plugin = {
   config: {
     folders: [
       {
-        src: '/images/', // where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js.
+        src: '/images/*', // where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js.
         output: '/images/', // where files should be put within the distDir defined in your elder.config.js.
       },
     ],

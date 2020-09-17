@@ -116,7 +116,7 @@ plugins: {
     '@elderjs/plugin-images': {
         folders: [
             {
-                src: '/images/', // where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js.
+                src: '/images/*', // glob of where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js. Careful with **.
                 output: '/images/', // where files should be put within the distDir defined in your elder.config.js.
             },
         ],

@@ -2,18 +2,16 @@
 
 In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugins.
 
-
 ## Official Plugins:
 
-* [Critical Path CSS](https://github.com/Elderjs/plugins/tree/master/packages/critical-path-css) Quickly and easily generate and include critical path css for your Elder.js website.
-* [Sitemap](https://github.com/Elderjs/plugins/tree/master/packages/sitemap) Automatically generate the latest sitemap for your Elder.js website on build.
-* [Browser Reload](https://github.com/Elderjs/plugins/tree/master/packages/browser-reload) Reload the browser when your Elder.js server restarts. 
-
+- [Images](https://github.com/Elderjs/plugins/tree/master/packages/images) Easily add and manage responsive images with your Elder.js website.
+- [Critical Path CSS](https://github.com/Elderjs/plugins/tree/master/packages/critical-path-css) Quickly and easily generate and include critical path css for your Elder.js website.
+- [Sitemap](https://github.com/Elderjs/plugins/tree/master/packages/sitemap) Automatically generate the latest sitemap for your Elder.js website on build.
+- [Browser Reload](https://github.com/Elderjs/plugins/tree/master/packages/browser-reload) Reload the browser when your Elder.js server restarts.
 
 ## Other Plugins:
 
-* Have you written a plugin? If so, let us know we'd love to include it here.
-
+- Have you written a plugin? If so, let us know we'd love to include it here.
 
 ## Writing A Plugin:
 
@@ -24,7 +22,6 @@ npx degit Elderjs/plugin-template elderjs-plugin
 cd elderjs-plugin
 ```
 
-
 ## Adding Your Plugin:
 
-If you've got a plugin you'd like to see on this page, please create a pull request updating this readme. 
+If you've got a plugin you'd like to see on this page, please create a pull request updating this readme.

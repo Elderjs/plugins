@@ -1,3 +1,12 @@
+## [0.0.12](https://github.com/Elderjs/plugins/compare/v0.0.11...v0.0.12) (2020-09-17)
+
+
+### Features
+
+* 🎸 add image plugin ([8b5ccba](https://github.com/Elderjs/plugins/commit/8b5ccbacd7e25283af8dc1e138822e369df2f69e))
+
+
+
 ## [0.0.11](https://github.com/Elderjs/plugins/compare/v0.0.10...v0.0.11) (2020-09-10)
 
 

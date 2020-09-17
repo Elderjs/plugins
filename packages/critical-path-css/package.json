@@ -32,7 +32,10 @@
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
-    "critical": "^2.0.1",
-    "clean-css": "^4.2.3"
+    "svgo": "^1.3.2",
+    "sharp": "^0.26.0",
+    "potrace": "^2.1.8",
+    "mini-svg-data-uri": "^1.2.3",
+    "workerpool": "^6.0.0"
   }
 }

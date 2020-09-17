@@ -1,0 +1,30 @@
+{
+  "name": "@elderjs/plugin-images",
+  "version": "0.0.11",
+  "description": "Easily generate and manage responsive images for your Elder.js site.",
+  "keywords": [
+    "elderjs",
+    "elder.js",
+    "Svelte",
+    "responsive",
+    "picture",
+    "lqip",
+    "sharp",
+    "generator",
+    "sapper"
+  ],
+  "author": "Nick Reese <npm@nicholasreese.com>",
+  "homepage": "https://elderguide.com/tech/elderjs/",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elderjs/plugins.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Elderjs/plugins/issues"
+  }
+}

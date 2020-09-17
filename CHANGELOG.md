@@ -1,3 +1,12 @@
+## [0.0.13](https://github.com/Elderjs/plugins/compare/v0.0.12...v0.0.13) (2020-09-17)
+
+
+### Bug Fixes
+
+* 🐛 fix deps, mixed up projects ([ba299e6](https://github.com/Elderjs/plugins/commit/ba299e6f57e14bbe98bb8234d10e03f32298f78f))
+
+
+
 ## [0.0.12](https://github.com/Elderjs/plugins/compare/v0.0.11...v0.0.12) (2020-09-17)
 
 

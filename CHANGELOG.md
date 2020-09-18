@@ -1,3 +1,12 @@
+## [0.1.6](https://github.com/Elderjs/plugins/compare/v0.1.5...v0.1.6) (2020-09-18)
+
+
+### Features
+
+* 🎸 sitemap plugin will add origin from elder.config.js ([9bbf144](https://github.com/Elderjs/plugins/commit/9bbf1448b638878fb3385dd1dfd029777adc25df))
+
+
+
 ## [0.1.5](https://github.com/Elderjs/plugins/compare/v0.1.4...v0.1.5) (2020-09-18)
 
 

@@ -138,12 +138,12 @@ const plugin = {
               xml += SITEMAP_FOOTER;
 
               // todo: remove after v1.
-              if (settings.locations && settings.locations.public) {
-                fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
+              if (settings.distDir) {
+                fs.writeFileSync(path.resolve(settings.distDir, `./${indexFileName}`), xml, {
                   encoding: 'utf-8',
                 });
-              } else if (settings.distDir) {
-                fs.writeFileSync(path.resolve(settings.distDir, `./${indexFileName}`), xml, {
+              } else if (settings.locations && settings.locations.public) {
+                fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
                   encoding: 'utf-8',
                 });
               }
@@ -157,12 +157,12 @@ const plugin = {
             indexXml += SITEMAP_INDEX_FOOTER;
 
             // todo: remove after v1.
-            if (settings.locations && settings.locations.public) {
-              fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, './sitemap.xml'), indexXml, {
+            if (settings.distDir) {
+              fs.writeFileSync(path.resolve(settings.distDir, './sitemap.xml'), indexXml, {
                 encoding: 'utf-8',
               });
-            } else if (settings.distDir) {
-              fs.writeFileSync(path.resolve(settings.distDir, './sitemap.xml'), indexXml, {
+            } else if (settings.locations && settings.locations.public) {
+              fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, './sitemap.xml'), indexXml, {
                 encoding: 'utf-8',
               });
             }

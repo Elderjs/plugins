@@ -1,3 +1,12 @@
+## [0.1.4](https://github.com/Elderjs/plugins/compare/v0.1.3...v0.1.4) (2020-09-18)
+
+
+### Bug Fixes
+
+* 🐛 fix images ([3265cc0](https://github.com/Elderjs/plugins/commit/3265cc0d5cd398c6599f4b5b9022ce3cd16ac8f1))
+
+
+
 ## [0.1.3](https://github.com/Elderjs/plugins/compare/v0.1.2...v0.1.3) (2020-09-18)
 
 

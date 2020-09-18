@@ -52,7 +52,7 @@ const plugin = {
       if (plugin.config.cssFile) {
         if (Array.isArray(plugin.config.cssFile)) {
           for (const file of plugin.config.cssFile) {
-            const cssLocation = path.resolve(process.cwd(), file);
+            const cssLocation = path.resolve(plugin.settings.rootDir, file);
             if (fs.existsSync(cssLocation)) {
               plugin.internal.cssLocations.push(cssLocation);
             } else {
@@ -67,7 +67,7 @@ const plugin = {
           );
         }
       } else {
-        const cssLocation = path.resolve(process.cwd(), plugin.config.cssFile);
+        const cssLocation = path.resolve(plugin.settings.rootDir, plugin.config.cssFile);
         if (fs.existsSync(cssLocation)) {
           plugin.internal.cssLocations.push(cssLocation);
         } else {
@@ -82,7 +82,7 @@ const plugin = {
 
       if (plugin.config.rebuilding) {
         if (!plugin.config.writeFolder) {
-          plugin.internal.writeFolder = path.resolve(process.cwd(), plugin.config.folder);
+          plugin.internal.writeFolder = path.resolve(plugin.settings.rootDir, plugin.config.folder);
         }
 
         // ensure the folder exists
@@ -113,11 +113,11 @@ const plugin = {
       name: 'collectCriticalPathCssForRoutes',
       description: `Collects the critical path css files that exist for routes.`,
       priority: 50,
-      run: async ({ plugin, routes }) => {
+      run: async ({ plugin, routes, settings }) => {
         if (!plugin.internal.disable) {
           let collectedCssFiles = 0;
           plugin.internal.criticalPathCss = Object.keys(routes).reduce((out, cv) => {
-            const file = path.resolve(process.cwd(), plugin.config.folder, `./${cv}.css`);
+            const file = path.resolve(settings.rootDir, plugin.config.folder, `./${cv}.css`);
             if (fs.existsSync(file)) {
               collectedCssFiles += 1;
               out[cv] = fs.readFileSync(file);

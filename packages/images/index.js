@@ -57,7 +57,7 @@ const plugin = {
 
               const [relNameNoExt] = rel.split('.');
 
-              fs.ensureDirSync(path.join(process.cwd(), plugin.settings.locations.public, folder.output));
+              fs.ensureDirSync(path.join(settings.distDir, folder.output));
 
               out.push({
                 src: file,

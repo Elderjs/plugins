@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/Elderjs/plugins/compare/v0.1.2...v0.1.3) (2020-09-18)
+
+
+### Bug Fixes
+
+* 🐛 fixes for v1 ([ccf0112](https://github.com/Elderjs/plugins/commit/ccf011262902e77dce13852a5f432f21dd15b887))
+
+
+
 ## [0.1.2](https://github.com/Elderjs/plugins/compare/v0.1.1...v0.1.2) (2020-09-17)
 
 

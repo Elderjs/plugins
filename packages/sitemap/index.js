@@ -38,6 +38,13 @@ const plugin = {
 
     if (plugin.config.origin && typeof plugin.config.origin === 'string' && plugin.config.origin.includes('://')) {
       plugin.internal.ready = true;
+    } else if (
+      plugin.settings.origin &&
+      typeof plugin.settings.origin === 'string' &&
+      plugin.settings.origin.includes('://')
+    ) {
+      plugin.internal.ready = true;
+      plugin.config.origin = plugin.settings.origin;
     } else {
       console.error(
         `elder-plugin-sitemap please make sure you have a full domain name set for the value at 'elder-plugin-sitemap.origin' in your elder.config.js.`,

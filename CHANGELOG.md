@@ -1,3 +1,13 @@
+## [0.1.5](https://github.com/Elderjs/plugins/compare/v0.1.4...v0.1.5) (2020-09-18)
+
+
+### Bug Fixes
+
+* 🐛 browser reload uses plugin prefix ([affdee4](https://github.com/Elderjs/plugins/commit/affdee4224b293c171add03818343205f45577a2))
+* 🐛 fix distdir ([c94449b](https://github.com/Elderjs/plugins/commit/c94449b27e4ea28ae79b52ac03638434855d0495))
+
+
+
 ## [0.1.4](https://github.com/Elderjs/plugins/compare/v0.1.3...v0.1.4) (2020-09-18)
 
 

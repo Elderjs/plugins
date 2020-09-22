@@ -2,7 +2,7 @@
 
 In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugins.
 
-> All plugins require the latest Elder.js RC or V1.0.0 depending on when you are reading this.
+> **NOTE:** All plugins require at least Elder.js V1.0.0.
 
 ## Official Plugins:
 

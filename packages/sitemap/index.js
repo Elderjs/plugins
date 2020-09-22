@@ -58,7 +58,7 @@ const plugin = {
       hook: 'allRequests',
       name: 'addAllRequestsToPlugin',
       description: 'Generates a sitemap on build.',
-      priority: 100, // we want it to be last.
+      priority: 1, // we want it to be last.
       run: async ({ allRequests, plugin, settings, routes, query }) => {
         if (settings.build && !settings.worker) {
           if (plugin.internal.ready) {

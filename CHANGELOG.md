@@ -1,3 +1,12 @@
+## [0.1.7](https://github.com/Elderjs/plugins/compare/v0.1.6...v0.1.7) (2020-09-22)
+
+
+### Bug Fixes
+
+* 🐛 sitemap should run last ([53841d1](https://github.com/Elderjs/plugins/commit/53841d151710e2cba9e0e1fef1fa70bfa00a9e90))
+
+
+
 ## [0.1.6](https://github.com/Elderjs/plugins/compare/v0.1.5...v0.1.6) (2020-09-18)
 
 

@@ -114,7 +114,7 @@ const plugin = {
       hook: 'bootstrap',
       name: 'addMdFilesToDataObject',
       description: 'Add parsed .md content and data to the data object',
-      priority: 99, // default
+      priority: 99,
       run: async ({ data, plugin }) => {
         if (plugin.config.routes.length > 0) {
           return {

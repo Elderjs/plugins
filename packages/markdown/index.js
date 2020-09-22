@@ -92,30 +92,7 @@ const plugin = {
     remarkPlugins: [], // if you define your own, you must define remarkHtml another html parser or you'll have issues. Order matters here.
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images it will replace all markdown images with the {{picture src="" alt="" /}} shortcode.
   },
-  shortcodes: [
-    {
-      shortcode: 'ref',
-      run: ({ plugin, content, request }) => {
-        const count = plugin.references.length + 1;
-        plugin.references[request.permalink].push(`
-        <li id='cite_note-${count}'>
-        <cite>${content}</cite>
-        <a href='#cite_ref-${count}' class='cite-ref-backlink' aria-label='Jump up to reference' title='Jump up to reference'>^</a>
-      </li>`);
-        return `<sup id='cite_ref-${count}' class='reference'><a href='#cite_note-${count}'>[${count}]</a></sup>`;
-      },
-    },
-    {
-      shortcode: 'referenceList',
-      run: ({ plugin, props, request }) => {
-        if (plugin.references[request.permalink] && plugin.references[request.permalink].length > 0) {
-          return `<div class="references"><h4>${props.label || 'References: '}</h4><ol>${plugin.references[
-            request.permalink
-          ].join('')}</ol></div>`;
-        }
-      },
-    },
-  ],
+  shortcodes: [],
   hooks: [
     {
       hook: 'bootstrap',

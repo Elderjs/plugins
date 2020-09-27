@@ -27,11 +27,10 @@ const plugin = {
         frontmatter,
         [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
         remarkHtml,
-        plugin.config.useSyntaxHighlighting && [require('./rehype-shiki'), 
-          typeof plugin.config.useSyntaxHighlighting === 'boolean' ? 
-            {} :
-            plugin.config.useSyntaxHighlighting // its an options object
-        ]
+        plugin.config.useSyntaxHighlighting && [
+          require('./rehype-shiki'),
+          typeof plugin.config.useSyntaxHighlighting === 'boolean' ? {} : plugin.config.useSyntaxHighlighting, // its an options object
+        ],
       ];
     }
 
@@ -96,6 +95,8 @@ const plugin = {
     routes: [],
     remarkPlugins: [], // if you define your own, you must define remarkHtml another html parser or you'll have issues. Order matters here.
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images it will replace all markdown images with the {{picture src="" alt="" /}} shortcode.
+    useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker.
+    //theme is the only option available - for now.
   },
   shortcodes: [],
   hooks: [

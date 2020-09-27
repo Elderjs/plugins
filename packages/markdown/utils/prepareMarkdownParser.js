@@ -9,13 +9,15 @@ function prepareMarkdownParser(remarkPlugins = []) {
     );
   }
 
-  remarkPlugins.forEach((plugin) => {
-    if (Array.isArray(plugin)) {
-      processor.use(...plugin);
-    } else {
-      processor.use(plugin);
-    }
-  });
+  remarkPlugins
+    .filter((plugin) => !!plugin)
+    .forEach((plugin) => {
+      if (Array.isArray(plugin)) {
+        processor.use(...plugin);
+      } else {
+        processor.use(plugin);
+      }
+    });
 
   return processor;
 }

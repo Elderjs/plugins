@@ -27,6 +27,11 @@ const plugin = {
         frontmatter,
         [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
         remarkHtml,
+        plugin.config.useSyntaxHighlighting && [require('./rehype-shiki'), 
+          typeof plugin.config.useSyntaxHighlighting === 'boolean' ? 
+            {} :
+            plugin.config.useSyntaxHighlighting // its an options object
+        ]
       ];
     }
 

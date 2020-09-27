@@ -18,6 +18,7 @@ Once installed, open your `elder.config.js` and configure the plugin by adding `
 plugins: {
   '@elderjs/plugin-markdown': {
     routes: [], // if all of your markdown lives in ./src/routes/blog/, you'd add 'blog' to this array.
+    useSyntaxHighlighting: false // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
   }
 }
 ```
@@ -36,6 +37,12 @@ plugins: {
       [extractFrontmatter, { name: 'frontmatter', yaml: yaml }], // 'remark-extract-frontmatter' and 'yaml' packages.
       remarkHtml, // 'remark-html' package
     ],
+    // If you need to customize syntax highlighting, pass an options object instead of true
+    // note that this feature is disabled if you choose to pass your own remarkPlugins above
+    useSyntaxHighlighting: {
+      theme: 'nord' // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker
+      // theme is the only option available - for now.
+    },
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.
   },
 

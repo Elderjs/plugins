@@ -1,3 +1,13 @@
+## [0.1.8](https://github.com/Elderjs/plugins/compare/v0.1.7...v0.1.8) (2020-09-27)
+
+
+### Bug Fixes
+
+* 🐛 add default config, fix falsey values in parser ([c01e16e](https://github.com/Elderjs/plugins/commit/c01e16edbe2ad018fad862a75917e14b625a7407))
+* 🐛 remove reference shortcodes from markdown ([034cb20](https://github.com/Elderjs/plugins/commit/034cb20ec308874401c752f76905a0c1efdc9030))
+
+
+
 ## [0.1.7](https://github.com/Elderjs/plugins/compare/v0.1.6...v0.1.7) (2020-09-22)
 
 

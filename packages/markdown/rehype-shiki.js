@@ -1,72 +1,69 @@
 // this is a local fork of rehype-shiki, which is unmaintained/out of date
 // we want to use shiki (over other syntax highlighers) because it offers html highlighting with NO js or CSS weight concerns
 
-const shiki = require('shiki')
-const visit = require('unist-util-visit')
-const hastToString = require('hast-util-to-string')
-const u = require('unist-builder')
+const shiki = require('shiki');
+const visit = require('unist-util-visit');
+const hastToString = require('hast-util-to-string');
+const u = require('unist-builder');
 
-module.exports = attacher
+module.exports = attacher;
 
 function attacher(options) {
-  var settings = options || {}
-  var theme = settings.theme || 'nord'
-  var useBackground =
-    typeof settings.useBackground === 'undefined'
-      ? true
-      : Boolean(settings.useBackground)
-  var shikiTheme
-  var highlighter
+  let settings = options || {};
+  let theme = settings.theme || 'nord';
+  let useBackground = typeof settings.useBackground === 'undefined' ? true : Boolean(settings.useBackground);
+  let shikiTheme;
+  let highlighter;
 
   try {
-    shikiTheme = shiki.getTheme(theme)
+    shikiTheme = shiki.getTheme(theme);
   } catch (_) {
     try {
-      shikiTheme = shiki.loadTheme(theme)
+      shikiTheme = shiki.loadTheme(theme);
     } catch (_) {
-      throw new Error('Unable to load theme: ' + theme)
+      throw new Error('Unable to load theme: ' + theme);
     }
   }
 
-  return transformer
+  return transformer;
 
   async function transformer(tree) {
     highlighter = await shiki.getHighlighter({
       theme: shikiTheme,
-    })
-    visit(tree, 'element', visitor)
+    });
+    visit(tree, 'element', visitor);
   }
 
   function visitor(node, index, parent) {
     if (!parent || parent.tagName !== 'pre' || node.tagName !== 'code') {
-      return
+      return;
     }
 
     if (useBackground) {
-      addStyle(parent, 'background: ' + shikiTheme.bg)
+      addStyle(parent, 'background: ' + shikiTheme.bg);
     }
 
-    const lang = codeLanguage(node)
+    const lang = codeLanguage(node);
 
     if (!lang) {
       // Unknown language, fall back to a foreground colour
-      addStyle(node, 'color: ' + shikiTheme.settings.foreground)
-      return
+      addStyle(node, 'color: ' + shikiTheme.settings.foreground);
+      return;
     }
 
-    const tokens = highlighter.codeToThemedTokens(hastToString(node), lang)
-    const tree = tokensToHast(tokens)
+    const tokens = highlighter.codeToThemedTokens(hastToString(node), lang);
+    const tree = tokensToHast(tokens);
 
-    node.children = tree
+    node.children = tree;
   }
 }
 
 function tokensToHast(lines) {
-  let tree = []
+  let tree = [];
 
   for (const line of lines) {
     if (line.length === 0) {
-      tree.push(u('text', '\n'))
+      tree.push(u('text', '\n'));
     } else {
       for (const token of line) {
         tree.push(
@@ -74,42 +71,42 @@ function tokensToHast(lines) {
             'element',
             {
               tagName: 'span',
-              properties: {style: 'color: ' + token.color}
+              properties: { style: 'color: ' + token.color },
             },
-            [u('text', token.content)]
-          )
-        )
+            [u('text', token.content)],
+          ),
+        );
       }
 
-      tree.push(u('text', '\n'))
+      tree.push(u('text', '\n'));
     }
   }
 
   // Remove the last \n
-  tree.pop()
+  tree.pop();
 
-  return tree
+  return tree;
 }
 
 function addStyle(node, style) {
-  var props = node.properties || {}
-  var styles = props.style || []
-  styles.push(style)
-  props.style = styles
-  node.properties = props
+  let props = node.properties || {};
+  let styles = props.style || [];
+  styles.push(style);
+  props.style = styles;
+  node.properties = props;
 }
 
 function codeLanguage(node) {
-  const className = node.properties.className || []
-  var value
+  const className = node.properties.className || [];
+  let value;
 
   for (const element of className) {
-    value = element
+    value = element;
 
     if (value.slice(0, 9) === 'language-') {
-      return value.slice(9)
+      return value.slice(9);
     }
   }
 
-  return null
+  return null;
 }

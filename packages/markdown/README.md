@@ -49,7 +49,7 @@ plugins: {
 }
 ```
 
-A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS neeeded), has extensive language support, and can use any VS Code theme include your own custom one. We have *not* yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting`: false` and implement separately from this markdown toolchain.
+A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS neeeded), has extensive language support, and can use any VS Code theme including your own custom one. We have *not* yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting: false` and implement separately from this markdown toolchain.
 
 ## Getting all Markdown For a Route:
 

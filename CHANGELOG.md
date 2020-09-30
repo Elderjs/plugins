@@ -1,3 +1,12 @@
+## [0.1.9](https://github.com/Elderjs/plugins/compare/v0.1.8...v0.1.9) (2020-09-30)
+
+
+### Bug Fixes
+
+* 🐛 windows fix for image plugin ([00e6c99](https://github.com/Elderjs/plugins/commit/00e6c99f08531eae41ceab8a9a2194e9d2f195e9))
+
+
+
 ## [0.1.8](https://github.com/Elderjs/plugins/compare/v0.1.7...v0.1.8) (2020-09-27)
 
 

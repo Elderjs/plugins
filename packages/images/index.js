@@ -39,6 +39,7 @@ const plugin = {
           );
         }
       });
+      plugin.crossPlatformRoot = plugin.settings.rootDir.replace(/\\/gim, '/');
 
       const requestedImages = folders.reduce((out, folder) => {
         const relGlob = folder.src.replace('.', '').replace(/\*/g, '');
@@ -50,20 +51,23 @@ const plugin = {
             .filter((file) => imageFileTypes.includes(file.split('.').pop().toLowerCase()))
             .filter((file) => !file.split('/').pop().includes('-ejs'))
             .forEach((file) => {
-              const name = file.replace(plugin.settings.rootDir, '').replace(relGlob, '');
-              const rel = file.replace(plugin.settings.rootDir, '').replace(relGlob, folder.output);
+              const crossPlatformFile = file.replace(plugin.crossPlatformRoot, '');
+
+              const name = crossPlatformFile.replace(relGlob, '');
+
+              const rel = crossPlatformFile.replace(plugin.settings.rootDir, '').replace(relGlob, folder.output);
 
               const [nameNoExt, ext] = name.split('.');
 
               const [relNameNoExt] = rel.split('.');
 
-              fs.ensureDirSync(path.join(plugin.settings.distDir, folder.output));
-
+              const baseDir = path.join(plugin.settings.distDir, folder.output);
+              fs.ensureDirSync(baseDir);
               out.push({
                 src: file,
                 rel,
                 ext,
-                publicPrefix: path.join(plugin.settings.distDir, folder.output, nameNoExt),
+                publicPrefix: path.join(baseDir, nameNoExt),
                 cachePrefix:
                   plugin.config.cacheFolder &&
                   path.join(plugin.settings.rootDir, relNameNoExt.replace(folder.output, plugin.config.cacheFolder)),

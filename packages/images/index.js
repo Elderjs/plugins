@@ -2,8 +2,6 @@ const glob = require('glob');
 const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs-extra');
-const getSuffix = require('./utils/getSuffix');
-const getPrefix = require('./utils/getPrefix');
 const imageStore = require('./utils/imageStore');
 
 const imageFileTypes = ['jpg', 'jpeg', 'png'];

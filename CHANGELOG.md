@@ -1,3 +1,13 @@
+## [0.1.10](https://github.com/Elderjs/plugins/compare/v0.1.9...v0.1.10) (2020-10-03)
+
+
+### Bug Fixes
+
+* 🐛 config: default 'width' and 'scales' props not used when custom props provided ([#32](https://github.com/Elderjs/plugins/issues/32)) ([48bc805](https://github.com/Elderjs/plugins/commit/48bc805d75b107f0e34355dbb77e0e2b67828f46))
+* 🐛 fix getPrefix for windows ([546be36](https://github.com/Elderjs/plugins/commit/546be36ef6d9efb3ebe9e9a1dbf6f919b1a4c2a4))
+
+
+
 ## [0.1.9](https://github.com/Elderjs/plugins/compare/v0.1.8...v0.1.9) (2020-09-30)
 
 

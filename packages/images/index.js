@@ -7,11 +7,21 @@ const getPrefix = require('./utils/getPrefix');
 const imageStore = require('./utils/imageStore');
 
 const imageFileTypes = ['jpg', 'jpeg', 'png'];
+const defaultWidths = [1280, 992, 768, 576, 400, 350, 200];
+const defaultScales = [1, 2];
 
 const plugin = {
   name: '@elderjs/plugin-images',
   description: 'Resizes images. ',
   init: (plugin) => {
+    if (plugin.config.widths.length === 0) {
+      plugin.config.widths = defaultWidths;
+    }
+
+    if (plugin.config.scales.length === 0) {
+      plugin.config.scales = defaultScales;
+    }
+
     // used to store the data in the plugin's closure so it is persisted between loads
 
     plugin.manifest = {};
@@ -89,11 +99,11 @@ const plugin = {
         output: '/images/', // where files should be put within the distDir defined in your elder.config.js.
       },
     ],
-    widths: [1280, 992, 768, 576, 400, 350, 200], // Sizes the images will be resized to.
+    widths: [], // Sizes the images will be resized to.
     fileTypes: ['webp'], // file types in addition to jpeg/png
     imageManifest: '/images/ejs-image-manifest.json', // relative to root dir
     cacheFolder: '/images/sizes/', // relative to root dir
-    scales: [1, 2],
+    scales: [],
     svg: false,
     placeholder: {
       resize: {

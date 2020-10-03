@@ -167,3 +167,59 @@ plugins: {
 
 }
 ```
+
+## Additional Notes For Usage
+
+Within your project's root, you can add the following to further optimize this plugin's usage.
+
+### Adjust .gitignore to keep cache files out of repository
+
+```
+/images/sizes/
+/images/*.json
+```
+
+### Cleaning cache
+
+Explicitly default cache related values to elder.config.js
+
+```js
+imageManifest: '/images/ejs-image-manifest.json',
+cacheFolder: '/images/sizes/',
+```
+
+and created package script to clear the cache when it feels appropriate
+
+```js
+//src/cleanImageCache.js
+
+const del = require('del');
+const path = require('path');
+const { getConfig } = require('@elderjs/elderjs');
+a;
+const { rootDir, plugins } = getConfig();
+
+console.log(' Clearing out image cache.');
+
+if (plugins['elderjs-plugin-images'] !== undefined) {
+  const plugin = plugins['@elderjs/plugin-images'];
+  if (plugin.imageManifest !== undefined) {
+    del.sync(path.join(rootDir, plugin.imageManifest));
+  }
+  if (plugin.cacheFolder !== undefined) {
+    del.sync(path.join(rootDir, plugin.cacheFolder));
+  }
+}
+```
+
+```console
+node ./src/cleanImageCache.js
+```
+
+## Troubleshooting
+
+If you are struggling with the plugin doing unexpected things, remove your `ejs-image-manifest.json` and let the plugin rebuild it from scratch. Generally this won't result in generating new images but can help clean up issues caused by an out of sync manifest.json.
+
+## Special Thanks
+
+Thanks to [@meigo](https://github.com/meigo) for helping make this work on Windows and many of the scripts in this readme.

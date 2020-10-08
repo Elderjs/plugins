@@ -36,7 +36,7 @@ function getSources(sizes, srcsets, srcSizes) {
     let type = srcset[0];
     let items = srcset[1];
 
-    if(Object.keys(items).length === 0) return; 
+    if (Object.keys(items).length === 0) return; 
 
     let source = `<source `;
     if (type === 'webp') source += `type="image/webp" `;

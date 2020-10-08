@@ -357,8 +357,11 @@ const plugin = {
             var ll = new LazyLoad({
               callback_loaded: function (element) {
                 var ejs = findAncestor(element, 'ejs');
-                if(ejs && ejs.childNodes[0] && ejs.childNodes[0].className.includes("placeholder")){
-                  ejs.childNodes[0].classList.add('loaded');
+                if(ejs){
+                  var elements = ejs.getElementsByClassName("placeholder");
+                  if(elements.length > 0){
+                    elements[0].classList.add('loaded');
+                  }
                 }
               }
             });

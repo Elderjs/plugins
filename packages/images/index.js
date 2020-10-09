@@ -120,9 +120,18 @@ const plugin = {
     quality: 70,
     cssString: `.ejs {display: block;position: relative;height: 0;width: 100%;}
     .ejs img.lazy{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: block;}
-    .ejs .placeholder{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: block; z-index:9; background-repeat: no-repeat;
+    .ejs .placeholder{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index:9;
+      background-repeat: no-repeat;
       background-size: cover;
-    background-color: white;}x
+      background-color: white;
+    }
     .blur-up {
       -webkit-filter: blur(1px);
       filter: blur(1px);

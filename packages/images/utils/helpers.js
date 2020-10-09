@@ -46,7 +46,7 @@ function getSources(sizes, srcsets, srcSizes) {
       source += `${item[1]} ${item[0]}w, `; // ☝ image src with width w descriptor
     });
     source = source.replace(/,\s*$/, "");
-    source += `" sizes="${srcSizes ? srcSizes : '100vw'}" `; // ☝ sizes attribute must be set if w descriptors are used
+    source += `" data-sizes="${srcSizes ? srcSizes : '100vw'}" `; // ☝ sizes attribute must be set if w descriptors are used
     source += `>`;
 
     sources[type] = [source];

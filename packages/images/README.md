@@ -196,12 +196,12 @@ and created package script to clear the cache when it feels appropriate
 const del = require('del');
 const path = require('path');
 const { getConfig } = require('@elderjs/elderjs');
-a;
+
 const { rootDir, plugins } = getConfig();
 
 console.log(' Clearing out image cache.');
 
-if (plugins['elderjs-plugin-images'] !== undefined) {
+if (plugins['@elderjs/plugin-images'] !== undefined) {
   const plugin = plugins['@elderjs/plugin-images'];
   if (plugin.imageManifest !== undefined) {
     del.sync(path.join(rootDir, plugin.imageManifest));

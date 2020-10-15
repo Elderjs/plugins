@@ -1,3 +1,12 @@
+## [0.1.11](https://github.com/Elderjs/plugins/compare/v0.1.10...v0.1.11) (2020-10-15)
+
+
+### Bug Fixes
+
+* 🐛 fix date bug in markdown ([3756799](https://github.com/Elderjs/plugins/commit/3756799157ec1a67600a439bd8781cf9c174d246))
+
+
+
 ## [0.1.10](https://github.com/Elderjs/plugins/compare/v0.1.9...v0.1.10) (2020-10-03)
 
 

@@ -80,7 +80,11 @@ const plugin = {
         }
 
         // if there is a date in frontmatter, sort them by most recent
-        const haveDates = plugin.markdown[route].reduce((out, cv) => cv.frontmatter && cv.frontmatter.date && out);
+        const haveDates = plugin.markdown[route].reduce(
+          (out, cv) => out && !!cv.frontmatter && !!cv.frontmatter.date,
+          true,
+        );
+
         if (haveDates) {
           plugin.markdown[route] = plugin.markdown[route].sort(
             (a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date),

@@ -120,9 +120,18 @@ const plugin = {
     quality: 70,
     cssString: `.ejs {display: block;position: relative;height: 0;width: 100%;}
     .ejs img.lazy{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: block;}
-    .ejs .placeholder{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: block; z-index:9; background-repeat: no-repeat;
+    .ejs .placeholder{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index:9;
+      background-repeat: no-repeat;
       background-size: cover;
-    background-color: white;}x
+      background-color: white;
+    }
     .blur-up {
       -webkit-filter: blur(1px);
       filter: blur(1px);
@@ -357,8 +366,11 @@ const plugin = {
             var ll = new LazyLoad({
               callback_loaded: function (element) {
                 var ejs = findAncestor(element, 'ejs');
-                if(ejs && ejs.childNodes[0] && ejs.childNodes[0].className.includes("placeholder")){
-                  ejs.childNodes[0].classList.add('loaded');
+                if(ejs){
+                  var elements = ejs.getElementsByClassName("placeholder");
+                  if(elements.length > 0){
+                    elements[0].classList.add('loaded');
+                  }
                 }
               }
             });

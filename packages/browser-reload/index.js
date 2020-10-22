@@ -8,6 +8,10 @@ const plugin = {
     const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
     plugin.run = !plugin.settings.build && notProd;
+    plugin.origin = plugin.settings.origin.includes('://') ? plugin.settings.origin : 'http://localhost';
+
+    plugin.serverPort = process.env.SERVER_PORT || 3000;
+
     if (plugin.run) {
       plugin.ws = require('http').createServer();
       plugin.io = require('socket.io')(plugin.ws);
@@ -22,9 +26,9 @@ const plugin = {
   },
   config: {
     port: 8080,
-    delay: 200,
+    delay: 600,
     preventReloadQS: 'noreload',
-    retryCount: 50,
+    retryCount: 300,
   },
   hooks: [
     {
@@ -47,7 +51,7 @@ const plugin = {
           }
 
           async function checkServer(tryCount = 0){
-            var up = await fetch('http://localhost:3000');
+            var up = await fetch('${plugin.origin}:${plugin.serverPort}');
             if(up.ok) return true;
             if(tryCount > ${plugin.config.retryCount}){
               return false;
@@ -61,7 +65,7 @@ const plugin = {
           socketio.onload = function() {
             if(document.location.search.indexOf('${plugin.config.preventReloadQS}') === -1){
               var disconnected = false;
-              var socket = io('http://localhost:${plugin.config.port}');
+              var socket = io('${plugin.origin}:${plugin.config.port}');
               socket.on('connect', async function() {
                 if (disconnected) {
                   console.log('reloading');

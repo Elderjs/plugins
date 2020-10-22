@@ -45,7 +45,7 @@ plugins: {
       home: {
         priority: 1.0,
         changefreq: 'monthly',
-      }
+      },
       blog: {
         priority: 0.8,
         changfreq: 'monthly',

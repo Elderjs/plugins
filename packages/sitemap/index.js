@@ -136,7 +136,7 @@ const plugin = {
                 );
                 if (exclude) return;
 
-                xml += `<url><loc>${plugin.config.origin}${permalink}</loc><lastmod>${formatDate(
+                xml += `<url><loc>${plugin.config.origin}${permalink.replace(/&/g, '&amp;')}</loc><lastmod>${formatDate(
                   request.lastUpdate,
                 )}</lastmod><changefreq>${request.details.changefreq}</changefreq><priority>${
                   request.details.priority

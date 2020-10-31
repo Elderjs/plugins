@@ -1,6 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
+const debug = require('debug')('elderjs:plugins:markdown');
 const remarkHtml = require('remark-html');
 
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
@@ -8,7 +9,6 @@ const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
 const extractFrontmatter = require('remark-extract-frontmatter');
 const frontmatter = require('remark-frontmatter');
 const yaml = require('yaml').parse;
-
 const plugin = {
   name: '@elderjs/plugin-markdown',
   description:
@@ -33,14 +33,15 @@ const plugin = {
         ],
       ];
     }
+    debug(`plugin.config: ${JSON.stringify(plugin.config)}`)
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
 
     if (plugin.config && Array.isArray(plugin.config.routes) && plugin.config.routes.length > 0) {
       for (const route of plugin.config.routes) {
         plugin.markdown[route] = [];
-        const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
-        const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
+        const routeAbsolutePath = path.resolve(plugin.settings.srcDir, './routes/', route);
+        const mdFiles = glob.sync(`${routeAbsolutePath}/**/*.md`);
 
         for (const file of mdFiles) {
           let md = fs.readFileSync(file, 'utf-8');
@@ -55,28 +56,28 @@ const plugin = {
             }
           }
 
-          const { data, contents } = plugin.markdownParser.processSync(md);
-          const { frontmatter } = data;
+          const { data, contents: html, data: { frontmatter } } = plugin.markdownParser.processSync(md);
+          let slug;
 
-          if (data && data.frontmatter && data.frontmatter.slug) {
-            plugin.markdown[route].push({
-              slug: frontmatter.slug,
-              frontmatter: data.frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: frontmatter.slug, route });
+          if (plugin.config.slugFormatter) {
+            slug = plugin.config.slugFormatter(file, routeAbsolutePath);
+            debug(`slugFormatter: ${slug}`)
+          } else if (frontmatter && frontmatter.slug) {
+            slug = frontmatter.slug;
+            debug(`slugFrontmatter: ${slug}`)
           } else {
-            let fileSlug = file.replace('.md', '').split('/').pop();
-            if (fileSlug.includes(' ')) {
-              fileSlug = fileSlug.replace(/ /gim, '-');
+            slug = file.replace('.md', '').split('/').pop();
+            if (slug.includes(' ')) {
+              slug = slug.replace(/ /gim, '-');
             }
-            plugin.markdown[route].push({
-              slug: fileSlug,
-              frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: fileSlug, route });
+            debug(`slugFile: ${slug}`)
           }
+          plugin.markdown[route].push({
+            slug,
+            frontmatter,
+            html,
+          });
+          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent

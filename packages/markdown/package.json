@@ -27,15 +27,11 @@
   },
   "dependencies": {
     "glob": "^7.1.6",
-    "hast-util-to-string": "^1.0.4",
-    "remark": "^12.0.1",
-    "remark-extract-frontmatter": "^2.0.3",
-    "remark-fenced-divs": "^1.1.1",
-    "remark-frontmatter": "^2.0.0",
-    "remark-html": "^12.0.0",
-    "remark-unwrap-images": "^2.0.0",
-    "shiki": "^0.2.5",
-    "unist-builder": "^2.0.3",
+    "remark": "^13.0.0",
+    "remark-extract-frontmatter": "^3.0.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-html": "^13.0.1",
+    "shiki": "^0.2.6",
     "unist-util-visit": "^2.0.3",
     "yaml": "^1.10.0"
   }

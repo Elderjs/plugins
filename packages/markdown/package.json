@@ -32,6 +32,7 @@
     "remark-frontmatter": "^3.0.0",
     "remark-html": "^13.0.1",
     "shiki": "^0.2.6",
+    "to-vfile": "^6.1.0",
     "unist-util-visit": "^2.0.3",
     "yaml": "^1.10.0"
   }

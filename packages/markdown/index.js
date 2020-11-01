@@ -1,6 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
+const toVfile = require('to-vfile');
 const remarkHtml = require('remark-html');
 
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
@@ -8,7 +9,6 @@ const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
 const extractFrontmatter = require('remark-extract-frontmatter');
 const frontmatter = require('remark-frontmatter');
 const yaml = require('yaml').parse;
-
 const plugin = {
   name: '@elderjs/plugin-markdown',
   description:
@@ -33,50 +33,59 @@ const plugin = {
         ],
       ];
     }
+    if (plugin.config.slugFormatter) {
+      plugin.config.remarkPlugins.push(
+        function () {
+          return transformer
+
+          function transformer(tree, file) {
+            plugin.config.slugFormatter(tree, file);
+          }
+        }
+      );
+    }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
 
     if (plugin.config && Array.isArray(plugin.config.routes) && plugin.config.routes.length > 0) {
       for (const route of plugin.config.routes) {
         plugin.markdown[route] = [];
-        const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
-        const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
+        const routeAbsolutePath = path.resolve(plugin.settings.srcDir, './routes/', route);
+        const mdFiles = glob.sync(`${routeAbsolutePath}/**/*.md`);
 
         for (const file of mdFiles) {
-          let md = fs.readFileSync(file, 'utf-8');
-
+          let md = toVfile.readSync(file);
+          md.data.routePath = routeAbsolutePath;
+          md.data.path = md.path;
           // replace md images if image plugin is being used
           if (plugin.settings.plugins['@elderjs/plugin-images'] && plugin.config.useElderJsPluginImages) {
             const MDImgRegex = /!\[([A-Za-z-_\d]*)\]\(([^)]*)\)/gm;
             let match;
-            while ((match = MDImgRegex.exec(md)) !== null) {
+            while ((match = MDImgRegex.exec(md.contents)) !== null) {
               const [fullMatch, alt, src] = match;
-              md = md.replace(fullMatch, `${openPattern}picture alt="${alt}" src="${src}" /${closePattern}`);
+              md.contents = md.contents.replace(fullMatch, `${openPattern}picture alt="${alt}" src="${src}" /${closePattern}`);
             }
           }
 
-          const { data, contents } = await plugin.markdownParser.process(md);
-          const { frontmatter } = data;
+          plugin.markdownParser.process(md);
+          const { data, contents: html, data: { frontmatter } } = md;
+          let slug;
 
-          if (data && data.frontmatter && data.frontmatter.slug) {
-            plugin.markdown[route].push({
-              slug: frontmatter.slug,
-              frontmatter: data.frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: frontmatter.slug, route });
+
+          if (frontmatter && frontmatter.slug) {
+            slug = frontmatter.slug;
           } else {
-            let fileSlug = file.replace('.md', '').split('/').pop();
-            if (fileSlug.includes(' ')) {
-              fileSlug = fileSlug.replace(/ /gim, '-');
+            slug = file.replace('.md', '').split('/').pop();
+            if (slug.includes(' ')) {
+              slug = slug.replace(/ /gim, '-');
             }
-            plugin.markdown[route].push({
-              slug: fileSlug,
-              frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: fileSlug, route });
           }
+          plugin.markdown[route].push({
+            slug,
+            frontmatter,
+            html,
+          });
+          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent

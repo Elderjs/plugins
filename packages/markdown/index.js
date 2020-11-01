@@ -61,17 +61,8 @@ const plugin = {
 
           plugin.markdownParser.process(md);
           const { data, contents: html, data: { frontmatter } } = md;
-          let slug;
+          const slug = (frontmatter && frontmatter.slug) ? frontmatter.slug : file.stem.replace(/ /gim, '-');
 
-
-          if (frontmatter && frontmatter.slug) {
-            slug = frontmatter.slug;
-          } else {
-            slug = file.replace('.md', '').split('/').pop();
-            if (slug.includes(' ')) {
-              slug = slug.replace(/ /gim, '-');
-            }
-          }
           plugin.markdown[route].push({
             slug,
             frontmatter,

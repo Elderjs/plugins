@@ -33,7 +33,7 @@ const plugin = {
         ],
       ];
     }
-    if (plugin.config.additionalRemarkPlugins) {
+    if (Array.isArray(plugin.config.additionalRemarkPlugins)) {
       plugin.config.additionalRemarkPlugins.forEach((remarkPlugin) => {
         plugin.config.remarkPlugins.push(remarkPlugin);
       });
@@ -63,7 +63,7 @@ const plugin = {
 
           plugin.markdownParser.process(md);
           const { data, contents: html, data: { frontmatter } } = md;
-          const slug = (frontmatter && frontmatter.slug) ? frontmatter.slug : file.stem.replace(/ /gim, '-');
+          const slug = (frontmatter && frontmatter.slug) ? frontmatter.slug : md.stem.replace(/ /gim, '-');
 
           plugin.markdown[route].push({
             slug,

@@ -33,16 +33,8 @@ const plugin = {
         ],
       ];
     }
-    if (plugin.config.slugFormatter) {
-      plugin.config.remarkPlugins.push(
-        function () {
-          return transformer
-
-          function transformer(tree, file) {
-            plugin.config.slugFormatter(tree, file);
-          }
-        }
-      );
+    if (plugin.config.slugTransformer) {
+      plugin.config.remarkPlugins.push(plugin.config.slugTransformer)
     }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);

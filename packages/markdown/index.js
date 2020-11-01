@@ -33,8 +33,10 @@ const plugin = {
         ],
       ];
     }
-    if (plugin.config.slugTransformer) {
-      plugin.config.remarkPlugins.push(plugin.config.slugTransformer)
+    if (plugin.config.additionalRemarkPlugins) {
+      plugin.config.additionalRemarkPlugins.forEach((remarkPlugin) => {
+        plugin.config.remarkPlugins.push(remarkPlugin);
+      });
     }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);

@@ -13,7 +13,7 @@ const plugin = {
   name: '@elderjs/plugin-markdown',
   description:
     'Reads and collects markdown content from specified routes. It automatically adds found markdown files as requests on allRequests. Includes a shortcode parser.',
-  init: (plugin) => {
+  init: async (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
     plugin.markdown = {};
     plugin.requests = [];
@@ -56,7 +56,7 @@ const plugin = {
             }
           }
 
-          const { data, contents: html, data: { frontmatter } } = plugin.markdownParser.processSync(md);
+          const { data, contents: html, data: { frontmatter } } = await plugin.markdownParser.process(md);
           let slug;
 
           if (plugin.config.slugFormatter) {
@@ -77,7 +77,6 @@ const plugin = {
             frontmatter,
             html,
           });
-          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent

@@ -38,8 +38,8 @@ const plugin = {
     if (plugin.config && Array.isArray(plugin.config.routes) && plugin.config.routes.length > 0) {
       for (const route of plugin.config.routes) {
         plugin.markdown[route] = [];
-        const routeAbsolutePath = path.resolve(plugin.settings.srcDir, './routes/', route);
-        const mdFiles = glob.sync(`${routeAbsolutePath}/**/*.md`);
+        const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
+        const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
 
         for (const file of mdFiles) {
           let md = fs.readFileSync(file, 'utf-8');

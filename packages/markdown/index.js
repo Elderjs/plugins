@@ -8,6 +8,7 @@ const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
 const extractFrontmatter = require('remark-extract-frontmatter');
 const frontmatter = require('remark-frontmatter');
 const yaml = require('yaml').parse;
+
 const plugin = {
   name: '@elderjs/plugin-markdown',
   description:
@@ -57,14 +58,17 @@ const plugin = {
           const { data, contents: html, data: { frontmatter } } = await plugin.markdownParser.process(md);
           let slug;
 
-          if (plugin.config.slugFormatter) {
-            slug = plugin.config.slugFormatter(file, routeAbsolutePath);
-          } else if (frontmatter && frontmatter.slug) {
-            slug = frontmatter.slug;
-          } else {
-            slug = file.replace('.md', '').split('/').pop();
-            if (slug.includes(' ')) {
-              slug = slug.replace(/ /gim, '-');
+          if (plugin.config.slugFormatter && typeof(plugin.config.slugFormatter) === 'function') {
+            slug = plugin.config.slugFormatter(file);
+          }
+          if (typeof(slug) !== 'string') {
+            if (frontmatter && frontmatter.slug) {
+              slug = frontmatter.slug;
+            } else {
+              slug = file.replace('.md', '').split('/').pop();
+              if (slug.includes(' ')) {
+                slug = slug.replace(/ /gim, '-');
+              }
             }
           }
           plugin.markdown[route].push({
@@ -72,6 +76,7 @@ const plugin = {
             frontmatter,
             html,
           });
+          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent

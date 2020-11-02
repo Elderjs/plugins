@@ -1,7 +1,6 @@
 const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
-const debug = require('debug')('elderjs:plugins:markdown');
 const remarkHtml = require('remark-html');
 
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
@@ -33,7 +32,6 @@ const plugin = {
         ],
       ];
     }
-    debug(`plugin.config: ${JSON.stringify(plugin.config)}`)
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
 
@@ -61,16 +59,13 @@ const plugin = {
 
           if (plugin.config.slugFormatter) {
             slug = plugin.config.slugFormatter(file, routeAbsolutePath);
-            debug(`slugFormatter: ${slug}`)
           } else if (frontmatter && frontmatter.slug) {
             slug = frontmatter.slug;
-            debug(`slugFrontmatter: ${slug}`)
           } else {
             slug = file.replace('.md', '').split('/').pop();
             if (slug.includes(' ')) {
               slug = slug.replace(/ /gim, '-');
             }
-            debug(`slugFile: ${slug}`)
           }
           plugin.markdown[route].push({
             slug,

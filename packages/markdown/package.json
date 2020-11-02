@@ -34,8 +34,5 @@
     "shiki": "^0.2.6",
     "unist-util-visit": "^2.0.3",
     "yaml": "^1.10.0"
-  },
-  "devDependencies": {
-    "debug": "^4.2.0"
   }
 }

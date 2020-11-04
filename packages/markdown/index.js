@@ -59,7 +59,8 @@ const plugin = {
           let slug;
 
           if (plugin.config.slugFormatter && typeof(plugin.config.slugFormatter) === 'function') {
-            slug = plugin.config.slugFormatter(file);
+            let relativePath = file.replace(`${mdsInRoute}/`, '');
+            slug = plugin.config.slugFormatter(relativePath, frontmatter);
           }
           if (typeof(slug) !== 'string') {
             if (frontmatter && frontmatter.slug) {

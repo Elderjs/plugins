@@ -18,6 +18,10 @@ Once installed, open your `elder.config.js` and configure the plugin by adding `
 plugins: {
   '@elderjs/plugin-markdown': {
     routes: [], // if all of your markdown lives in ./src/routes/blog/, you'd add 'blog' to this array.
+    slugFormatter: function(relativeFilePath, frontmatter) {
+      return false; // If needed, a custom slug for the url can be crafted from the relative path to the file and 
+      // frontmatter in it (if any). slugFormatter must be a function and must return a string to be used.
+    }, 
     useSyntaxHighlighting: false // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
   }
 }

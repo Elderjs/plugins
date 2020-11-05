@@ -114,20 +114,20 @@ const plugin = {
               sitemapRequests.push(req);
             }
 
-            const indexFiles = [];
+            const includedRequests = {};
 
             for (let i = 0; i < routeNames.length; i++) {
               const route = routeNames[i];
               const indexFileName = `sitemap-${route}.xml`;
-              indexFiles.push({ url: `${plugin.config.origin}/${indexFileName}` });
 
               const routeRequests = sitemapRequests.filter((ar) => ar.route === route);
 
               if (routeRequests.length > 50000) {
                 throw new Error(`${indexFileName} will have more than 50,000 urls. Implement splitting logic.`);
               }
+              
+              includedRequests[indexFileName] = [];
 
-              let xml = SITEMAP_HEADER;
               routeRequests.forEach((request) => {
                 const permalink = routes[route].permalink({ request, settings });
 
@@ -136,25 +136,40 @@ const plugin = {
                 );
                 if (exclude) return;
 
-                xml += `<url><loc>${plugin.config.origin}${permalink.replace(/&/g, '&amp;')}</loc><lastmod>${formatDate(
-                  request.lastUpdate,
-                )}</lastmod><changefreq>${request.details.changefreq}</changefreq><priority>${
-                  request.details.priority
-                }</priority></url>`;
+                includedRequests[indexFileName].push(request);
               });
-              xml += SITEMAP_FOOTER;
+            }
+            
+            const indexFiles = [];
+            
+            for (const [indexFileName, routeRequests] of Object.entries(includedRequests)) {
+              if(routeRequests.length > 0){
+                indexFiles.push({ url: `${plugin.config.origin}/${indexFileName}` });
 
-              // todo: remove after v1.
-              if (settings.distDir) {
-                fs.writeFileSync(path.resolve(settings.distDir, `./${indexFileName}`), xml, {
-                  encoding: 'utf-8',
+                let xml = SITEMAP_HEADER;
+                routeRequests.forEach((request) => {
+                  const permalink = routes[request.route].permalink({ request, settings });
+
+                  xml += `<url><loc>${plugin.config.origin}${permalink.replace(/&/g, '&amp;')}</loc><lastmod>${formatDate(
+                    request.lastUpdate,
+                  )}</lastmod><changefreq>${request.details.changefreq}</changefreq><priority>${
+                    request.details.priority
+                  }</priority></url>`;
                 });
-              } else if (settings.locations && settings.locations.public) {
-                fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
-                  encoding: 'utf-8',
-                });
+                xml += SITEMAP_FOOTER;
+
+                // todo: remove after v1.
+                if (settings.distDir) {
+                  fs.writeFileSync(path.resolve(settings.distDir, `./${indexFileName}`), xml, {
+                    encoding: 'utf-8',
+                  });
+                } else if (settings.locations && settings.locations.public) {
+                  fs.writeFileSync(path.resolve(process.cwd(), settings.locations.public, `./${indexFileName}`), xml, {
+                    encoding: 'utf-8',
+                  });
+                }
+                console.log(`${indexFileName}: ${routeRequests.length} pages`);
               }
-              console.log(`${indexFileName}: ${routeRequests.length} pages`);
             }
 
             let indexXml = SITEMAP_INDEX_HEADER;

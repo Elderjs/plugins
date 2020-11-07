@@ -27,11 +27,18 @@ const plugin = {
         frontmatter,
         [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
         remarkHtml,
-        plugin.config.useSyntaxHighlighting && [
-          require('./rehype-shiki'),
-          typeof plugin.config.useSyntaxHighlighting === 'boolean' ? {} : plugin.config.useSyntaxHighlighting, // its an options object
-        ],
       ];
+    }
+
+    if (plugin.config.useSyntaxHighlighting) {
+      const rehypeShiki = require('./rehype-shiki');
+      let rehypeShikiConfig = {};
+      if (typeof plugin.config.useSyntaxHighlighting !== 'boolean') {
+        rehypeShikiConfig = plugin.config.useSyntaxHighlighting;
+      }
+      plugin.config.remarkPlugins.push(
+        [rehypeShiki, rehypeShikiConfig]
+      );
     }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);

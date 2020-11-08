@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-markdown",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Easily create routes from your markdown files on your Elder.js site using the remark ecosystem.",
   "keywords": [
     "elder.js",

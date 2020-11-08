@@ -55,28 +55,29 @@ const plugin = {
             }
           }
 
-          const { data, contents } = await plugin.markdownParser.process(md);
-          const { frontmatter } = data;
+          const { data, contents: html, data: { frontmatter } } = await plugin.markdownParser.process(md);
+          let slug;
 
-          if (data && data.frontmatter && data.frontmatter.slug) {
-            plugin.markdown[route].push({
-              slug: frontmatter.slug,
-              frontmatter: data.frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: frontmatter.slug, route });
-          } else {
-            let fileSlug = file.replace('.md', '').split('/').pop();
-            if (fileSlug.includes(' ')) {
-              fileSlug = fileSlug.replace(/ /gim, '-');
-            }
-            plugin.markdown[route].push({
-              slug: fileSlug,
-              frontmatter,
-              html: contents,
-            });
-            plugin.requests.push({ slug: fileSlug, route });
+          if (plugin.config.slugFormatter && typeof(plugin.config.slugFormatter) === 'function') {
+            let relativePath = file.replace(`${mdsInRoute}/`, '');
+            slug = plugin.config.slugFormatter(relativePath, frontmatter);
           }
+          if (typeof(slug) !== 'string') {
+            if (frontmatter && frontmatter.slug) {
+              slug = frontmatter.slug;
+            } else {
+              slug = file.replace('.md', '').split('/').pop();
+              if (slug.includes(' ')) {
+                slug = slug.replace(/ /gim, '-');
+              }
+            }
+          }
+          plugin.markdown[route].push({
+            slug,
+            frontmatter,
+            html,
+          });
+          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent

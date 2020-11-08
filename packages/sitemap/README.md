@@ -62,3 +62,21 @@ plugins: {
   },
 }
 ```
+
+
+## Exclusion Logic is Greedy
+
+For example excluding 'green' route
+```js
+exclude: ['green'],
+```
+would excude all routes starting with 'green', also 'greenland' and 'green-eggs'
+
+'green' route could be explicitly excluded with
+```js
+exclude: ['green/'],
+```
+Also nested routes or specific slugs of route could be excluded with
+```js
+exclude: ['green/', 'greenland/polar-bear'],
+```

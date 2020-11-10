@@ -1,3 +1,18 @@
+## [0.1.17](https://github.com/Elderjs/plugins/compare/v0.1.16...v0.1.17) (2020-11-10)
+
+
+### Bug Fixes
+
+* 🐛 Wrap shortcodes in <div> so they don't get <p> wrapped ([2944b34](https://github.com/Elderjs/plugins/commit/2944b34fd8d4528cf323655b98a25aa659aa5281))
+
+
+### Features
+
+* 🎸 pass vfile data to route data when present ([2e7a776](https://github.com/Elderjs/plugins/commit/2e7a776e663a48a22f4f2c5fa28c02d83b580ad7))
+* 🎸 table of contents functionality ([142351e](https://github.com/Elderjs/plugins/commit/142351e6de01b3de7d0db9ac29a20688aeecabcf))
+
+
+
 ## [0.1.16](https://github.com/Elderjs/plugins/compare/v0.1.15...v0.1.16) (2020-11-08)
 
 

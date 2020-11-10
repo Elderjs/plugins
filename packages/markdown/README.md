@@ -19,9 +19,9 @@ plugins: {
   '@elderjs/plugin-markdown': {
     routes: [], // if all of your markdown lives in ./src/routes/blog/, you'd add 'blog' to this array.
     slugFormatter: function(relativeFilePath, frontmatter) {
-      return false; // If needed, a custom slug for the url can be crafted from the relative path to the file and 
+      return false; // If needed, a custom slug for the url can be crafted from the relative path to the file and
       // frontmatter in it (if any). slugFormatter must be a function and must return a string to be used.
-    }, 
+    },
     useSyntaxHighlighting: false // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
   }
 }
@@ -39,6 +39,7 @@ plugins: {
     remarkPlugins: [
       frontmatter, // 'remark-frontmatter' package
       [extractFrontmatter, { name: 'frontmatter', yaml: yaml }], // 'remark-extract-frontmatter' and 'yaml' packages.
+      remarkSlug, // 'remark-slug' package
       remarkHtml, // 'remark-html' package
     ],
     // If you need to customize syntax highlighting, pass an options object instead of true
@@ -48,12 +49,13 @@ plugins: {
       // theme is the only option available - for now.
     },
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.
+    useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
   },
 
 }
 ```
 
-A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS neeeded), has extensive language support, and can use any VS Code theme including your own custom one. We have *not* yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting: false` and implement separately from this markdown toolchain.
+A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS neeeded), has extensive language support, and can use any VS Code theme including your own custom one. We have _not_ yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting: false` and implement separately from this markdown toolchain.
 
 ## Getting all Markdown For a Route:
 

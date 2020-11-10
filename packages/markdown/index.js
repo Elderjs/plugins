@@ -2,6 +2,7 @@ const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 const remarkHtml = require('remark-html');
+const remarkSlug = require('remark-slug');
 
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
 
@@ -26,6 +27,7 @@ const plugin = {
       plugin.config.remarkPlugins = [
         remarkFrontmatter,
         [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
+        remarkSlug,
         remarkHtml,
       ];
     }
@@ -37,6 +39,11 @@ const plugin = {
         rehypeShikiConfig = plugin.config.useSyntaxHighlighting;
       }
       plugin.config.remarkPlugins.push([rehypeShiki, rehypeShikiConfig]);
+    }
+
+    if (plugin.config.useTableOfContents) {
+      const tableOfContents = require('./utils/tableOfContents');
+      plugin.config.remarkPlugins.push(tableOfContents);
     }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
@@ -114,6 +121,7 @@ const plugin = {
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images it will replace all markdown images with the {{picture src="" alt="" /}} shortcode.
     useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker.
     //theme is the only option available - for now.
+    useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
   },
   shortcodes: [],
   hooks: [

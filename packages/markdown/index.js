@@ -6,7 +6,7 @@ const remarkHtml = require('remark-html');
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
 
 const extractFrontmatter = require('remark-extract-frontmatter');
-const frontmatter = require('remark-frontmatter');
+const remarkFrontmatter = require('remark-frontmatter');
 const yaml = require('yaml').parse;
 
 const plugin = {
@@ -24,7 +24,7 @@ const plugin = {
 
     if (plugin.config.remarkPlugins.length === 0) {
       plugin.config.remarkPlugins = [
-        frontmatter,
+        remarkFrontmatter,
         [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
         remarkHtml,
       ];
@@ -36,9 +36,7 @@ const plugin = {
       if (typeof plugin.config.useSyntaxHighlighting !== 'boolean') {
         rehypeShikiConfig = plugin.config.useSyntaxHighlighting;
       }
-      plugin.config.remarkPlugins.push(
-        [rehypeShiki, rehypeShikiConfig]
-      );
+      plugin.config.remarkPlugins.push([rehypeShiki, rehypeShikiConfig]);
     }
 
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
@@ -62,14 +60,17 @@ const plugin = {
             }
           }
 
-          const { data, contents: html, data: { frontmatter } } = await plugin.markdownParser.process(md);
+          const {
+            contents: html,
+            data: { frontmatter, ...data },
+          } = await plugin.markdownParser.process(md);
           let slug;
 
-          if (plugin.config.slugFormatter && typeof(plugin.config.slugFormatter) === 'function') {
+          if (plugin.config.slugFormatter && typeof plugin.config.slugFormatter === 'function') {
             let relativePath = file.replace(`${mdsInRoute}/`, '');
             slug = plugin.config.slugFormatter(relativePath, frontmatter);
           }
-          if (typeof(slug) !== 'string') {
+          if (typeof slug !== 'string') {
             if (frontmatter && frontmatter.slug) {
               slug = frontmatter.slug;
             } else {
@@ -83,6 +84,7 @@ const plugin = {
             slug,
             frontmatter,
             html,
+            data,
           });
           plugin.requests.push({ slug, route });
         }
@@ -172,11 +174,12 @@ const plugin = {
         if (data.markdown && data.markdown[request.route]) {
           const markdown = data.markdown[request.route].find((m) => m.slug === request.slug);
           if (markdown) {
-            let { html, frontmatter } = markdown;
+            let { html, frontmatter, data: addToData } = markdown;
 
             return {
               data: {
                 ...data,
+                ...addToData,
                 html,
                 frontmatter,
               },

@@ -56,7 +56,10 @@ const plugin = {
             let match;
             while ((match = MDImgRegex.exec(md)) !== null) {
               const [fullMatch, alt, src] = match;
-              md = md.replace(fullMatch, `${openPattern}picture alt="${alt}" src="${src}" /${closePattern}`);
+              md = md.replace(
+                fullMatch,
+                `<div class="md-img">${openPattern}picture alt="${alt}" src="${src}" /${closePattern}</div>`,
+              );
             }
           }
 

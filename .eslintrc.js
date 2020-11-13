@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    commonjs: false,
+    commonjs: true,
     es2020: true,
     browser: true,
     'jest/globals': true,

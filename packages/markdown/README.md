@@ -49,7 +49,7 @@ plugins: {
       // theme is the only option available - for now.
     },
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.
-    useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
+    useTableOfContents: false, // adds tocTree to each route's data object.
   },
 
 }

@@ -1,0 +1,1390 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "html",
+      "value": "<div><h2><a href=\"http://test.com/\">Link Test</a></h2></div>",
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 61,
+          "offset": 60
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<div>\n## Can we wrap markdown?\n</div>",
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 62
+        },
+        "end": {
+          "line": 5,
+          "column": 7,
+          "offset": 99
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Assisted living is in many ways the midpoint between living at home and moving to a nursing home. Similar to independent living, most assisted living communities allow residents to live in their own apartment. The primary difference between independent living and assisted living lies in the scope of services provided by assisted living communities. In addition to the services provided by independent living communities, for an additional fee, assisted living communities will provide more extensive personal care and additional health-related services. Unlike a nursing home, assisted living communities generally are not staffed by as many licensed nurses and lack the ability to provide most of the medical care provided by nursing homes. If your physical condition has deteriorated to the point where your daily needs are inching closer to a hospital level of care, assisted living is probably no longer an option. ",
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 1,
+              "offset": 101
+            },
+            "end": {
+              "line": 7,
+              "column": 922,
+              "offset": 1022
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 7,
+          "column": 1,
+          "offset": 101
+        },
+        "end": {
+          "line": 7,
+          "column": 922,
+          "offset": 1022
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Services Offered By ",
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 4,
+              "offset": 1027
+            },
+            "end": {
+              "line": 9,
+              "column": 24,
+              "offset": 1047
+            }
+          }
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "http://test.com",
+          "children": [
+            {
+              "type": "text",
+              "value": "Assisted Living",
+              "position": {
+                "start": {
+                  "line": 9,
+                  "column": 25,
+                  "offset": 1048
+                },
+                "end": {
+                  "line": 9,
+                  "column": 40,
+                  "offset": 1063
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 24,
+              "offset": 1047
+            },
+            "end": {
+              "line": 9,
+              "column": 58,
+              "offset": 1081
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 9,
+          "column": 1,
+          "offset": 1024
+        },
+        "end": {
+          "line": 9,
+          "column": 58,
+          "offset": 1081
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "services-offered-by-assisted-living"
+        },
+        "id": "services-offered-by-assisted-living"
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Assisted living communities generally provide most or all of the following services:",
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 1,
+              "offset": 1083
+            },
+            "end": {
+              "line": 11,
+              "column": 85,
+              "offset": 1167
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 11,
+          "column": 1,
+          "offset": 1083
+        },
+        "end": {
+          "line": 11,
+          "column": 85,
+          "offset": 1167
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Maintenance-free housing",
+                  "position": {
+                    "start": {
+                      "line": 13,
+                      "column": 5,
+                      "offset": 1173
+                    },
+                    "end": {
+                      "line": 13,
+                      "column": 29,
+                      "offset": 1197
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 13,
+                  "column": 5,
+                  "offset": 1173
+                },
+                "end": {
+                  "line": 13,
+                  "column": 29,
+                  "offset": 1197
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 1,
+              "offset": 1169
+            },
+            "end": {
+              "line": 13,
+              "column": 29,
+              "offset": 1197
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "24-hour supervision",
+                  "position": {
+                    "start": {
+                      "line": 14,
+                      "column": 5,
+                      "offset": 1202
+                    },
+                    "end": {
+                      "line": 14,
+                      "column": 24,
+                      "offset": 1221
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 14,
+                  "column": 5,
+                  "offset": 1202
+                },
+                "end": {
+                  "line": 14,
+                  "column": 24,
+                  "offset": 1221
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 1,
+              "offset": 1198
+            },
+            "end": {
+              "line": 14,
+              "column": 24,
+              "offset": 1221
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Meals",
+                  "position": {
+                    "start": {
+                      "line": 15,
+                      "column": 5,
+                      "offset": 1226
+                    },
+                    "end": {
+                      "line": 15,
+                      "column": 10,
+                      "offset": 1231
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 15,
+                  "column": 5,
+                  "offset": 1226
+                },
+                "end": {
+                  "line": 15,
+                  "column": 10,
+                  "offset": 1231
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 15,
+              "column": 1,
+              "offset": 1222
+            },
+            "end": {
+              "line": 15,
+              "column": 10,
+              "offset": 1231
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Transportation",
+                  "position": {
+                    "start": {
+                      "line": 16,
+                      "column": 5,
+                      "offset": 1236
+                    },
+                    "end": {
+                      "line": 16,
+                      "column": 19,
+                      "offset": 1250
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 16,
+                  "column": 5,
+                  "offset": 1236
+                },
+                "end": {
+                  "line": 16,
+                  "column": 19,
+                  "offset": 1250
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 16,
+              "column": 1,
+              "offset": 1232
+            },
+            "end": {
+              "line": 16,
+              "column": 19,
+              "offset": 1250
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Security",
+                  "position": {
+                    "start": {
+                      "line": 17,
+                      "column": 5,
+                      "offset": 1255
+                    },
+                    "end": {
+                      "line": 17,
+                      "column": 13,
+                      "offset": 1263
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 17,
+                  "column": 5,
+                  "offset": 1255
+                },
+                "end": {
+                  "line": 17,
+                  "column": 13,
+                  "offset": 1263
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 17,
+              "column": 1,
+              "offset": 1251
+            },
+            "end": {
+              "line": 17,
+              "column": 13,
+              "offset": 1263
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Laundry",
+                  "position": {
+                    "start": {
+                      "line": 18,
+                      "column": 5,
+                      "offset": 1268
+                    },
+                    "end": {
+                      "line": 18,
+                      "column": 12,
+                      "offset": 1275
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 18,
+                  "column": 5,
+                  "offset": 1268
+                },
+                "end": {
+                  "line": 18,
+                  "column": 12,
+                  "offset": 1275
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 18,
+              "column": 1,
+              "offset": 1264
+            },
+            "end": {
+              "line": 18,
+              "column": 12,
+              "offset": 1275
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Personal care (assistance with activities of daily living)",
+                  "position": {
+                    "start": {
+                      "line": 19,
+                      "column": 5,
+                      "offset": 1280
+                    },
+                    "end": {
+                      "line": 19,
+                      "column": 63,
+                      "offset": 1338
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 19,
+                  "column": 5,
+                  "offset": 1280
+                },
+                "end": {
+                  "line": 19,
+                  "column": 63,
+                  "offset": 1338
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 19,
+              "column": 1,
+              "offset": 1276
+            },
+            "end": {
+              "line": 19,
+              "column": 63,
+              "offset": 1338
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Medication management",
+                  "position": {
+                    "start": {
+                      "line": 20,
+                      "column": 5,
+                      "offset": 1343
+                    },
+                    "end": {
+                      "line": 20,
+                      "column": 26,
+                      "offset": 1364
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 20,
+                  "column": 5,
+                  "offset": 1343
+                },
+                "end": {
+                  "line": 20,
+                  "column": 26,
+                  "offset": 1364
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 20,
+              "column": 1,
+              "offset": 1339
+            },
+            "end": {
+              "line": 20,
+              "column": 26,
+              "offset": 1364
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Housekeeping and related services",
+                  "position": {
+                    "start": {
+                      "line": 21,
+                      "column": 5,
+                      "offset": 1369
+                    },
+                    "end": {
+                      "line": 21,
+                      "column": 38,
+                      "offset": 1402
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 21,
+                  "column": 5,
+                  "offset": 1369
+                },
+                "end": {
+                  "line": 21,
+                  "column": 38,
+                  "offset": 1402
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 21,
+              "column": 1,
+              "offset": 1365
+            },
+            "end": {
+              "line": 21,
+              "column": 38,
+              "offset": 1402
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Activities and social events",
+                  "position": {
+                    "start": {
+                      "line": 22,
+                      "column": 5,
+                      "offset": 1407
+                    },
+                    "end": {
+                      "line": 22,
+                      "column": 33,
+                      "offset": 1435
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 22,
+                  "column": 5,
+                  "offset": 1407
+                },
+                "end": {
+                  "line": 22,
+                  "column": 33,
+                  "offset": 1435
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 22,
+              "column": 1,
+              "offset": 1403
+            },
+            "end": {
+              "line": 22,
+              "column": 33,
+              "offset": 1435
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 13,
+          "column": 1,
+          "offset": 1169
+        },
+        "end": {
+          "line": 22,
+          "column": 33,
+          "offset": 1435
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "At minimum, residents of assisted living facilities are looking to downsize into a more manageable apartment, with upkeep and maintenance provided by the community. In addition, most residents require assistance with bathing and dressing, while some residents also require assistance with other activities of daily living, including dressing, using the bathroom, transferring from bed to a chair and eating{{{ref}}}Pratt, John R. ",
+          "position": {
+            "start": {
+              "line": 24,
+              "column": 1,
+              "offset": 1437
+            },
+            "end": {
+              "line": 24,
+              "column": 431,
+              "offset": 1867
+            }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "Long-Term Care – Managing Across the Continuum",
+              "position": {
+                "start": {
+                  "line": 24,
+                  "column": 432,
+                  "offset": 1868
+                },
+                "end": {
+                  "line": 24,
+                  "column": 478,
+                  "offset": 1914
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 24,
+              "column": 431,
+              "offset": 1867
+            },
+            "end": {
+              "line": 24,
+              "column": 479,
+              "offset": 1915
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " (4th Ed.) (2016). Jones & Bartlett Learning, 156-57.{{{/ref}}}. Many residents also require routine healthcare services such as medication management and various types of therapy. In general, the scope of healthcare services provided by assisted living communities most closely parallel those provided by home healthcare providers and are less intensive than those provided by nursing homes. In fact, one of the great conveniences of assisted living is that services are generally performed right in the resident’s apartment. ",
+          "position": {
+            "start": {
+              "line": 24,
+              "column": 479,
+              "offset": 1915
+            },
+            "end": {
+              "line": 24,
+              "column": 1006,
+              "offset": 2442
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 24,
+          "column": 1,
+          "offset": 1437
+        },
+        "end": {
+          "line": 24,
+          "column": 1006,
+          "offset": 2442
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "It should be noted that some assisted living facilities have begun hiring licensed nurses and are providing medical services that would have traditionally been provided by nursing homes. One study by MetLife Market Institute even found that 61% of assisted living communities were now caring for residents with Alzheimer’s and dementia{{{ref}}}MetLife Market Institute (2012). ",
+          "position": {
+            "start": {
+              "line": 26,
+              "column": 1,
+              "offset": 2444
+            },
+            "end": {
+              "line": 26,
+              "column": 378,
+              "offset": 2821
+            }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "Market Survey of Long-Term Care Costs.",
+              "position": {
+                "start": {
+                  "line": 26,
+                  "column": 379,
+                  "offset": 2822
+                },
+                "end": {
+                  "line": 26,
+                  "column": 417,
+                  "offset": 2860
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 26,
+              "column": 378,
+              "offset": 2821
+            },
+            "end": {
+              "line": 26,
+              "column": 418,
+              "offset": 2861
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "{{{/ref}}}. Many communities also allow residents to receive hospice care at the end of their lives without having to leave their apartment. ",
+          "position": {
+            "start": {
+              "line": 26,
+              "column": 418,
+              "offset": 2861
+            },
+            "end": {
+              "line": 26,
+              "column": 559,
+              "offset": 3002
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 26,
+          "column": 1,
+          "offset": 2444
+        },
+        "end": {
+          "line": 26,
+          "column": 559,
+          "offset": 3002
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "With residents entering senior living at more advanced ages and with more health conditions, this shift towards expanding the scope of services may be inevitable. In many cases, assisted living communities are merely trying to better care for their patients. However, if you are a new resident entering a community, you should keep in mind that assisted living communities are not licensed nursing homes and as such assisted living communities are not subject to the same expansive regulations governing care and staffing. Prospective residents should be realistic about their health and physical condition and whether the level of care provided by a nursing home would be more appropriate for their situation. ",
+          "position": {
+            "start": {
+              "line": 28,
+              "column": 1,
+              "offset": 3004
+            },
+            "end": {
+              "line": 28,
+              "column": 712,
+              "offset": 3715
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 28,
+          "column": 1,
+          "offset": 3004
+        },
+        "end": {
+          "line": 28,
+          "column": 712,
+          "offset": 3715
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 4,
+      "children": [
+        {
+          "type": "text",
+          "value": "test orphan",
+          "position": {
+            "start": {
+              "line": 30,
+              "column": 6,
+              "offset": 3722
+            },
+            "end": {
+              "line": 30,
+              "column": 17,
+              "offset": 3733
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 30,
+          "column": 1,
+          "offset": 3717
+        },
+        "end": {
+          "line": 30,
+          "column": 17,
+          "offset": 3733
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "test-orphan"
+        },
+        "id": "test-orphan"
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Testing",
+          "position": {
+            "start": {
+              "line": 32,
+              "column": 5,
+              "offset": 3739
+            },
+            "end": {
+              "line": 32,
+              "column": 12,
+              "offset": 3746
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 32,
+          "column": 1,
+          "offset": 3735
+        },
+        "end": {
+          "line": 32,
+          "column": 12,
+          "offset": 3746
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "testing"
+        },
+        "id": "testing"
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Here is a test",
+          "position": {
+            "start": {
+              "line": 33,
+              "column": 1,
+              "offset": 3747
+            },
+            "end": {
+              "line": 33,
+              "column": 15,
+              "offset": 3761
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 33,
+          "column": 1,
+          "offset": 3747
+        },
+        "end": {
+          "line": 33,
+          "column": 15,
+          "offset": 3761
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 4,
+      "children": [
+        {
+          "type": "text",
+          "value": "Testing more",
+          "position": {
+            "start": {
+              "line": 35,
+              "column": 6,
+              "offset": 3768
+            },
+            "end": {
+              "line": 35,
+              "column": 18,
+              "offset": 3780
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 35,
+          "column": 1,
+          "offset": 3763
+        },
+        "end": {
+          "line": 35,
+          "column": 18,
+          "offset": 3780
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "testing-more"
+        },
+        "id": "testing-more"
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Costs and Paying for Assisted Living",
+          "position": {
+            "start": {
+              "line": 37,
+              "column": 4,
+              "offset": 3785
+            },
+            "end": {
+              "line": 37,
+              "column": 40,
+              "offset": 3821
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 37,
+          "column": 1,
+          "offset": 3782
+        },
+        "end": {
+          "line": 37,
+          "column": 40,
+          "offset": 3821
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "costs-and-paying-for-assisted-living"
+        },
+        "id": "costs-and-paying-for-assisted-living"
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "According to the National Center for Assisted Living, the average cost for assisted living is $4,000 per month{{{ref}}}https://www.ahcancal.org/ncal/facts/Pages/Finance.aspx{{{/ref}}}. This generally is the base rate for room and board and perhaps a canned package of additional services, such as meals. Residents requiring medication management, nursing and other healthcare and personal care to help them with activities of daily living will be charged additional fees. Some assisted living communities will charge the resident on an a la carte basis based on the services used. However, most communities assess the resident and then lump the resident into a tier of services and charge for that package. This tends to be more expensive as many residents will not need all of the services included in that package. In some cases where residents require extensive additional services, additional fees can be as much as $1,500 to $2,000 per month{{{ref}}}Slomovic, David (2017). ",
+          "position": {
+            "start": {
+              "line": 39,
+              "column": 1,
+              "offset": 3823
+            },
+            "end": {
+              "line": 39,
+              "column": 980,
+              "offset": 4802
+            }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "The Unicorn Project",
+              "position": {
+                "start": {
+                  "line": 39,
+                  "column": 981,
+                  "offset": 4803
+                },
+                "end": {
+                  "line": 39,
+                  "column": 1000,
+                  "offset": 4822
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 39,
+              "column": 980,
+              "offset": 4802
+            },
+            "end": {
+              "line": 39,
+              "column": 1001,
+              "offset": 4823
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", 67-68.{{{/ref}}}. The average stay in an assisted living community is 2.5 to 3 years{{{ref}}}Pratt, John R. ",
+          "position": {
+            "start": {
+              "line": 39,
+              "column": 1001,
+              "offset": 4823
+            },
+            "end": {
+              "line": 39,
+              "column": 1111,
+              "offset": 4933
+            }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "Long-Term Care – Managing Across the Continuum",
+              "position": {
+                "start": {
+                  "line": 39,
+                  "column": 1112,
+                  "offset": 4934
+                },
+                "end": {
+                  "line": 39,
+                  "column": 1158,
+                  "offset": 4980
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 39,
+              "column": 1111,
+              "offset": 4933
+            },
+            "end": {
+              "line": 39,
+              "column": 1159,
+              "offset": 4981
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " (4th Ed.) (2016). Jones & Bartlett Learning, 160.{{{/ref}}}, so while costs aren’t as high as nursing homes, total fees over the entire stay may exceed $150,000. ",
+          "position": {
+            "start": {
+              "line": 39,
+              "column": 1159,
+              "offset": 4981
+            },
+            "end": {
+              "line": 39,
+              "column": 1322,
+              "offset": 5144
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 39,
+          "column": 1,
+          "offset": 3823
+        },
+        "end": {
+          "line": 39,
+          "column": 1322,
+          "offset": 5144
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Like nursing home care, assisted living is rarely covered by insurance, in large part because most of the services provided are not medical in nature. Unfortunately, Medicare which is the insurance provider for most residents of assisted living, does not provide any coverage for assisted living. Most residents of assisted living communities have no choice but to private pay. For residents who run out of resources, Medicaid long-term care may be an option in many states, but you should confirm your state’s program offers this coverage. According to the National Center for Assisted Living, one in six assisted living community residents now rely on Medicaid long-term care to pay for their assisted living costs. If you anticipate this being an issue for you in the future, you may wish to confirm that any assisted living community you are considering accepts Medicaid and is located in a state which provides assisted living coverage through Medicaid.",
+          "position": {
+            "start": {
+              "line": 41,
+              "column": 1,
+              "offset": 5146
+            },
+            "end": {
+              "line": 41,
+              "column": 959,
+              "offset": 6104
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 41,
+          "column": 1,
+          "offset": 5146
+        },
+        "end": {
+          "line": 41,
+          "column": 959,
+          "offset": 6104
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Pros and Cons of Assisted Living",
+          "position": {
+            "start": {
+              "line": 43,
+              "column": 4,
+              "offset": 6109
+            },
+            "end": {
+              "line": 43,
+              "column": 36,
+              "offset": 6141
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 43,
+          "column": 1,
+          "offset": 6106
+        },
+        "end": {
+          "line": 43,
+          "column": 36,
+          "offset": 6141
+        }
+      },
+      "data": {
+        "hProperties": {
+          "id": "pros-and-cons-of-assisted-living"
+        },
+        "id": "pros-and-cons-of-assisted-living"
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Assisted living may be a great option for seniors who require moderate or even extensive personal care and healthcare services, but relatively minimal medical services. Assisted living tends to be more cost-effective than nursing homes and also allows its residents to enjoy a level of autonomy and independent that is not available in nursing homes. As mentioned in the beginning of this article, if you find yourself needing more services than independent living can offer but don’t need the vast medical services provided by nursing homes, assisted living may be right in the “goldilocks zone”. If you find that you require this level of services, you may also want to explore home healthcare options which provide a viable alternative for this level of care. ",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 1,
+              "offset": 6143
+            },
+            "end": {
+              "line": 45,
+              "column": 764,
+              "offset": 6906
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 45,
+          "column": 1,
+          "offset": 6143
+        },
+        "end": {
+          "line": 45,
+          "column": 764,
+          "offset": 6906
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "On the other hand, if you have a serious medical condition or require constant nursing oversight, assisted living is unlikely to be able to provide this level of services. Even if the community claims to offer this level of care, you should consider whether you would be better off in a nursing home. Assisted living communities simply were not intended to function like nursing homes, which are really more like medical facilities. Many assisted living communities are small and have minimal resources compared to nursing homes, lower staff to resident ratios than nursing homes and do not have registered nurses and physicians on staff. While these communities may be perfect for many healthier residents, not every community is right for every prospective resident. Fortunately, Elder Guide has created a great tool to help you navigate this complex process and identify the community that is right for you.",
+          "position": {
+            "start": {
+              "line": 47,
+              "column": 1,
+              "offset": 6908
+            },
+            "end": {
+              "line": 47,
+              "column": 911,
+              "offset": 7818
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 47,
+          "column": 1,
+          "offset": 6908
+        },
+        "end": {
+          "line": 47,
+          "column": 911,
+          "offset": 7818
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 48,
+      "column": 1,
+      "offset": 7819
+    }
+  }
+}

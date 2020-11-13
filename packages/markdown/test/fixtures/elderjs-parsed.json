@@ -1,0 +1,523 @@
+[
+  {
+    "text": "Getting Started",
+    "depth": 2,
+    "id": "getting-started",
+    "i": 0,
+    "children": [
+      {
+        "text": "Developing using the Template:",
+        "depth": 3,
+        "id": "developing-using-the-template",
+        "i": 1,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "To Build/Serve HTML:",
+        "depth": 3,
+        "id": "to-buildserve-html",
+        "i": 2,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Elder.js Intro Video:",
+        "depth": 3,
+        "id": "elderjs-intro-video",
+        "i": 3,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Why We Built Elder.js",
+        "depth": 3,
+        "id": "why-we-built-elderjs",
+        "i": 4,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Routes",
+    "depth": 2,
+    "id": "routes",
+    "i": 5,
+    "children": [
+      { "text": "Route.js", "depth": 3, "id": "routejs", "i": 6, "parent": true, "children": [] },
+      {
+        "text": "Why Routing Differs from Express-like Frameworks",
+        "depth": 3,
+        "id": "why-routing-differs-from-express-like-frameworks",
+        "i": 7,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Route.js Best Practices:",
+        "depth": 3,
+        "id": "routejs-best-practices",
+        "i": 8,
+        "parent": true,
+        "children": []
+      },
+      { "text": "all() Function Spec", "depth": 3, "id": "all-function-spec", "i": 9, "parent": true, "children": [] },
+      {
+        "text": "permalink() Function Spec",
+        "depth": 3,
+        "id": "permalink-function-spec",
+        "i": 10,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "data() Function Spec",
+        "depth": 3,
+        "id": "data-function-spec",
+        "i": 11,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Hooks",
+    "depth": 2,
+    "id": "hooks",
+    "i": 12,
+    "children": [
+      {
+        "text": "The Goal of Elder.js Hooks",
+        "depth": 3,
+        "id": "the-goal-of-elderjs-hooks",
+        "i": 13,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Hook Interface: the mutable and props Arrays",
+        "depth": 3,
+        "id": "hook-interface-the-mutable-and-props-arrays",
+        "i": 14,
+        "parent": true,
+        "children": []
+      },
+      { "text": "Hook Lifecycle", "depth": 3, "id": "hook-lifecycle", "i": 15, "parent": true, "children": [] },
+      {
+        "text": "Hook List",
+        "depth": 3,
+        "id": "hook-list",
+        "i": 16,
+        "parent": true,
+        "children": [
+          {
+            "text": "'customizeHooks'",
+            "depth": 4,
+            "id": "hook-customizeHooks",
+            "i": 17,
+            "parent": true,
+            "children": []
+          },
+          { "text": "'bootstrap'", "depth": 4, "id": "hook-bootstrap", "i": 18, "parent": true, "children": [] },
+          { "text": "'allRequests'", "depth": 4, "id": "hook-allRequests", "i": 19, "parent": true, "children": [] },
+          { "text": "'middleware'", "depth": 4, "id": "hook-middleware", "i": 20, "parent": true, "children": [] },
+          { "text": "'request'", "depth": 4, "id": "hook-request", "i": 21, "parent": true, "children": [] },
+          { "text": "'data'", "depth": 4, "id": "hook-data", "i": 22, "parent": true, "children": [] },
+          { "text": "'shortcodes'", "depth": 4, "id": "hook-shortcodes", "i": 23, "parent": true, "children": [] },
+          { "text": "'stacks'", "depth": 4, "id": "hook-stacks", "i": 24, "parent": true, "children": [] },
+          { "text": "'head'", "depth": 4, "id": "hook-head", "i": 25, "parent": true, "children": [] },
+          { "text": "'compileHtml'", "depth": 4, "id": "hook-compileHtml", "i": 26, "parent": true, "children": [] },
+          { "text": "'html'", "depth": 4, "id": "hook-html", "i": 27, "parent": true, "children": [] },
+          {
+            "text": "'requestComplete'",
+            "depth": 4,
+            "id": "hook-requestComplete",
+            "i": 28,
+            "parent": true,
+            "children": []
+          },
+          { "text": "'error'", "depth": 4, "id": "hook-error", "i": 29, "parent": true, "children": [] },
+          { "text": "'buildComplete'", "depth": 4, "id": "hook-buildComplete", "i": 30, "parent": true, "children": [] }
+        ]
+      },
+      {
+        "text": "Hook Example 1: bootstrap",
+        "depth": 3,
+        "id": "hook-example-1-bootstrap",
+        "i": 31,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Where to Organize Hooks",
+        "depth": 3,
+        "id": "where-to-organize-hooks",
+        "i": 32,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Plugins",
+    "depth": 2,
+    "id": "plugins",
+    "i": 33,
+    "children": [
+      { "text": "Official Plugins:", "depth": 3, "id": "official-plugins", "i": 34, "parent": true, "children": [] },
+      {
+        "text": "Other Plugin Ideas:",
+        "depth": 3,
+        "id": "other-plugin-ideas",
+        "i": 35,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Writing Your Own Plugin",
+        "depth": 3,
+        "id": "writing-your-own-plugin",
+        "i": 36,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Plugin Example 1: S3 Upload",
+        "depth": 3,
+        "id": "plugin-example-1-s3-upload",
+        "i": 37,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Svelte",
+    "depth": 2,
+    "id": "svelte",
+    "i": 38,
+    "children": [
+      { "text": "Partial Hydration", "depth": 3, "id": "partial-hydration", "i": 39, "parent": true, "children": [] },
+      {
+        "text": "Understanding Partial hydration",
+        "depth": 3,
+        "id": "understanding-partial-hydration",
+        "i": 40,
+        "parent": true,
+        "children": []
+      },
+      { "text": "Hydration Options:", "depth": 3, "id": "hydration-options", "i": 41, "parent": true, "children": [] },
+      {
+        "text": "How partial hydration works under the covers.",
+        "depth": 3,
+        "id": "how-partial-hydration-works-under-the-covers",
+        "i": 42,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Shortcodes",
+    "depth": 2,
+    "id": "shortcodes",
+    "i": 43,
+    "children": [
+      { "text": "Overview", "depth": 3, "id": "overview", "i": 44, "parent": true, "children": [] },
+      {
+        "text": "Use Cases For Shortcodes:",
+        "depth": 3,
+        "id": "use-cases-for-shortcodes",
+        "i": 45,
+        "parent": true,
+        "children": []
+      },
+      { "text": "Shortcode Spec:", "depth": 3, "id": "shortcode-spec", "i": 46, "parent": true, "children": [] },
+      {
+        "text": "Using Shortcodes from Within Svelte",
+        "depth": 3,
+        "id": "using-shortcodes-from-within-svelte",
+        "i": 47,
+        "parent": true,
+        "children": []
+      }
+    ]
+  },
+  {
+    "text": "Elder.js In Detail",
+    "depth": 2,
+    "id": "elderjs-in-detail",
+    "i": 48,
+    "children": [
+      {
+        "text": "Data Flow",
+        "depth": 3,
+        "id": "data-flow",
+        "i": 49,
+        "parent": true,
+        "children": [
+          {
+            "text": "1. Everything starts in a site's route.js files",
+            "depth": 4,
+            "id": "1-everything-starts-in-a-sites-routejs-files",
+            "i": 50,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "2. Elder.js Bootstrap Itself",
+            "depth": 4,
+            "id": "2-elderjs-bootstrap-itself",
+            "i": 51,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "3. The allRequests Hook is Run",
+            "depth": 4,
+            "id": "3-the-allrequests-hook-is-run",
+            "i": 52,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "4. Full 'request' Objects are Built",
+            "depth": 4,
+            "id": "4-full-request-objects-are-built",
+            "i": 53,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "5. Hooks are Executed Until the data function is Executed",
+            "depth": 4,
+            "id": "5-hooks-are-executed-until-the-data-function-is-executed",
+            "i": 54,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "6. The 'data' hook is Executed",
+            "depth": 4,
+            "id": "6-the-data-hook-is-executed",
+            "i": 55,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "7. The data Object is passed to the Svelte template",
+            "depth": 4,
+            "id": "7-the-data-object-is-passed-to-the-svelte-template",
+            "i": 56,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "8. The HTML returned by Blog.svelte is passed into Layout.svelte",
+            "depth": 4,
+            "id": "8-the-html-returned-by-blogsvelte-is-passed-into-layoutsvelte",
+            "i": 57,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "9. Page Generation Completes",
+            "depth": 4,
+            "id": "9-page-generation-completes",
+            "i": 58,
+            "parent": true,
+            "children": []
+          }
+        ]
+      },
+      {
+        "text": "Specifications and Config",
+        "depth": 3,
+        "id": "specifications-and-config",
+        "i": 59,
+        "parent": true,
+        "children": [
+          {
+            "text": "Config: elder.config.js",
+            "depth": 4,
+            "id": "config-elderconfigjs",
+            "i": 60,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Elder.js Expected file structure",
+            "depth": 4,
+            "id": "elderjs-expected-file-structure",
+            "i": 61,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Hook Specification",
+            "depth": 4,
+            "id": "hook-specification",
+            "i": 62,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Plugin Specification",
+            "depth": 4,
+            "id": "plugin-specification",
+            "i": 63,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Route Specification",
+            "depth": 4,
+            "id": "route-specification",
+            "i": 64,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Shortcode Specification",
+            "depth": 4,
+            "id": "shortcode-specification",
+            "i": 65,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Requirements for name and description fields",
+            "depth": 4,
+            "id": "requirements-for-name-and-description-fields",
+            "i": 66,
+            "parent": true,
+            "children": []
+          },
+          {
+            "text": "Stacks: Predictable String Concatenation",
+            "depth": 4,
+            "id": "stacks-predictable-string-concatenation",
+            "i": 67,
+            "parent": true,
+            "children": []
+          }
+        ]
+      },
+      { "text": "Automatic Behavior", "depth": 3, "id": "automatic-behavior", "i": 68, "parent": true, "children": [] },
+      { "text": "Default Helpers", "depth": 3, "id": "default-helpers", "i": 69, "parent": true, "children": [] },
+      {
+        "text": "Elder.js Exports:",
+        "depth": 3,
+        "id": "elderjs-exports",
+        "i": 70,
+        "parent": true,
+        "children": [
+          { "text": "server", "depth": 4, "id": "server", "i": 71, "parent": true, "children": [] },
+          { "text": "build", "depth": 4, "id": "build", "i": 72, "parent": true, "children": [] },
+          {
+            "text": "getRollupConfig",
+            "depth": 4,
+            "id": "getrollupconfig",
+            "i": 73,
+            "parent": true,
+            "children": [
+              { "text": "Replacements", "depth": 5, "id": "replacements", "i": 74, "parent": true, "children": [] }
+            ]
+          },
+          { "text": "getElderConfig", "depth": 4, "id": "getelderconfig", "i": 75, "parent": true, "children": [] }
+        ]
+      },
+      {
+        "text": "Using typescript/postcss/scss or other Preprocessors",
+        "depth": 3,
+        "id": "using-typescriptpostcssscss-or-other-preprocessors",
+        "i": 76,
+        "parent": true,
+        "children": [
+          {
+            "text": "Extra setup for typescript",
+            "depth": 4,
+            "id": "extra-setup-for-typescript",
+            "i": 77,
+            "parent": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "text": "FAQ",
+    "depth": 2,
+    "id": "faq",
+    "i": 78,
+    "children": [
+      {
+        "text": "How can I disable a hook?",
+        "depth": 3,
+        "id": "how-can-i-disable-a-hook",
+        "i": 79,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "How can I copy files to public?",
+        "depth": 3,
+        "id": "how-can-i-copy-files-to-public",
+        "i": 80,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Why can't I use Svelte templates for data fetching/manipulation?",
+        "depth": 3,
+        "id": "why-cant-i-use-svelte-templates-for-data-fetchingmanipulation",
+        "i": 81,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "How Does Elder.js Differ From Sapper?",
+        "depth": 3,
+        "id": "how-does-elderjs-differ-from-sapper",
+        "i": 82,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Adding Database Access",
+        "depth": 3,
+        "id": "adding-database-access",
+        "i": 83,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Customizing the HTML 'shell'",
+        "depth": 3,
+        "id": "customizing-the-html-shell",
+        "i": 84,
+        "parent": true,
+        "children": []
+      },
+      {
+        "text": "Upgrading to v1.0.0:",
+        "depth": 3,
+        "id": "upgrading-to-v100",
+        "i": 85,
+        "parent": true,
+        "children": [
+          {
+            "text": "File / Hook Changes:",
+            "depth": 4,
+            "id": "file--hook-changes",
+            "i": 86,
+            "parent": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

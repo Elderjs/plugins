@@ -1,0 +1,437 @@
+[
+  {
+    "text": "Getting Started",
+    "depth": 2,
+    "id": "getting-started"
+  },
+  {
+    "text": "Developing using the Template:",
+    "depth": 3,
+    "id": "developing-using-the-template"
+  },
+  {
+    "text": "To Build/Serve HTML:",
+    "depth": 3,
+    "id": "to-buildserve-html"
+  },
+  {
+    "text": "Elder.js Intro Video:",
+    "depth": 3,
+    "id": "elderjs-intro-video"
+  },
+  {
+    "text": "Why We Built Elder.js",
+    "depth": 3,
+    "id": "why-we-built-elderjs"
+  },
+  {
+    "text": "Routes",
+    "depth": 2,
+    "id": "routes"
+  },
+  {
+    "text": "Route.js",
+    "depth": 3,
+    "id": "routejs"
+  },
+  {
+    "text": "Why Routing Differs from Express-like Frameworks",
+    "depth": 3,
+    "id": "why-routing-differs-from-express-like-frameworks"
+  },
+  {
+    "text": "Route.js Best Practices:",
+    "depth": 3,
+    "id": "routejs-best-practices"
+  },
+  {
+    "text": "all() Function Spec",
+    "depth": 3,
+    "id": "all-function-spec"
+  },
+  {
+    "text": "permalink() Function Spec",
+    "depth": 3,
+    "id": "permalink-function-spec"
+  },
+  {
+    "text": "data() Function Spec",
+    "depth": 3,
+    "id": "data-function-spec"
+  },
+  {
+    "text": "Hooks",
+    "depth": 2,
+    "id": "hooks"
+  },
+  {
+    "text": "The Goal of Elder.js Hooks",
+    "depth": 3,
+    "id": "the-goal-of-elderjs-hooks"
+  },
+  {
+    "text": "Hook Interface: the mutable and props Arrays",
+    "depth": 3,
+    "id": "hook-interface-the-mutable-and-props-arrays"
+  },
+  {
+    "text": "Hook Lifecycle",
+    "depth": 3,
+    "id": "hook-lifecycle"
+  },
+  {
+    "text": "Hook List",
+    "depth": 3,
+    "id": "hook-list"
+  },
+  {
+    "text": "'customizeHooks'",
+    "depth": 4,
+    "id": "hook-customizeHooks"
+  },
+  {
+    "text": "'bootstrap'",
+    "depth": 4,
+    "id": "hook-bootstrap"
+  },
+  {
+    "text": "'allRequests'",
+    "depth": 4,
+    "id": "hook-allRequests"
+  },
+  {
+    "text": "'middleware'",
+    "depth": 4,
+    "id": "hook-middleware"
+  },
+  {
+    "text": "'request'",
+    "depth": 4,
+    "id": "hook-request"
+  },
+  {
+    "text": "'data'",
+    "depth": 4,
+    "id": "hook-data"
+  },
+  {
+    "text": "'shortcodes'",
+    "depth": 4,
+    "id": "hook-shortcodes"
+  },
+  {
+    "text": "'stacks'",
+    "depth": 4,
+    "id": "hook-stacks"
+  },
+  {
+    "text": "'head'",
+    "depth": 4,
+    "id": "hook-head"
+  },
+  {
+    "text": "'compileHtml'",
+    "depth": 4,
+    "id": "hook-compileHtml"
+  },
+  {
+    "text": "'html'",
+    "depth": 4,
+    "id": "hook-html"
+  },
+  {
+    "text": "'requestComplete'",
+    "depth": 4,
+    "id": "hook-requestComplete"
+  },
+  {
+    "text": "'error'",
+    "depth": 4,
+    "id": "hook-error"
+  },
+  {
+    "text": "'buildComplete'",
+    "depth": 4,
+    "id": "hook-buildComplete"
+  },
+  {
+    "text": "Hook Example 1: bootstrap",
+    "depth": 3,
+    "id": "hook-example-1-bootstrap"
+  },
+  {
+    "text": "Where to Organize Hooks",
+    "depth": 3,
+    "id": "where-to-organize-hooks"
+  },
+  {
+    "text": "Plugins",
+    "depth": 2,
+    "id": "plugins"
+  },
+  {
+    "text": "Official Plugins:",
+    "depth": 3,
+    "id": "official-plugins"
+  },
+  {
+    "text": "Other Plugin Ideas:",
+    "depth": 3,
+    "id": "other-plugin-ideas"
+  },
+  {
+    "text": "Writing Your Own Plugin",
+    "depth": 3,
+    "id": "writing-your-own-plugin"
+  },
+  {
+    "text": "Plugin Example 1: S3 Upload",
+    "depth": 3,
+    "id": "plugin-example-1-s3-upload"
+  },
+  {
+    "text": "Svelte",
+    "depth": 2,
+    "id": "svelte"
+  },
+  {
+    "text": "Partial Hydration",
+    "depth": 3,
+    "id": "partial-hydration"
+  },
+  {
+    "text": "Understanding Partial hydration",
+    "depth": 3,
+    "id": "understanding-partial-hydration"
+  },
+  {
+    "text": "Hydration Options:",
+    "depth": 3,
+    "id": "hydration-options"
+  },
+  {
+    "text": "How partial hydration works under the covers.",
+    "depth": 3,
+    "id": "how-partial-hydration-works-under-the-covers"
+  },
+  {
+    "text": "Shortcodes",
+    "depth": 2,
+    "id": "shortcodes"
+  },
+  {
+    "text": "Overview",
+    "depth": 3,
+    "id": "overview"
+  },
+  {
+    "text": "Use Cases For Shortcodes:",
+    "depth": 3,
+    "id": "use-cases-for-shortcodes"
+  },
+  {
+    "text": "Shortcode Spec:",
+    "depth": 3,
+    "id": "shortcode-spec"
+  },
+  {
+    "text": "Using Shortcodes from Within Svelte",
+    "depth": 3,
+    "id": "using-shortcodes-from-within-svelte"
+  },
+  {
+    "text": "Elder.js In Detail",
+    "depth": 2,
+    "id": "elderjs-in-detail"
+  },
+  {
+    "text": "Data Flow",
+    "depth": 3,
+    "id": "data-flow"
+  },
+  {
+    "text": "1. Everything starts in a site's route.js files",
+    "depth": 4,
+    "id": "1-everything-starts-in-a-sites-routejs-files"
+  },
+  {
+    "text": "2. Elder.js Bootstrap Itself",
+    "depth": 4,
+    "id": "2-elderjs-bootstrap-itself"
+  },
+  {
+    "text": "3. The allRequests Hook is Run",
+    "depth": 4,
+    "id": "3-the-allrequests-hook-is-run"
+  },
+  {
+    "text": "4. Full 'request' Objects are Built",
+    "depth": 4,
+    "id": "4-full-request-objects-are-built"
+  },
+  {
+    "text": "5. Hooks are Executed Until the data function is Executed",
+    "depth": 4,
+    "id": "5-hooks-are-executed-until-the-data-function-is-executed"
+  },
+  {
+    "text": "6. The 'data' hook is Executed",
+    "depth": 4,
+    "id": "6-the-data-hook-is-executed"
+  },
+  {
+    "text": "7. The data Object is passed to the Svelte template",
+    "depth": 4,
+    "id": "7-the-data-object-is-passed-to-the-svelte-template"
+  },
+  {
+    "text": "8. The HTML returned by Blog.svelte is passed into Layout.svelte",
+    "depth": 4,
+    "id": "8-the-html-returned-by-blogsvelte-is-passed-into-layoutsvelte"
+  },
+  {
+    "text": "9. Page Generation Completes",
+    "depth": 4,
+    "id": "9-page-generation-completes"
+  },
+  {
+    "text": "Specifications and Config",
+    "depth": 3,
+    "id": "specifications-and-config"
+  },
+  {
+    "text": "Config: elder.config.js",
+    "depth": 4,
+    "id": "config-elderconfigjs"
+  },
+  {
+    "text": "Elder.js Expected file structure",
+    "depth": 4,
+    "id": "elderjs-expected-file-structure"
+  },
+  {
+    "text": "Hook Specification",
+    "depth": 4,
+    "id": "hook-specification"
+  },
+  {
+    "text": "Plugin Specification",
+    "depth": 4,
+    "id": "plugin-specification"
+  },
+  {
+    "text": "Route Specification",
+    "depth": 4,
+    "id": "route-specification"
+  },
+  {
+    "text": "Shortcode Specification",
+    "depth": 4,
+    "id": "shortcode-specification"
+  },
+  {
+    "text": "Requirements for name and description fields",
+    "depth": 4,
+    "id": "requirements-for-name-and-description-fields"
+  },
+  {
+    "text": "Stacks: Predictable String Concatenation",
+    "depth": 4,
+    "id": "stacks-predictable-string-concatenation"
+  },
+  {
+    "text": "Automatic Behavior",
+    "depth": 3,
+    "id": "automatic-behavior"
+  },
+  {
+    "text": "Default Helpers",
+    "depth": 3,
+    "id": "default-helpers"
+  },
+  {
+    "text": "Elder.js Exports:",
+    "depth": 3,
+    "id": "elderjs-exports"
+  },
+  {
+    "text": "server",
+    "depth": 4,
+    "id": "server"
+  },
+  {
+    "text": "build",
+    "depth": 4,
+    "id": "build"
+  },
+  {
+    "text": "getRollupConfig",
+    "depth": 4,
+    "id": "getrollupconfig"
+  },
+  {
+    "text": "Replacements",
+    "depth": 5,
+    "id": "replacements"
+  },
+  {
+    "text": "getElderConfig",
+    "depth": 4,
+    "id": "getelderconfig"
+  },
+  {
+    "text": "Using typescript/postcss/scss or other Preprocessors",
+    "depth": 3,
+    "id": "using-typescriptpostcssscss-or-other-preprocessors"
+  },
+  {
+    "text": "Extra setup for typescript",
+    "depth": 4,
+    "id": "extra-setup-for-typescript"
+  },
+  {
+    "text": "FAQ",
+    "depth": 2,
+    "id": "faq"
+  },
+  {
+    "text": "How can I disable a hook?",
+    "depth": 3,
+    "id": "how-can-i-disable-a-hook"
+  },
+  {
+    "text": "How can I copy files to public?",
+    "depth": 3,
+    "id": "how-can-i-copy-files-to-public"
+  },
+  {
+    "text": "Why can't I use Svelte templates for data fetching/manipulation?",
+    "depth": 3,
+    "id": "why-cant-i-use-svelte-templates-for-data-fetchingmanipulation"
+  },
+  {
+    "text": "How Does Elder.js Differ From Sapper?",
+    "depth": 3,
+    "id": "how-does-elderjs-differ-from-sapper"
+  },
+  {
+    "text": "Adding Database Access",
+    "depth": 3,
+    "id": "adding-database-access"
+  },
+  {
+    "text": "Customizing the HTML 'shell'",
+    "depth": 3,
+    "id": "customizing-the-html-shell"
+  },
+  {
+    "text": "Upgrading to v1.0.0:",
+    "depth": 3,
+    "id": "upgrading-to-v100"
+  },
+  {
+    "text": "File / Hook Changes:",
+    "depth": 4,
+    "id": "file--hook-changes"
+  }
+]

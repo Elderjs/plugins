@@ -1,3 +1,12 @@
+## [0.1.18](https://github.com/Elderjs/plugins/compare/v0.1.17...v0.1.18) (2020-11-13)
+
+
+### Features
+
+* 🎸 major rework of table of contents generation ([49d898b](https://github.com/Elderjs/plugins/commit/49d898bd8838d48dd76297c6c183a3b2d4881817))
+
+
+
 ## [0.1.17](https://github.com/Elderjs/plugins/compare/v0.1.16...v0.1.17) (2020-11-10)
 
 

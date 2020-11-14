@@ -20,7 +20,7 @@ const imageStore = (manifest, plugin) => {
         //todo title
 
         const { sizes, srcsets } = getSrcsets(maxWidth, file.sizes);
-        const sources = getSources(sizes, srcsets);
+        const sources = getSources(sizes, srcsets, opts.sizes);
 
         let picture = `<picture class="${classStr ? ` ${classStr}` : ''}">`;
 

@@ -9,7 +9,7 @@ function getSrcsets(maxWidth, fileSizes) {
       let thisSrcSet = out[cv.format][cv.width] || '';
       // let thisSrcSet = '';
       if (cv.scale === 1) thisSrcSet = `${cv.relative}${thisSrcSet}`;
-      if (cv.scale === 2 && thisSrcSet.length) thisSrcSet = `${thisSrcSet}, ${cv.relative} 2x`;
+      //if (cv.scale === 2 && thisSrcSet.length) thisSrcSet = `${thisSrcSet}, ${cv.relative} 2x`;
       out[cv.format][cv.width] = thisSrcSet;
       return out;
     },
@@ -25,28 +25,31 @@ function getSrcsets(maxWidth, fileSizes) {
   };
 }
 
-function getSources(sizes, srcsets) {
+function getSources(sizes, srcsets, srcSizes) {
   const sources = {
     webp: [],
     jpeg: [],
     png: [],
   };
 
-  sizes.forEach((size, i, arr) => {
-    Object.keys(srcsets).forEach((type) => {
-      if (!srcsets[type][size]) return;
-      let source = `<source `;
-      if (type === 'webp') source += `type="image/webp" `;
-      if (type === 'png') source += `type="image/png" `;
-      source += `data-srcset="${srcsets[type][size]}" `;
+  Object.entries(srcsets).forEach((srcset) => {
+    let type = srcset[0];
+    let items = srcset[1];
 
-      if (i + 1 < arr.length) {
-        source += `media="(min-width: ${size}px)" `;
-      }
-      source += `/>`;
+    if (Object.keys(items).length === 0) return; 
 
-      sources[type].push(source);
+    let source = `<source `;
+    if (type === 'webp') source += `type="image/webp" `;
+    if (type === 'png') source += `type="image/png" `;
+    source += `data-srcset="`;
+    Object.entries(items).forEach((item) => {
+      source += `${item[1]} ${item[0]}w, `; // ☝ image src with width w descriptor
     });
+    source = source.replace(/,\s*$/, "");
+    source += `" data-sizes="${srcSizes ? srcSizes : '100vw'}" `; // ☝ sizes attribute must be set if w descriptors are used
+    source += `>`;
+
+    sources[type] = [source];
   });
 
   return sources;

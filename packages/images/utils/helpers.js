@@ -41,7 +41,8 @@ function getSources(sizes, srcsets) {
       source += `data-srcset="${srcsets[type][size]}" `;
 
       if (i + 1 < arr.length) {
-        source += `media="(min-width: ${size}px)" `;
+        // sizes is sorted descending in getSrcsets
+        source += `media="(min-width: ${sizes[i + 1]}px)" `;
       }
       source += `/>`;
 

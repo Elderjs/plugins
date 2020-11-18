@@ -21,7 +21,7 @@ This plugin aims to simplify this and will take folder of non-responsive images 
 
 So where you would usually have a non-responsive image of: `/images/wide.jpeg`
 
-You can now use an Elder.js shortcode `{{picture src='/images/wide.jpeg' /}}` which will output:
+You can now use an Elder.js shortcode `{{picture src='/images/wide.jpeg' /}}` which will output (something like):
 
 ```html
 <picture
@@ -59,11 +59,11 @@ You can now use an Elder.js shortcode `{{picture src='/images/wide.jpeg' /}}` wh
 
 In addition to the `{{picture src='' alt='' /}}` shortcode. This plugin adds the following to the `helper` object available in all Elder.js hooks after bootstrap:
 
-### `helpers.src(path)`
+### `helpers.images.src(path)`
 
 Takes a relative path of the image and returns all the srcsets and data from the `ejs-image-manifest.json`.
 
-### `helpers.picture(path, {maxWidth: 2000, class:'', alt: ''})`
+### `helpers.images.picture(path, {maxWidth: 2000, class:'', alt: ''})`
 
 Takes a `path` and `opts` object and outputs the `<picture>` tag similar to the shortcode.
 
@@ -73,7 +73,7 @@ Takes a `path` and `opts` object and outputs the `<picture>` tag similar to the 
 - `class` a class added to the `<picture>`
 - `alt` alt tag added to the `<img>`.
 
-### `helpers.largest(path, {maxWidth: 2000})`
+### `helpers.images.largest(path, {maxWidth: 2000})`
 
 A small utility to find the largest file (up to the maxWidth) for a given image.
 

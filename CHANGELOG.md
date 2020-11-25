@@ -1,3 +1,12 @@
+## [0.1.20](https://github.com/Elderjs/plugins/compare/v0.1.19...v0.1.20) (2020-11-25)
+
+
+### Features
+
+* 🎸 detect elderjs css ([8f36452](https://github.com/Elderjs/plugins/commit/8f36452f1fb85bff57600ddd633062c601f5949e))
+
+
+
 ## [0.1.19](https://github.com/Elderjs/plugins/compare/v0.1.18...v0.1.19) (2020-11-18)
 
 

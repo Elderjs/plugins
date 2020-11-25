@@ -61,23 +61,24 @@ const plugin = {
             }
           }
         } else {
-          plugin.config.rebuild = false;
-          console.log(
-            `elder-plugin-critical-path-css.config.cssFile in your elder.config.js should be a path to all of the css on your site relative to the root of your project.`,
-          );
-        }
-      } else {
-        const cssLocation = path.resolve(plugin.settings.rootDir, plugin.config.cssFile);
-        if (fs.existsSync(cssLocation)) {
-          plugin.internal.cssLocations.push(cssLocation);
-        } else {
-          console.log(`elder-plugin-critical-path-css could not find your css at ${cssLocation}.`);
-          plugin.config.rebuilding = false;
+          const cssLocation = path.resolve(plugin.settings.rootDir, plugin.config.cssFile);
+          if (fs.existsSync(cssLocation)) {
+            plugin.internal.cssLocations.push(cssLocation);
+          } else {
+            console.log(`elder-plugin-critical-path-css could not find your css at ${cssLocation}.`);
+            plugin.config.rebuilding = false;
+          }
         }
       }
 
       if (plugin.config.rebuild === true && plugin.settings.build) {
         plugin.config.rebuilding = true;
+        if (plugin.settings && plugin.settings.$$internal && plugin.settings.$$internal.publicCssFile) {
+          const elderJsCss = path.resolve(plugin.settings.distDir, `.${plugin.settings.$$internal.publicCssFile}`);
+          if (fs.existsSync(elderJsCss)) {
+            plugin.internal.cssLocations.push(elderJsCss);
+          }
+        }
       }
 
       if (plugin.config.rebuilding) {
@@ -244,7 +245,7 @@ const plugin = {
       priority: 100, // we want it to be last so we don't kill early.
       run: async ({ plugin }) => {
         if (plugin.config.rebuilding === true && !plugin.internal.disable) {
-          process.exit(0);
+          // process.exit(0);
         }
       },
     },
@@ -270,7 +271,7 @@ const plugin = {
         },
       ],
     },
-    cssFile: './src/assets/style.css',
+    cssFile: undefined,
   },
 };
 

@@ -193,7 +193,7 @@ const plugin = {
           }
 
           plugin.internal.counts = requestsForCritical.reduce((out, cv) => {
-            if (!{}.hasOwnProperty.call(out, cv)) out[cv.route] = 0;
+            if (!{}.hasOwnProperty.call(out, cv.route)) out[cv.route] = 0;
             out[cv.route] += 1;
             return out;
           }, {});

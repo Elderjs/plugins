@@ -1,3 +1,12 @@
+## [0.1.21](https://github.com/Elderjs/plugins/compare/v0.1.20...v0.1.21) (2020-12-23)
+
+
+### Bug Fixes
+
+* 🐛 fix issue where critical path wasn't built for all req ([ded1aac](https://github.com/Elderjs/plugins/commit/ded1aacfca0d0ab64b53afb8f24aba842d52bdb8))
+
+
+
 ## [0.1.20](https://github.com/Elderjs/plugins/compare/v0.1.19...v0.1.20) (2020-11-25)
 
 

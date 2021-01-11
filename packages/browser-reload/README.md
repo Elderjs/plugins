@@ -30,6 +30,7 @@ Below are the default settings of the plugin. You can adjust them to your needs.
 plugins: {
 
   '@elderjs/plugin-browser-reload': {
+    origin: 'http://localhost',
     port: 8080, // the port the websocket server should run on.
     delay: 200, // the delay in ms the browser should wait after the server disappears.
     preventReloadQS: 'noreload', // if 'noreload' is in the query string it won't reload that page. Good for CSS editing in the browser.

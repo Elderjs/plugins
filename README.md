@@ -14,6 +14,8 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 - [References](https://github.com/Elderjs/plugins/tree/master/packages/references) Easily add wikipedia style references to your content.
 
 ## Other Plugins:
+- [i18n](https://github.com/kiuKisas/elderjs-plugin-i18n) Easily add internationalization to your Elder.js website.
+**NOTE:** This plugin require at least Elder.js v1.2.5.
 
 - Have you written a plugin? If so, let us know we'd love to include it here.
 

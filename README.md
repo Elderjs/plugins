@@ -17,7 +17,6 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 - [i18n](https://github.com/kiuKisas/elderjs-plugin-i18n) Easily add internationalization to your Elder.js website.
 **NOTE:** This plugin require at least Elder.js v1.2.5.
 
-- [elderjs-plugin-wp](https://www.npmjs.com/package/elderjs-plugin-wp): This plugin provides an easy wordpress integration for Elder.js using the WP-API npm package.
 - [elderjs-plugin-google-fonts](https://github.com/kevmodrome/elderjs-plugin-google-fonts): This plugin fetches fonts from google fonts, generates font-face definitions and inlines those in the head tag.
 
 - Have you written a plugin? If so, let us know we'd love to include it here.

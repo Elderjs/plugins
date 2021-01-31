@@ -38,7 +38,7 @@ plugins: {
     routes: [], // a list of routes, the plugin should look for markdown in.
     remarkPlugins: [
       frontmatter, // 'remark-frontmatter' package
-      [extractFrontmatter, { name: 'frontmatter', yaml: yaml }], // 'remark-extract-frontmatter' and 'yaml' packages.
+      [extractFrontmatter, { name: 'frontmatter', yaml: yaml.parse }], // 'remark-extract-frontmatter' and 'yaml' packages.
       remarkSlug, // 'remark-slug' package
       remarkHtml, // 'remark-html' package
     ],
@@ -77,7 +77,7 @@ If you need to customize the remark plugins that are used here are some notes:
 
 1. The `remarkPlugins` array are added to `remark` in the order they are given.
 1. If you add a single plugin in your `elder.config.js`, you must specify a full `remark` pipeline.
-1. If a plugin such as `remark-extract-frontmatter` needs an array of options, you can pass in an array like so: `remarkPlugins: [[extractFrontmatter, { name: 'frontmatter', yaml: yaml }]]`
+1. If a plugin such as `remark-extract-frontmatter` needs an array of options, you can pass in an array like so: `remarkPlugins: [[extractFrontmatter, { name: 'frontmatter', yaml: yaml.parse }]]`
 
 ### Notes:
 

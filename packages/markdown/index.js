@@ -122,6 +122,7 @@ const plugin = {
     useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker.
     //theme is the only option available - for now.
     useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
+    createRoutes: true, // creates routes in allRequests based on collected md files.
   },
   shortcodes: [],
   hooks: [
@@ -160,7 +161,7 @@ const plugin = {
       description: 'Add collected md files to allRequests array using the frontmatter slug or filename as the slug.',
       priority: 50, // default
       run: async ({ allRequests, plugin }) => {
-        if (plugin.config.routes.length > 0) {
+        if (plugin.config.routes.length > 0 && plugin.config.createRoutes) {
           return {
             allRequests: [...allRequests, ...plugin.requests],
           };

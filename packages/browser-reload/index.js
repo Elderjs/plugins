@@ -51,8 +51,12 @@ const plugin = {
           }
 
           async function checkServer(tryCount = 0){
-            var up = await fetch('${plugin.origin}:${plugin.serverPort}');
-            if(up.ok) return true;
+            try {
+              var up = await fetch('${plugin.origin}:${plugin.serverPort}');
+              if(up.ok) return true;
+            } catch(e) {
+              // do nothing
+            }
             if(tryCount > ${plugin.config.retryCount}){
               return false;
             }

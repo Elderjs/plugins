@@ -10,9 +10,9 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.1.0",
-    "lerna": "^3.22.1",
+    "lerna": "^4.0.0",
     "prettier": "^2.0.5",
-    "shipjs": "0.20.1"
+    "shipjs": "^0.23.2"
   },
   "scripts": {
     "release": "shipjs prepare"

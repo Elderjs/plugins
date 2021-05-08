@@ -50,6 +50,7 @@ plugins: {
     },
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.
     useTableOfContents: false, // adds tocTree to each route's data object.
+    createRoutes: true, // creates routes in allRequests based on collected md files.
   },
 
 }

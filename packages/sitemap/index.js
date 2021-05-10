@@ -59,7 +59,7 @@ const plugin = {
       name: 'addAllRequestsToPlugin',
       description: 'Generates a sitemap on build.',
       priority: 1, // we want it to be last.
-      run: async ({ allRequests, plugin, settings, routes, query }) => {
+      run: async ({ allRequests, plugin, helpers, settings, routes, query }) => {
         if (settings.build && !settings.worker) {
           if (plugin.internal.ready) {
             const customPriority =
@@ -129,7 +129,7 @@ const plugin = {
               includedRequests[indexFileName] = [];
 
               routeRequests.forEach((request) => {
-                const permalink = routes[route].permalink({ request, settings });
+                const permalink = routes[route].permalink({helpers, request, settings });
 
                 const exclude = plugin.config.exclude.find(
                   (e) => permalink.startsWith(`/${e}`) || permalink.startsWith(`${e}`),
@@ -148,7 +148,7 @@ const plugin = {
 
                 let xml = SITEMAP_HEADER;
                 routeRequests.forEach((request) => {
-                  const permalink = routes[request.route].permalink({ request, settings });
+                  const permalink = routes[request.route].permalink({helpers, request, settings });
 
                   xml += `<url><loc>${plugin.config.origin}${permalink.replace(/&/g, '&amp;')}</loc><lastmod>${formatDate(
                     request.lastUpdate,

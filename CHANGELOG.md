@@ -1,3 +1,12 @@
+## [0.1.24](https://github.com/Elderjs/plugins/compare/v0.1.23...v0.1.24) (2021-05-10)
+
+
+### Bug Fixes
+
+* sitemap: permalink with helpers ([48c3584](https://github.com/Elderjs/plugins/commit/48c35846e51a575e63ecedc9a2077b4b71fa3421))
+
+
+
 ## [0.1.23](https://github.com/Elderjs/plugins/compare/v0.1.22...v0.1.23) (2021-05-06)
 
 

@@ -1,3 +1,12 @@
+## [0.1.27](https://github.com/Elderjs/plugins/compare/v0.1.26...v0.1.27) (2021-05-11)
+
+
+### Bug Fixes
+
+* 🐛 include prefix in browser reload when present ([7df21ab](https://github.com/Elderjs/plugins/commit/7df21ab68ce79892b12d458444982dc3b31060ac))
+
+
+
 ## [0.1.26](https://github.com/Elderjs/plugins/compare/v0.1.25...v0.1.26) (2021-05-11)
 
 

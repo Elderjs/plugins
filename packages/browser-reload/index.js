@@ -10,6 +10,12 @@ const plugin = {
     plugin.run = !plugin.settings.build && notProd;
     plugin.origin = plugin.settings.origin.includes('://') ? plugin.settings.origin : 'http://localhost';
 
+    plugin.path = plugin.settings.prefix;
+
+    if (plugin.path) {
+      console.log('> Elder.js Auto Reload Plugin auto reloading path:', plugin.settings.prefix);
+    }
+
     plugin.serverPort = process.env.SERVER_PORT || 3000;
 
     if (plugin.run) {
@@ -52,7 +58,7 @@ const plugin = {
 
           async function checkServer(tryCount = 0){
             try {
-              var up = await fetch('${plugin.origin}:${plugin.serverPort}');
+              var up = await fetch('${plugin.origin}:${plugin.serverPort}${plugin.path}');
               if(up.ok) return true;
             } catch(e) {
               // do nothing

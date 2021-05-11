@@ -14,8 +14,9 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 - [References](https://github.com/Elderjs/plugins/tree/master/packages/references) Easily add wikipedia style references to your content.
 
 ## Other Plugins:
+
 - [i18n](https://github.com/kiuKisas/elderjs-plugin-i18n) Easily add internationalization to your Elder.js website.
-**NOTE:** This plugin require at least Elder.js v1.2.5.
+  **NOTE:** This plugin require at least Elder.js v1.2.5.
 
 - [elderjs-plugin-google-fonts](https://github.com/kevmodrome/elderjs-plugin-google-fonts): This plugin fetches fonts from google fonts, generates font-face definitions and inlines those in the head tag.
 
@@ -32,4 +33,4 @@ cd elderjs-plugin
 
 ## Adding Your Plugin:
 
-If you've got a plugin you'd like to see on this page, please create a pull request updating this readme.
+If you've got a plugin you'd like to see on this page, please create a pull request updating this readme. Thanks!

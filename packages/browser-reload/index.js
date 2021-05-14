@@ -5,15 +5,17 @@ const plugin = {
   init: (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
 
+    console.log(plugin);
+
     const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
     plugin.run = !plugin.settings.build && notProd;
     plugin.origin = plugin.settings.origin.includes('://') ? plugin.settings.origin : 'http://localhost';
 
-    plugin.path = plugin.settings.prefix;
+    plugin.prefix = plugin.settings.prefix;
 
-    if (plugin.path) {
-      console.log('> Elder.js Auto Reload Plugin auto reloading path:', plugin.settings.prefix);
+    if (plugin.prefix) {
+      console.log('> Elder.js Auto Reload Plugin auto reloading prefix:', plugin.settings.prefix);
     }
 
     plugin.serverPort = process.env.SERVER_PORT || 3000;
@@ -35,6 +37,7 @@ const plugin = {
     delay: 600,
     preventReloadQS: 'noreload',
     retryCount: 300,
+    reload: true, // whether a hard reload should be done in the browser. If false it will fetch and replace the document with the fetched document.
   },
   hooks: [
     {
@@ -58,8 +61,17 @@ const plugin = {
 
           async function checkServer(tryCount = 0){
             try {
-              var up = await fetch('${plugin.origin}:${plugin.serverPort}${plugin.path}');
-              if(up.ok) return true;
+              var up = await fetch('${plugin.origin}:${plugin.serverPort}' + document.location.pathname);
+              if(up.ok) {
+                if(${!plugin.config.reload}){
+                  const text = await up.text();
+                  let parser = new DOMParser();
+                  const doc = parser.parseFromString(text, 'text/html');
+                  document.replaceChild( doc.documentElement, document.documentElement );
+                  console.log('replaced');
+                }
+                return true;
+              }
             } catch(e) {
               // do nothing
             }
@@ -78,12 +90,15 @@ const plugin = {
               var socket = io('${plugin.origin}:${plugin.config.port}');
               socket.on('connect', async function() {
                 if (disconnected) {
-                  console.log('reloading');
+
 
                   const serverUp = await checkServer();
                   if(serverUp){
-                    window.location.reload();
                     disconnected = false;
+                    if(${plugin.config.reload}){
+                      console.log('reloaded')
+                      window.location.reload();
+                    }
                   } else {
                     console.error('Reloading failed after ${plugin.config.retryCount} retries to connect.')
                   }

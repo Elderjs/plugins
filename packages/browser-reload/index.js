@@ -8,7 +8,6 @@ const plugin = {
 
     plugin.run = !plugin.settings.build && notProd;
     plugin.origin = plugin.settings.origin.includes('://') ? plugin.settings.origin : 'http://localhost';
-
     plugin.prefix = plugin.settings.prefix;
 
     if (plugin.prefix) {

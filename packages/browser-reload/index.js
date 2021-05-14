@@ -4,7 +4,6 @@ const plugin = {
     'Polls a websocket to make sure a server is up. If it is down, it keeps polling and restarts once the websocket is back up. Basically reloads the webpage automatically. ',
   init: (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
-
     const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
     plugin.run = !plugin.settings.build && notProd;

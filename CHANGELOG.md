@@ -1,3 +1,12 @@
+## [0.1.28](https://github.com/Elderjs/plugins/compare/v0.1.27...v0.1.28) (2021-05-14)
+
+
+### Features
+
+* 🎸 allow for fetching and replacing document ([74e02bd](https://github.com/Elderjs/plugins/commit/74e02bd125799238d04a33584454fbe540baf8d3))
+
+
+
 ## [0.1.27](https://github.com/Elderjs/plugins/compare/v0.1.26...v0.1.27) (2021-05-11)
 
 

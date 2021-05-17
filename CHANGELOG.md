@@ -1,3 +1,12 @@
+## [0.1.31](https://github.com/Elderjs/plugins/compare/v0.1.30...v0.1.31) (2021-05-17)
+
+
+### Features
+
+* 🎸 SEO check alpha ([354cb8d](https://github.com/Elderjs/plugins/commit/354cb8dbb2eb342a7b352390797b256190b2dd65))
+
+
+
 ## [0.1.30](https://github.com/Elderjs/plugins/compare/v0.1.29...v0.1.30) (2021-05-17)
 
 

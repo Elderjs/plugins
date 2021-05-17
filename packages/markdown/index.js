@@ -59,7 +59,7 @@ const plugin = {
 
           // replace md images if image plugin is being used
           if (plugin.settings.plugins['@elderjs/plugin-images'] && plugin.config.useElderJsPluginImages) {
-            const MDImgRegex = /!\[([A-Za-z-_\d]*)\]\(([^)]*)\)/gm;
+            const MDImgRegex = /!\[([A-Za-z-_ \d]*)\]\(([^)]*)\)/gm;
             let match;
             while ((match = MDImgRegex.exec(md)) !== null) {
               const [fullMatch, alt, src] = match;

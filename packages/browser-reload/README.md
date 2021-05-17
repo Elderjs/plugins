@@ -35,6 +35,7 @@ plugins: {
     delay: 200, // the delay in ms the browser should wait after the server disappears.
     preventReloadQS: 'noreload', // if 'noreload' is in the query string it won't reload that page. Good for CSS editing in the browser.
     retryCount: 50, // number of tries the browser will check to see if the server is up before giving up.
+    reload: true, // complete reload of the page. Set to false to use fetch to replace the document.
   },
 
 }

@@ -117,3 +117,7 @@ plugins: {
 
 }
 ```
+
+## Contributing:
+
+- This plugin could be extended to accept new user defined rules. It just needs to be passed in to the `new Tester({rules:['rules', 'go', 'here']})` and the library should pick them up.

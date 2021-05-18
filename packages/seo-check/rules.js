@@ -70,6 +70,8 @@ const rules = [
         `There should only one and only 1 title tag, currently there are ${titles.length}`,
       );
 
+      if (titles.length !== 1) return;
+
       if (titles[0]) {
         tester.test(
           90,
@@ -276,13 +278,15 @@ const rules = [
           .split(' ')
           .filter((i) => [':', '|', '-'].indexOf(i) === -1);
 
-        const matches = titleArr.filter((t) => compareArr.indexOf(t) !== -1);
-        if (matches.length > 0) {
-          usesKeywords = true;
+        if (titleArr) {
+          const matches = titleArr.filter((t) => compareArr.indexOf(t) !== -1);
+          if (matches.length > 0) {
+            usesKeywords = true;
+          }
         }
       });
 
-      if (h2s.length > 0) {
+      if (h2s.length > 0 && title[0]) {
         tester.lint(70, assert.ok, usesKeywords, `None of your h2 tags use a single word from your title tag.`);
       }
 

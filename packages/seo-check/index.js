@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const totalist = require('totalist/sync');
+const { totalist } = require('totalist/sync');
 
 const Tester = require('./Tester');
 const rules = require('./rules');
@@ -10,7 +10,7 @@ const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !=
 const getHtmlFiles = (path) => {
   const html = new Set();
   totalist(path, (name, abs, stats) => {
-    if (/\.js$/.test(name)) {
+    if (/\.html$/.test(name)) {
       html.add(abs);
     }
   });
@@ -58,15 +58,13 @@ const plugin = {
       run: async ({ settings, plugin, allRequests }) => {
         if (settings.context === 'build') {
           const files = getHtmlFiles(`${settings.distDir}`);
-          console.log(files);
-          const publicFolder = path.relative(settings.rootDir, settings.distDir);
 
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
 
             const html = fs.readFileSync(path.resolve(file), { encoding: 'utf-8' });
 
-            const relPermalink = file.replace('index.html', '').replace(publicFolder, '');
+            const relPermalink = file.replace('index.html', '').replace(settings.distDir, '');
             await plugin.tester.test(html, relPermalink);
           }
 

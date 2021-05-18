@@ -2,9 +2,20 @@
 
 Checks the generated HTML for common SEO issues along with tips.
 
-**ALPHA**
+Works in single page mode and site wide mode.
+
+Pro users can easily use this plugin to fire off an email to the marketing/content team any time an SEO issue is encountered.
 
 ## Working Checks
+
+### Sitewide
+
+These are only checked when Elder.js runs in build mode.
+
+- [x] check for orphaned pages (no incoming internal links)
+- [x] check for broken internal links.
+- [x] check for duplicate title tags
+- [x] check for duplicate meta descriptions
 
 ### Canonical
 
@@ -33,14 +44,14 @@ Checks the generated HTML for common SEO issues along with tips.
 - [x] Meta description is less than than 120 chars
 - [x] Meta description is longer than 300 chars (sometimes things
       go REALLY wrong and this helps catch it.)
-- [x] Meta description includes ~20% of the keywords of the title
-      tag. (useful in my experience.)
+- [x] Meta description includes at least one the keywords of the title
+      tag.
 
 ### HTags
 
 - [x] h1 Exists on page
 - [x] only a single h1 per page.
-- [x] h1 has 10% of the words in the title tag
+- [x] h1 has at least one word from your title tag
 - [x] h1 is less than 70 chars
 - [x] h1 is more than than 10 chars
 - [x] H2 or H3 don't exist if an H1 is missing.
@@ -68,6 +79,8 @@ Checks the generated HTML for common SEO issues along with tips.
 - [x] Internal links have trailing slash
 - [x] Internal links are not `nofollow`
 - [x] Notifies if there are more than 50 outbound links on the page.
+- [x] check for trailing `index.html`
+- [x] internal fully formed links include 'https'
 
 ### Misc
 
@@ -87,6 +100,17 @@ Once installed, open your `elder.config.js` and configure the plugin by adding `
 ```javascript
 plugins: {
   '@elderjs/plugin-seo-check': {
+    display: ['errors', 'warnings'], // what level of reporting would you like.
+    handleSiteResults: async (results) => { // default.
+      // 'results' represents all of the issues found for the site wide build.
+      // power users can use this async function to post the issues to an endpoint or send an email
+      // so that the content or marketing team can address the issues.
+      if (Object.keys(results).length > 0) {
+        console.log(results);
+      } else {
+        console.log(`No SEO issues detected.`);
+      }
+    },
   },
 
 }

@@ -5,6 +5,16 @@ const seoLint = {
   internalLinksTrailingSlash: true,
 };
 
+const cleanString = (str) =>
+  str
+    .toLowerCase()
+    .replace('|', '')
+    .replace('-', '')
+    .replace('.', '')
+    .replace(':', '')
+    .replace('!', '')
+    .replace('?', '');
+
 const rules = [
   {
     name: 'Canonical Tag',
@@ -156,13 +166,11 @@ const rules = [
         );
 
         if (payload.result.title[0]) {
-          const titleArr = payload.result.title[0].innerText
-            .toLowerCase()
+          const titleArr = cleanString(payload.result.title[0].innerText)
             .split(' ')
             .filter((i) => [':', '|', '-'].indexOf(i) === -1);
 
-          const compareArr = metas[0].content
-            .toLowerCase()
+          const compareArr = cleanString(metas[0].content)
             .split(' ')
             .filter((i) => [':', '|', '-'].indexOf(i) === -1);
 
@@ -171,8 +179,8 @@ const rules = [
           tester.lint(
             70,
             assert.ok,
-            matches.length > Math.floor(titleArr.length * 0.2),
-            'Meta description should include at least 20% of the words in the title tag.',
+            matches.length >= 1,
+            'Meta description should include at least 1 of the words in the title tag.',
           );
         }
       }
@@ -203,7 +211,7 @@ const rules = [
       },
     },
     validator: async (payload, tester) => {
-      const { h1s, h2s, h3s, h4s, h5s, h6s, title } = payload.result;
+      const { h1s, h2s, h3s, h4s, h5s, h6s, title, html } = payload.result;
       tester.test(
         90,
         assert.ok,
@@ -213,8 +221,7 @@ const rules = [
 
       let titleArr;
       if (title[0]) {
-        titleArr = title[0].innerText
-          .toLowerCase()
+        titleArr = cleanString(title[0].innerText)
           .split(' ')
           .filter((i) => [':', '|', '-'].indexOf(i) === -1);
       }
@@ -233,19 +240,15 @@ const rules = [
         );
 
         if (titleArr) {
-          const compareArr = h1s[0].innerText
-            .toLowerCase()
+          const compareArr = cleanString(h1s[0].innerText)
             .split(' ')
             .filter((i) => [':', '|', '-'].indexOf(i) === -1);
 
           const matches = titleArr.filter((t) => compareArr.indexOf(t) !== -1);
 
-          tester.lint(
-            70,
-            assert.ok,
-            matches.length > Math.floor(titleArr.length * 0.1),
-            `H1 tag should have at least 10% of the words in the title tag.`,
-          );
+          if (matches.length < 1) console.log(titleArr, compareArr);
+
+          tester.lint(70, assert.ok, matches.length >= 1, `H1 tag should have at least 1 word from your title tag.`);
         }
       } else {
         tester.test(assert.ok, h2s.length === 0, `No h1 tag, but h2 tags are defined.`);
@@ -253,7 +256,9 @@ const rules = [
       }
 
       let usesKeywords = false;
-      tester.lint(60, assert.ok, h2s.length >= 1, 'Page is missing an h2 tag.');
+      if (html[0].innerText.length > 3000) {
+        tester.lint(60, assert.ok, h2s.length >= 1, 'Page is missing an h2 tag.');
+      }
       h2s.forEach((h2) => {
         tester.test(80, assert.notEqual, h2.innerText.length, 0, 'H2 tags should not be empty');
         tester.lint(
@@ -267,8 +272,7 @@ const rules = [
           `H2 tag is shorter than the recommended limit of 10. (${h2.innerText})`,
         );
 
-        const compareArr = h2.innerText
-          .toLowerCase()
+        const compareArr = cleanString(h2.innerText)
           .split(' ')
           .filter((i) => [':', '|', '-'].indexOf(i) === -1);
 
@@ -279,12 +283,7 @@ const rules = [
       });
 
       if (h2s.length > 0) {
-        tester.lint(
-          70,
-          assert.ok,
-          usesKeywords,
-          `None of your h2 tags use a single word from your title tag. Investigate.`,
-        );
+        tester.lint(70, assert.ok, usesKeywords, `None of your h2 tags use a single word from your title tag.`);
       }
 
       usesKeywords = false;

@@ -32,8 +32,8 @@ const emptyRule = {
   info: [],
 };
 
-const Tester = function (rules, siteWide = false) {
-  this.internalLinks = new Set();
+const Tester = function (rules, display, siteWide) {
+  this.internalLinks = []; //[[link, linkedFrom]]
   this.pagesSeen = new Set();
 
   this.currentUrl = '';
@@ -44,9 +44,14 @@ const Tester = function (rules, siteWide = false) {
   this.currentRule = JSON.parse(JSON.stringify(emptyRule));
 
   this.results = [];
+  this.siteResults = {
+    duplicateTitles: [],
+    duplicateMetaDescriptions: [],
+  };
 
   const logMetaDescription = (meta) => {
     if (this.metaDescriptions.has(meta)) {
+      this.siteResults.duplicateMetaDescriptions.push([this.metaDescriptions.get(meta), this.currentUrl]);
     } else {
       this.metaDescriptions.set(meta, this.currentUrl);
     }
@@ -54,6 +59,7 @@ const Tester = function (rules, siteWide = false) {
 
   const logTitleTag = (title) => {
     if (this.titleTags.has(title)) {
+      this.siteResults.duplicateTitles.push([this.titleTags.get(title), this.currentUrl]);
     } else {
       this.titleTags.set(title, this.currentUrl);
     }
@@ -87,11 +93,6 @@ const Tester = function (rules, siteWide = false) {
     };
   };
 
-  const tester = {
-    test: runTest(70, 'errors'),
-    lint: runTest(40, 'warnings'),
-  };
-
   const startRule = ({ validator, test, testData, ...payload }) => {
     if (this.currentRule.errors.length > 0)
       throw Error(
@@ -109,70 +110,118 @@ const Tester = function (rules, siteWide = false) {
     this.currentRule = JSON.parse(JSON.stringify(emptyRule));
   };
 
-  return async (html, url) => {
-    this.currentUrl = url;
-    this.pagesSeen.add(url);
+  return {
+    test: async (html, url) => {
+      try {
+        this.currentUrl = url;
+        this.pagesSeen.add(url);
 
-    const $ = cheerio.load(html);
+        const $ = cheerio.load(html);
 
-    const result = {
-      html: $attributes($, 'html'),
-      title: $attributes($, 'title'),
-      meta: $attributes($, 'head meta'),
-      ldjson: $attributes($, 'script[type="application/ld+json"]'),
-      h1s: $attributes($, 'h1'),
-      h2s: $attributes($, 'h2'),
-      h3s: $attributes($, 'h3'),
-      h4s: $attributes($, 'h4'),
-      h5s: $attributes($, 'h5'),
-      h6s: $attributes($, 'h6'),
-      canonical: $attributes($, '[rel="canonical"]'),
-      imgs: $attributes($, 'img'),
-      aTags: $attributes($, 'a'),
-      linkTags: $attributes($, 'link'),
-      ps: $attributes($, 'p'),
-    };
+        const result = {
+          html: $attributes($, 'html'),
+          title: $attributes($, 'title'),
+          meta: $attributes($, 'head meta'),
+          ldjson: $attributes($, 'script[type="application/ld+json"]'),
+          h1s: $attributes($, 'h1'),
+          h2s: $attributes($, 'h2'),
+          h3s: $attributes($, 'h3'),
+          h4s: $attributes($, 'h4'),
+          h5s: $attributes($, 'h5'),
+          h6s: $attributes($, 'h6'),
+          canonical: $attributes($, '[rel="canonical"]'),
+          imgs: $attributes($, 'img'),
+          aTags: $attributes($, 'a'),
+          linkTags: $attributes($, 'link'),
+          ps: $attributes($, 'p'),
+        };
 
-    if (siteWide) {
-      if (result.title[0] && result.title[0].innerText) {
-        logTitleTag(result.title[0].innerText);
+        if (siteWide) {
+          if (result.title[0] && result.title[0].innerText) {
+            logTitleTag(result.title[0].innerText);
+          }
+          const metaDescription = result.meta.find((m) => m.name && m.name.toLowerCase() === 'description');
+          if (metaDescription) {
+            logMetaDescription(metaDescription.content);
+          }
+          result.aTags
+            .filter((a) => !!a.href)
+            .filter((a) => !a.href.includes('http'))
+            .filter((a) => {
+              if (this.currentUrl !== '/') {
+                return !a.href.endsWith(this.currentUrl);
+              }
+              return true;
+            })
+            .filter((a) => a.href !== this.currentUrl)
+            .map((a) => a.href)
+            .forEach((a) => this.internalLinks.push([a, this.currentUrl]));
+        }
+
+        for (let i = 0; i < rules.length; i++) {
+          const rule = rules[i];
+          startRule(rule);
+          await rule.validator(
+            { result, response: { url } },
+            {
+              test: runTest(70, 'errors'),
+              lint: runTest(40, 'warnings'),
+            },
+          );
+          finishRule();
+        }
+
+        const validDisplay = ['warnings', 'errors'];
+        const out = display
+          .filter((d) => validDisplay.includes(d))
+          .reduce((out, key) => {
+            return [
+              ...out,
+              ...this.results
+                .filter((r) => !r.success)
+                .sort((a, b) => a.priority > b.priority)
+                .reduce((o, ruleResult) => {
+                  return [...o, ...ruleResult[key].map((r) => ({ ...r, level: key }))];
+                }, []),
+            ];
+          }, []);
+
+        if (siteWide) {
+          this.siteResults[url] = out;
+        } else {
+          if (out.length > 0) {
+            // eslint-disable-next-line node/no-unsupported-features/node-builtins
+            console.table(out);
+          }
+        }
+
+        this.results = [];
+      } catch (e) {
+        console.error(e);
       }
-      const metaDescription = result.meta.find((m) => m.name && m.name.toLowerCase() === 'description');
-      if (metaDescription) {
-        logMetaDescription(metaDescription.content);
+    },
+    siteResults: async () => {
+      this.siteResults.orphanPages = [];
+      for (const page of this.pagesSeen.values()) {
+        if (!this.internalLinks.find((il) => il[0] === page)) this.siteResults.orphanPages.push(page);
       }
 
-      result.aTags.filter((a) => !a.href.includes('http')).forEach((a) => this.internalLinks.add(a.href));
-    }
+      this.siteResults.brokenInternalLinks = [];
+      for (const [link, linker] of this.internalLinks) {
+        if (!this.pagesSeen.has(link)) this.siteResults.brokenInternalLinks.push({ link, linker });
+      }
 
-    for (let i = 0; i < rules.length; i++) {
-      const rule = rules[i];
-      startRule(rule);
-      await rule.validator({ result, response: { url } }, tester);
-      finishRule();
-    }
+      const results = Object.keys(this.siteResults).reduce((out, key) => {
+        if (Array.isArray(this.siteResults[key]) && this.siteResults[key].length > 0) {
+          out[key] = this.siteResults[key];
+        }
+        return out;
+      }, {});
 
-    const out = ['errors', 'warnings'].reduce((out, key) => {
-      return [
-        ...out,
-        ...this.results
-          .filter((r) => !r.success)
-          .sort((a, b) => a.priority > b.priority)
-          .reduce((o, ruleResult) => {
-            return [...o, ...ruleResult[key].map((r) => ({ ...r, level: key }))];
-          }, []),
-      ];
-    }, []);
-
-    console.table(out);
-
-    this.results = [];
+      return results;
+    },
   };
 };
 
 // eslint-disable-next-line jest/no-export
 module.exports = Tester;
-
-// accept rules one time.
-// offer a function that tests all of the rules for a url.
-// if in build mode test site wide rules.

@@ -1,3 +1,12 @@
+## [0.1.35](https://github.com/Elderjs/plugins/compare/v0.1.34...v0.1.35) (2021-05-18)
+
+
+### Features
+
+* 🎸 prepare "meta" for the seo-lint package ([1184ada](https://github.com/Elderjs/plugins/commit/1184ada67512e78ccbb3362c4153c8e0fc3f8454))
+
+
+
 ## [0.1.34](https://github.com/Elderjs/plugins/compare/v0.1.32...v0.1.34) (2021-05-18)
 
 

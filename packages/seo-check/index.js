@@ -1,21 +1,6 @@
-const path = require('path');
-const fs = require('fs');
-const { totalist } = require('totalist/sync');
-
-const Tester = require('./Tester');
-const rules = require('./rules');
+const { Tester } = require('@nickreese/seo-lint');
 
 const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
-
-const getHtmlFiles = (path) => {
-  const html = new Set();
-  totalist(path, (name, abs, stats) => {
-    if (/\.html$/.test(name)) {
-      html.add(abs);
-    }
-  });
-  return [...html];
-};
 
 const plugin = {
   name: 'elderjs-plugin-seo-check',
@@ -23,7 +8,10 @@ const plugin = {
   init: (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
 
-    plugin.tester = new Tester(rules, plugin.config.display, plugin.settings.context === 'build');
+    plugin.tester = new Tester({
+      display: plugin.config.display,
+      siteWide: plugin.settings.context === 'build',
+    });
 
     return plugin;
   },
@@ -47,7 +35,11 @@ const plugin = {
       description: 'Check the elder.js response html for common SEO issues.',
       run: async ({ request, plugin, htmlString, settings }) => {
         if (notProd && settings.context !== 'build') {
-          await plugin.tester.test(htmlString, request.permalink);
+          const results = await plugin.tester.test(htmlString, request.permalink);
+          if (results.length > 0) {
+            // eslint-disable-next-line node/no-unsupported-features/node-builtins
+            console.table(results);
+          }
         }
       },
     },
@@ -55,21 +47,9 @@ const plugin = {
       hook: 'buildComplete',
       name: 'siteWideSeoCheck',
       description: 'test',
-      run: async ({ settings, plugin, allRequests }) => {
+      run: async ({ settings, plugin }) => {
         if (settings.context === 'build') {
-          const files = getHtmlFiles(`${settings.distDir}`);
-
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-
-            const html = fs.readFileSync(path.resolve(file), { encoding: 'utf-8' });
-
-            const relPermalink = file.replace('index.html', '').replace(settings.distDir, '');
-            await plugin.tester.test(html, relPermalink);
-          }
-
-          const results = await plugin.tester.siteResults();
-
+          const results = await plugin.tester.folder(settings.distDir);
           plugin.config.handleSiteResults(results);
         }
       },

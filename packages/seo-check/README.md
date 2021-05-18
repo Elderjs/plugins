@@ -1,12 +1,12 @@
 # Elder.js Plugin: SEO Check
 
-Checks the generated HTML for common SEO issues along with tips.
+Checks the generated HTML for more than 50 common SEO issues along with tips on fixing them.
 
 Works in single page mode and site wide mode.
 
 Pro users can easily use this plugin to fire off an email to the marketing/content team any time an SEO issue is encountered.
 
-## Working Checks
+## Checks
 
 ### Sitewide
 
@@ -21,6 +21,7 @@ These are only checked when Elder.js runs in build mode.
 
 - [x] canonical tag exists
 - [x] canonical tag matches `request.permalink`
+- [x] there is only one canonical tag
 
 ### Title Tag
 
@@ -33,6 +34,7 @@ These are only checked when Elder.js runs in build mode.
 - [x] Title doesn't include common stopwords.
 - [x] Title tag doesn't have `null`
 - [x] Title tag doesn't have `undefined`
+- [x] checks for stop words.
 
 ### Meta Description
 
@@ -61,9 +63,9 @@ These are only checked when Elder.js runs in build mode.
 - [x] At least one of your h2s contains a single word from your
       title tag.
 - [x] h3 is less than 100 chars
-- [x] h3 is more than than 10 chars
+- [x] h3 is more than than 7 chars
 - [x] h4 is less than 100 chars
-- [x] h4 is more than than 10 chars
+- [x] h4 is more than than 7 chars
 - [x] If no h2s checks for h3s.
 - [x] If no h3s checks for h4s.
 - [x] If no h4s checks for h5s.

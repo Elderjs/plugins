@@ -1,11 +1,22 @@
-const glob = require('tiny-glob');
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('fs');
+const totalist = require('totalist/sync');
 
 const Tester = require('./Tester');
 const rules = require('./rules');
 
 const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
+
+const getHtmlFiles = (path) => {
+  const html = new Set();
+  totalist(path, (name, abs, stats) => {
+    if (/\.js$/.test(name)) {
+      html.add(abs);
+    }
+  });
+  return [...html];
+};
+
 const plugin = {
   name: 'elderjs-plugin-seo-check',
   description: 'Checks Elder.js generated HTML for common SEO issues.',
@@ -46,7 +57,8 @@ const plugin = {
       description: 'test',
       run: async ({ settings, plugin, allRequests }) => {
         if (settings.context === 'build') {
-          const files = await glob(`${settings.distDir}/**/*.html`);
+          const files = getHtmlFiles(`${settings.distDir}`);
+          console.log(files);
           const publicFolder = path.relative(settings.rootDir, settings.distDir);
 
           for (let i = 0; i < files.length; i++) {

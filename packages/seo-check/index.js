@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const { Tester } = require('@nickreese/seo-lint');
 
 const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
@@ -49,7 +50,7 @@ const plugin = {
       description: 'test',
       run: async ({ settings, plugin }) => {
         if (settings.context === 'build') {
-          const results = await plugin.tester.folder(settings.distDir);
+          const { meta, ...results } = await plugin.tester.folder(settings.distDir);
           plugin.config.handleSiteResults(results);
         }
       },

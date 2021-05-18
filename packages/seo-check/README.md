@@ -118,6 +118,19 @@ plugins: {
 }
 ```
 
+If things are too verbose for dev, try this:
+
+```javascript
+plugins: {
+  '@elderjs/plugin-seo-check': {
+    display: process.NODE_ENV === production ? ['errors', 'warnings']: [], // disables reporting unless you in production building.
+
+    },
+  },
+
+}
+```
+
 ## Contributing:
 
 - This plugin could be extended to accept new user defined rules. It just needs to be passed in to the `new Tester({rules:['rules', 'go', 'here']})` and the library should pick them up.

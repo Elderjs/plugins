@@ -1,3 +1,12 @@
+## [0.1.32](https://github.com/Elderjs/plugins/compare/v0.1.31...v0.1.32) (2021-05-18)
+
+
+### Features
+
+* 🎸 wire up sitewide auditing ([d850c22](https://github.com/Elderjs/plugins/commit/d850c226349821b683815e1620db3a1dd64ec5ec))
+
+
+
 ## [0.1.31](https://github.com/Elderjs/plugins/compare/v0.1.30...v0.1.31) (2021-05-17)
 
 

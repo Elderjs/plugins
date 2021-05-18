@@ -13,7 +13,6 @@ const plugin = {
     if (plugin.prefix) {
       console.log('> Elder.js Auto Reload Plugin auto reloading prefix:', plugin.settings.prefix);
     }
-
     plugin.serverPort = process.env.SERVER_PORT || 3000;
 
     if (plugin.run) {

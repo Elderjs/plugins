@@ -123,8 +123,7 @@ If things are too verbose for dev, try this:
 ```javascript
 plugins: {
   '@elderjs/plugin-seo-check': {
-    display: process.NODE_ENV === production ? ['errors', 'warnings']: [], // disables reporting unless you in production building.
-
+    display: process.NODE_ENV === 'production' ? ['errors', 'warnings']: [], // disables reporting unless you in production building.
     },
   },
 

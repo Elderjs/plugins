@@ -2,6 +2,7 @@
 const { Tester, defaultPreferences, rules } = require('@nickreese/seo-lint');
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 
 const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
@@ -10,10 +11,20 @@ const plugin = {
   description: 'Checks Elder.js generated HTML for common SEO issues.',
   init: (plugin) => {
     // used to store the data in the plugin's closure so it is persisted between loads
+    let host;
+    try {
+      const parsed = new url.URL(plugin.settings.origin);
+      if (parsed) {
+        host = parsed.hostname;
+      }
+    } catch (e) {
+      // invalid url.
+    }
 
     plugin.tester = new Tester({
       display: plugin.config.display,
       siteWide: plugin.settings.context === 'build',
+      host,
     });
 
     return plugin;

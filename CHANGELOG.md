@@ -1,3 +1,17 @@
+## [0.1.36](https://github.com/Elderjs/plugins/compare/v0.1.35...v0.1.36) (2021-05-19)
+
+
+### Bug Fixes
+
+* 🐛 production with quotes ([cf00d06](https://github.com/Elderjs/plugins/commit/cf00d0631d28852c8e1a96fe656603a17fee719f))
+
+
+### Features
+
+* 🎸 allow user defined rules and prefs. Writing to json ([3e61283](https://github.com/Elderjs/plugins/commit/3e612832711a2ca584b114e86d791407eee44bf8))
+
+
+
 ## [0.1.35](https://github.com/Elderjs/plugins/compare/v0.1.34...v0.1.35) (2021-05-18)
 
 

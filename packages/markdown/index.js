@@ -10,6 +10,13 @@ const extractFrontmatter = require('remark-extract-frontmatter');
 const remarkFrontmatter = require('remark-frontmatter');
 const yaml = require('yaml').parse;
 
+const remarkPlugins = [
+  remarkFrontmatter,
+  [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
+  remarkSlug,
+  remarkHtml,
+];
+
 const plugin = {
   name: '@elderjs/plugin-markdown',
   description:
@@ -24,12 +31,7 @@ const plugin = {
     const { openPattern, closePattern } = plugin.settings.shortcodes;
 
     if (plugin.config.remarkPlugins.length === 0) {
-      plugin.config.remarkPlugins = [
-        remarkFrontmatter,
-        [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
-        remarkSlug,
-        remarkHtml,
-      ];
+      plugin.config.remarkPlugins = remarkPlugins;
     }
 
     if (plugin.config.useSyntaxHighlighting) {
@@ -201,6 +203,7 @@ const plugin = {
       },
     },
   ],
+  remarkPlugins,
 };
 
 module.exports = plugin;

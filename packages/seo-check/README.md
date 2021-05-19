@@ -6,7 +6,11 @@ Works in single page mode and site wide mode.
 
 Pro users can easily use this plugin to fire off an email to the marketing/content team any time an SEO issue is encountered.
 
-## Checks
+## SEO Checks
+
+This plugin is very opinionated based on years of [Nick Reese](https://nicholasreese.com)'s experience running major SEO assets.
+
+If you think the rules are too strict or opinionated this plugin supports adding your own rules.
 
 ### Sitewide
 
@@ -103,7 +107,7 @@ Once installed, open your `elder.config.js` and configure the plugin by adding `
 plugins: {
   '@elderjs/plugin-seo-check': {
     display: ['errors', 'warnings'], // what level of reporting would you like.
-    handleSiteResults: async (results) => { // default.
+    handleSiteResults: async ({ meta, ...results }) => {
       // 'results' represents all of the issues found for the site wide build.
       // power users can use this async function to post the issues to an endpoint or send an email
       // so that the content or marketing team can address the issues.
@@ -113,8 +117,10 @@ plugins: {
         console.log(`No SEO issues detected.`);
       }
     },
+    preferences: [], // define your own preferences. See below.
+    rules: [], // define your own rules. This overwrites existing rules. See below.
+    // writeLocation: './report.json' // used to write a JSON report. Relative to the root.
   },
-
 }
 ```
 
@@ -130,6 +136,12 @@ plugins: {
 }
 ```
 
+For access to the default rules and preferences:
+
+```js
+const { defaultPreferences, rules } = require('@elderjs/plugin-seo-check');
+```
+
 ## Contributing:
 
-- This plugin could be extended to accept new user defined rules. It just needs to be passed in to the `new Tester({rules:['rules', 'go', 'here']})` and the library should pick them up.
+- If you end up writing your own rules, if you want to write a how-to that would be great.

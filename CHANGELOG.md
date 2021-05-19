@@ -1,3 +1,12 @@
+## [0.1.38](https://github.com/Elderjs/plugins/compare/v0.1.37...v0.1.38) (2021-05-19)
+
+
+### Features
+
+* 🎸 export remarkPlugins from package for easy importing ([296798a](https://github.com/Elderjs/plugins/commit/296798add6405022cad91d05cd2ff8a7a2fee8f9))
+
+
+
 ## [0.1.37](https://github.com/Elderjs/plugins/compare/v0.1.36...v0.1.37) (2021-05-19)
 
 

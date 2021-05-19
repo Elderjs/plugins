@@ -56,7 +56,7 @@ plugins: {
 }
 ```
 
-A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS neeeded), has extensive language support, and can use any VS Code theme including your own custom one. We have _not_ yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting: false` and implement separately from this markdown toolchain.
+A note on the default syntax highlighting - we use [shiki](https://shiki.matsu.io/) (compared to other well known options) because it highlights everything in inline styles (so no extra JS/CSS needed), has extensive language support, and can use any VS Code theme including your own custom one. We have _not_ yet exposed this last feature to you as an option for this plugin - if you want this feature and are interested in implementing, please feel free to open an issue. If you wish to use your own syntax highlighting, you can add it to your `remarkPlugins` array, or set `useSyntaxHighlighting: false` and implement separately from this markdown toolchain.
 
 ## Getting all Markdown For a Route:
 
@@ -71,9 +71,9 @@ In addition to parsing the markdown in the given routes, this plugin makes avail
 This means you can use the same markdown parser to parse markdown from other sources if needed.
 
 For full documentation please review [remark's docs](https://github.com/remarkjs/remark). That said, the default plugin config can be used to parse markdown like so:
-* `helpers.markdownParser.processSync(mdText)` if you are not using syntax highlighting.
-* `helpers.markdownParser.process(mdText)` if you are using syntax highlighting. **Note that because this is an async function, it will not run inside of a non-hydrated Svelte file. To get around this, you'll want to execute the function in the `data` portion of your `route.js` file.**
 
+- `helpers.markdownParser.processSync(mdText)` if you are not using syntax highlighting.
+- `helpers.markdownParser.process(mdText)` if you are using syntax highlighting. **Note that because this is an async function, it will not run inside of a non-hydrated Svelte file. To get around this, you'll want to execute the function in the `data` portion of your `route.js` file.**
 
 ## Remark Plugins:
 
@@ -82,6 +82,8 @@ If you need to customize the remark plugins that are used here are some notes:
 1. The `remarkPlugins` array are added to `remark` in the order they are given.
 1. If you add a single plugin in your `elder.config.js`, you must specify a full `remark` pipeline.
 1. If a plugin such as `remark-extract-frontmatter` needs an array of options, you can pass in an array like so: `remarkPlugins: [[extractFrontmatter, { name: 'frontmatter', yaml: yaml.parse }]]`
+
+The default remarkPlugins are exported for ease of use via the package. `const { remarkPlugins } = require('@elderjs/plugin-markdown');`
 
 ### Notes:
 

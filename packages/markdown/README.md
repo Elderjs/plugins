@@ -70,7 +70,10 @@ In addition to parsing the markdown in the given routes, this plugin makes avail
 
 This means you can use the same markdown parser to parse markdown from other sources if needed.
 
-For full documentation please review [remark's docs](https://github.com/remarkjs/remark). That said, the default plugin config can be used to parse markdown like so: `helpers.markdownParser.processSync(mdText)`
+For full documentation please review [remark's docs](https://github.com/remarkjs/remark). That said, the default plugin config can be used to parse markdown like so:
+* `helpers.markdownParser.processSync(mdText)` if you are not using syntax highlighting
+* `helpers.markdownParser.process(mdText)` if you are using syntax highlighting. **Note that because this is an async function, it will not run inside of a non-hydrated Svelte file. To get around this, you'll want to execute the function in the `data` portion of your `route.js` file.
+
 
 ## Remark Plugins:
 

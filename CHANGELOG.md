@@ -1,3 +1,12 @@
+## [0.1.37](https://github.com/Elderjs/plugins/compare/v0.1.36...v0.1.37) (2021-05-19)
+
+
+### Features
+
+* 🎸 pipe in hostname from elder.config.js ([6b7f696](https://github.com/Elderjs/plugins/commit/6b7f6964ddd825e373319de9e2d74d47f343eb21))
+
+
+
 ## [0.1.36](https://github.com/Elderjs/plugins/compare/v0.1.35...v0.1.36) (2021-05-19)
 
 

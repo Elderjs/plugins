@@ -1,3 +1,12 @@
+## [0.1.39](https://github.com/Elderjs/plugins/compare/v0.1.38...v0.1.39) (2021-05-26)
+
+
+### Bug Fixes
+
+* 🐛 accept preferences and rules ([b1d3abc](https://github.com/Elderjs/plugins/commit/b1d3abcb7aa54f9b0da819b8ea33275c2b831f99))
+
+
+
 ## [0.1.38](https://github.com/Elderjs/plugins/compare/v0.1.37...v0.1.38) (2021-05-19)
 
 

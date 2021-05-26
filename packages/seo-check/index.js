@@ -25,6 +25,8 @@ const plugin = {
       display: plugin.config.display,
       siteWide: plugin.settings.context === 'build',
       host,
+      preferences: plugin.config.preferences,
+      rules: plugin.config.rules,
     });
 
     return plugin;

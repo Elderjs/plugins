@@ -1,0 +1,31 @@
+{
+  "name": "@elderjs/plugin-random",
+  "version": "0.1.38",
+  "description": "Easily preview a random page of a route by visiting a single url. This plugin should be used exclusively for development.",
+  "keywords": [
+    "elderjs",
+    "svelte",
+    "elder",
+    "random",
+    "debug"
+  ],
+  "author": "Nick Reese <nick@mbp.com>",
+  "homepage": "https://github.com/Elderjs/plugins#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {},
+  "files": [
+    "index.js",
+    "Random.svelte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elderjs/plugins.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Elderjs/plugins/issues"
+  }
+}

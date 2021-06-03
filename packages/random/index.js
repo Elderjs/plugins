@@ -2,11 +2,28 @@ const notProduction = process.env.NODE_ENV !== 'production';
 const plugin = {
   name: '@elderjs/plugin-random',
   description: 'Adds a /random/ page on previewer requests that displays all of the possible routes.',
-  init: (plugin) => {},
+  minimumElderjsVersion: '1.4.13',
+  init: (plugin) => {
+    // version check
+    let enabled = false;
+    if (plugin.settings.version) {
+      const [major, minor, patch] = plugin.settings.version.split('.');
+      if (major > 1) enabled = true;
+      if (major === 1 && minor > 4) enabled = true;
+      if (major === 1 && minor === 4 && patch >= 13) enabled = true;
+    }
+    if (!enabled) {
+      plugin.hooks = [];
+      plugin.routes = {};
+      console.error('@elderjs/plugin-random requires Elder.js v1.4.13 or greater. Plugin disabled.');
+    }
+    return plugin;
+  },
   routes: {
     pluginRandom: {
       data: () => {},
       template: 'Random.svelte',
+      layout: 'RandomLayout.svelte',
       permalink: ({ request }) => {
         if (request.slug && request.realRoute) return `/random/${request.realRoute}/`;
         return `/random/`;

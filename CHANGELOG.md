@@ -1,3 +1,12 @@
+## [0.1.43](https://github.com/Elderjs/plugins/compare/v0.1.42...v0.1.43) (2021-06-03)
+
+
+### Bug Fixes
+
+* 🐛 add randomLayout to plugin ([721e41a](https://github.com/Elderjs/plugins/commit/721e41a2fbe2949ab95efd1c7129b18240e502e1))
+
+
+
 ## [0.1.42](https://github.com/Elderjs/plugins/compare/v0.1.41...v0.1.42) (2021-06-03)
 
 

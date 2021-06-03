@@ -7,7 +7,7 @@ const plugin = {
     pluginRandom: {
       data: () => {},
       template: 'Random.svelte',
-      permalink: ({ request, settings }) => {
+      permalink: ({ request }) => {
         if (request.slug && request.realRoute) return `/random/${request.realRoute}/`;
         return `/random/`;
       },
@@ -21,7 +21,7 @@ const plugin = {
       name: 'addRandomAndDebug',
       description: 'Adds /random/route/ requests to allRequests. Also adds /debug/ to all requests.',
       priority: 50, // default
-      run: async ({ helpers, data, settings, request, allRequests, routes, db }) => {
+      run: async ({ settings, allRequests, routes }) => {
         if (notProduction && settings.server) {
           const randomRequests = Object.keys(routes).reduce(
             (out, route) => [...out, { slug: 'random', realRoute: route, route: 'pluginRandom' }],
@@ -62,7 +62,7 @@ const plugin = {
       hook: 'request',
       name: 'addAllRequestsToDebugDataObject',
       description: 'Adds the allRequests array to the data object for /debug/',
-      run: ({ helpers, data, settings, request, allRequests }) => {
+      run: ({ data, settings, request, allRequests }) => {
         if (notProduction && settings.server && request.slug === 'debug' && request.route === 'debug') {
           return {
             data: Object.assign({}, data, {

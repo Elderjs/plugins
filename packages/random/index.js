@@ -7,7 +7,10 @@ const plugin = {
     // version check
     let enabled = false;
     if (plugin.settings.version) {
-      const [major, minor, patch] = plugin.settings.version.split('.');
+      const pv = plugin.settings.version.split('.');
+      const major = Number(pv[0]);
+      const minor = Number(pv[1]);
+      const patch = Number(pv[2]);
       if (major > 1) enabled = true;
       if (major === 1 && minor > 4) enabled = true;
       if (major === 1 && minor === 4 && patch >= 13) enabled = true;

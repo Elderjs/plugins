@@ -16,7 +16,8 @@
   "directories": {},
   "files": [
     "index.js",
-    "Random.svelte"
+    "Random.svelte",
+    "RandomLayout.svelte"
   ],
   "repository": {
     "type": "git",

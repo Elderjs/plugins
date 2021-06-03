@@ -13,6 +13,7 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 - [Sitemap](https://github.com/Elderjs/plugins/tree/master/packages/sitemap) Automatically generate the latest sitemap for your Elder.js website on build.
 - [Browser Reload](https://github.com/Elderjs/plugins/tree/master/packages/browser-reload) Reload the browser when your Elder.js server restarts.
 - [References](https://github.com/Elderjs/plugins/tree/master/packages/references) Easily add wikipedia style references to your content.
+- [Random](https://github.com/Elderjs/plugins/tree/master/packages/random) Easily preview a random page of a route by visiting a single url speeding up design and debugging of large sites.
 
 ## Other Plugins:
 

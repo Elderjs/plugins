@@ -1,3 +1,12 @@
+## [0.1.40](https://github.com/Elderjs/plugins/compare/v0.1.39...v0.1.40) (2021-06-03)
+
+
+### Features
+
+* 🎸 v1 of @elderjs/plugin-random ([badc7b1](https://github.com/Elderjs/plugins/commit/badc7b116d6de464173dd0825c75c2221320090e))
+
+
+
 ## [0.1.39](https://github.com/Elderjs/plugins/compare/v0.1.38...v0.1.39) (2021-05-26)
 
 

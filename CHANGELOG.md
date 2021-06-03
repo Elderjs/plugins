@@ -1,3 +1,12 @@
+## [0.1.42](https://github.com/Elderjs/plugins/compare/v0.1.41...v0.1.42) (2021-06-03)
+
+
+### Bug Fixes
+
+* 🐛 fix version checking in random ([cf80c75](https://github.com/Elderjs/plugins/commit/cf80c75adcfc12ebb31e32e8b538dcf80af342d2))
+
+
+
 ## [0.1.41](https://github.com/Elderjs/plugins/compare/v0.1.40...v0.1.41) (2021-06-03)
 
 

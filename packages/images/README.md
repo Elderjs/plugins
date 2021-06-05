@@ -131,7 +131,16 @@ plugins: {
 plugins: {
 
   '@elderjs/plugin-images': {
-        folders: [
+    debug: false, // help with debugging
+    s3: {
+      AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID, // aws_access_key_id
+      AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY, // aws_secret_access_key
+      S3_BUCKET: process.env.S3_BUCKET, // s3 bucket name
+      S3_BUCKET_URL: process.env.S3_BUCKET_URL, // the bucket url
+      USE_S3_HOSTING: true, // images will be hosted on s3 instead of inserting relative url.
+    },
+
+    folders: [
       {
         src: '/images/', // where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js.
         output: '/images/', // where files should be put within the distDir defined in your elder.config.js.
@@ -139,7 +148,7 @@ plugins: {
     ],
     widths: [1280, 992, 768, 576, 400, 350, 200], // Sizes the images will be resized to.
     fileTypes: ['webp'], // file types in addition to jpeg/png.
-    imageManifest: '/images/ejs-image-manifest.json', // relative to root dir
+    imageManifest: '/images/ejs-image-manifest.json', // relative to root dir or an async function
     cacheFolder: '/images/sizes/', // relative to root dir
     scales: [1, 2], // 1x, 2x sizes
     svg: false, // experimental... you can play with it.
@@ -215,6 +224,72 @@ if (plugins['@elderjs/plugin-images'] !== undefined) {
 ```console
 node ./src/cleanImageCache.js
 ```
+
+## Library Usage
+
+This plugin also exports a `processImages` function which will generate sizes and optionally upload them to s3 just like it would work with the Elder.js plugin.
+
+## `processImages`
+
+**params**:
+
+- manifest: an prior manifest object or empty object.
+- images: an array of `image` objects (defined below).
+- widths: an array of widths.
+- scales: an array of scales. ex: [1,2],
+- s3: s3 options as defined in the plugin config above.
+- debug: turns in/off debugging
+
+## `images` array for `processImages`
+
+```js
+// images = [
+// {
+//     src,           // file path or buffer
+//     rel,           // the relative url where the image will be found on the site.
+//     ext,           // extension
+//   }
+// ]
+```
+
+### Library Use Case
+
+This is useful if you let your users upload images to a dashboard and you want to store the processed image sizes in a database or something.
+
+This was our use case at ElderGuide.com. Images were uploaded and the buffer can be sent directly to the `processImages` function which will generate a manifest and upload the resulting images to s3.
+
+We then take the entries in the manifest and toss them in the DB.
+
+Then to use the plugin we use an `async` function to build a manifest and add it to our `elder.config.js` like so:
+
+```js
+plugins: {
+  '@elderjs/plugin-images': {
+    // rest of the config
+    imageManifest: async () => {
+      // you can do a db call to build the manifest.
+      return {
+        '/images/advice-seekers.jpg': {
+          width: 200,
+          height: 200,
+          format: 'jpeg',
+          original: '/images/advice-seekers.jpg',
+          sizes: [
+            ...
+          ],
+          placeholder:
+            'data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAIG/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAABpefWf//EABoQAQABBQAAAAAAAAAAAAAAAAEAAhETFCH/2gAIAQEAAQUCK3Z5Bc12f//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQMBAT8Bf//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQIBAT8Bf//EABkQAAMAAwAAAAAAAAAAAAAAAAABMRBBgf/aAAgBAQAGPwJrUx0p/8QAGhABAQEAAwEAAAAAAAAAAAAAAREAITFhkf/aAAgBAQABPyFahWxz1DTILW57Pu//2gAMAwEAAgADAAAAEOP/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAcEAEAAwACAwAAAAAAAAAAAAABABEhMUFhobH/2gAIAQEAAT8Q7qhCGy68r7i67OQ5pvXI2v1T/9k=',
+        },
+      };
+    },
+  }
+}
+
+```
+
+We then proxy the s3 images in via a Cloudflare worker.
+
+This is really an advanced use case but power users should be aware it exists.
 
 ## Troubleshooting
 

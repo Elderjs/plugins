@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const glob = require('glob');
 const path = require('path');
 const sharp = require('sharp');
@@ -8,89 +9,164 @@ const imageFileTypes = ['jpg', 'jpeg', 'png'];
 const defaultWidths = [1280, 992, 768, 576, 400, 350, 200];
 const defaultScales = [1, 2];
 
+// images = [
+// {
+//     src,           // file path or buffer
+//     rel,           // the relative url where the image will be found on the site.
+//     ext,           // extension
+//     publicPrefix,  // used for writing/reading to the public folder.
+//     cachePrefix,   // used for writing/reading to the cache folder.
+//   }
+// ]
+
+// allows for processImages to be used by other packages to upload to s3 and still get Elder.js Image support.
+// s3: {
+//   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+//   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+//   S3_BUCKET: process.env.S3_BUCKET,
+//   S3_BUCKET_URL: process.env.S3_BUCKET_URL,
+// },
+
+// extracted so that it can accept a buffer and be used in other contexts via importing.
+const processImages = async ({ manifest = {}, images = [], widths = defaultWidths, scales = defaultScales, s3 }) => {
+  try {
+    const workerpool = require('workerpool');
+    const s3String = JSON.stringify(s3 || {});
+
+    const toProcess = [];
+    const toProcessPlaceholders = [];
+    const toProcessSvgs = [];
+
+    let resizeWorker = workerpool.pool(path.resolve(__dirname, './resizeWorker.js'));
+
+    for (const file of images) {
+      if (!s3) {
+        // copy to public folder if it doesn't exist and we're not uploading to s3.
+        const publicFolderDest = `${file.publicPrefix}.${file.ext}`;
+        if (!fs.existsSync(publicFolderDest)) {
+          fs.copyFileSync(file.src, publicFolderDest);
+        }
+      }
+
+      // if uploading to s3
+      let s3Rel;
+
+      if (s3) {
+        s3Rel = await resizeWorker.exec('saveOrigionalToS3', [file.rel, file.src, s3String]);
+      }
+
+      if (!manifest[file.rel]) {
+        // imageLocation
+        const original = await sharp(file.src).toBuffer({ resolveWithObject: true });
+
+        manifest[file.rel] = {
+          width: original.info.width,
+          height: original.info.height,
+          format: original.info.format,
+          original: s3Rel || file.rel, // if original is on s3 log it.
+          sizes: [],
+        };
+        // imageBuffer
+      }
+
+      const fileTypes = [...plugin.config.fileTypes];
+      if (file.ext === 'png') {
+        fileTypes.push(file.ext);
+      } else if (file.ext === 'jpeg' || file.ext === 'jpg') {
+        fileTypes.push('jpeg');
+      }
+
+      const widthsToProcess = [...widths];
+
+      // if original isn't wider, add one with a max width of the original.
+      if (manifest[file.rel].width < plugin.largestWidth) {
+        widthsToProcess.push(manifest[file.rel].width);
+      }
+
+      for (const width of widthsToProcess) {
+        if (manifest[file.rel].width < width) continue; //skip if original is smaller.
+        for (const scale of scales) {
+          if (manifest[file.rel].width < width * scale) continue; // skip if original is smaller.
+          for (const fileType of fileTypes) {
+            // const resizeRelative = `${getPrefix(file.rel, file.publicPrefix)}${getSuffix(
+            //   width,
+            //   scale,
+            //   fileType,
+            // )}`;
+
+            // check to make sure we don't need to resize this again.
+            // const sizeExsists = manifest[file.rel].sizes.find((size) => size.relative === resizeRelative);
+            // if (sizeExsists) continue;
+
+            const payload = [
+              file.rel,
+              file.src,
+              file.publicPrefix,
+              file.cachePrefix,
+              width,
+              scale,
+              fileType,
+              plugin.config.quality,
+              s3String,
+            ];
+            toProcess.push(resizeWorker.exec('resize', payload));
+          }
+        }
+      }
+
+      if (plugin.config.placeholder) {
+        if (!manifest[file.rel].placeholder) {
+          const payload = [file.rel, file.src, JSON.stringify(plugin.config.placeholder)];
+          toProcessPlaceholders.push(resizeWorker.exec('placeholder', payload));
+        }
+        if (plugin.config.svg && !manifest[file.rel].svg) {
+          const payloadSvg = [
+            file.rel,
+            file.src,
+            file.publicPrefix,
+            file.cachePrefix,
+            JSON.stringify(plugin.config.svg),
+          ];
+          toProcessSvgs.push(resizeWorker.exec('svg', payloadSvg));
+        }
+      }
+    }
+
+    const processed = await Promise.all(toProcess);
+    const placeholders = await Promise.all(toProcessPlaceholders);
+    const svgs = await Promise.all(toProcessSvgs);
+
+    await resizeWorker.terminate();
+    processed.forEach(({ rel, ...resize }) => {
+      if (!manifest[rel].sizes.find((size) => size.relative === resize.relative)) {
+        manifest[rel].sizes.push(resize);
+      }
+    });
+
+    placeholders.forEach(({ rel, placeholder, error }) => {
+      if (error) throw error;
+      manifest[rel].placeholder = placeholder;
+    });
+
+    svgs.forEach(({ rel, svg, error }) => {
+      if (error) throw error;
+      manifest[rel].svg = svg;
+    });
+
+    console.log(manifest);
+
+    return manifest;
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+};
+
 const plugin = {
   name: '@elderjs/plugin-images',
   description: 'Resizes images. ',
-  init: (plugin) => {
-    if (plugin.config.widths.length === 0) {
-      plugin.config.widths = defaultWidths;
-    }
-
-    if (plugin.config.scales.length === 0) {
-      plugin.config.scales = defaultScales;
-    }
-
-    // used to store the data in the plugin's closure so it is persisted between loads
-
-    plugin.manifest = {};
-
-    plugin.largestWidth = Math.max.apply(Math, plugin.config.widths);
-
-    const manifestLoc = path.join(plugin.settings.rootDir, plugin.config.imageManifest);
-    if (fs.existsSync(manifestLoc)) {
-      try {
-        const manifest = fs.readFileSync(manifestLoc, { encoding: 'utf-8' });
-        plugin.manifest = JSON.parse(manifest);
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      console.log(`elderjs-plugin-images: no manifest found at ${manifestLoc}`);
-    }
-
-    let folders = plugin.config.folders;
-    if (folders.length > 0) {
-      folders.forEach((folder) => {
-        if (!folder.src || !folder.output) {
-          throw new Error(
-            `elderjs-plugin-images: Both src and output keys are required for the 'folders' object or array.`,
-          );
-        }
-      });
-      plugin.crossPlatformRoot = plugin.settings.rootDir.replace(/\\/gim, '/');
-
-      const requestedImages = folders.reduce((out, folder) => {
-        const relGlob = folder.src.replace('.', '').replace(/\*/g, '');
-
-        fs.ensureDirSync(path.join(plugin.settings.distDir, folder.output));
-        const files = glob.sync(path.join(plugin.settings.rootDir, folder.src));
-        if (Array.isArray(files)) {
-          files
-            .filter((file) => imageFileTypes.includes(file.split('.').pop().toLowerCase()))
-            .filter((file) => !file.split('/').pop().includes('-ejs'))
-            .forEach((file) => {
-              const crossPlatformFile = file.replace(plugin.crossPlatformRoot, '');
-
-              const name = crossPlatformFile.replace(relGlob, '');
-
-              const rel = crossPlatformFile.replace(plugin.settings.rootDir, '').replace(relGlob, folder.output);
-
-              const [nameNoExt, ext] = name.split('.');
-
-              const [relNameNoExt] = rel.split('.');
-
-              const baseDir = path.join(plugin.settings.distDir, folder.output);
-              fs.ensureDirSync(baseDir);
-              out.push({
-                src: file,
-                rel,
-                ext,
-                publicPrefix: path.join(baseDir, nameNoExt),
-                cachePrefix:
-                  plugin.config.cacheFolder &&
-                  path.join(plugin.settings.rootDir, relNameNoExt.replace(folder.output, plugin.config.cacheFolder)),
-              });
-            });
-        }
-        return out;
-      }, []);
-
-      plugin.requestedImages = requestedImages;
-    }
-
-    return plugin;
-  },
   config: {
+    s3: undefined,
     folders: [
       {
         src: '/images/*', // where your original images are. Relative to rootDir/process.cwd() defined in your elder.config.js.
@@ -99,7 +175,7 @@ const plugin = {
     ],
     widths: [], // Sizes the images will be resized to.
     fileTypes: ['webp'], // file types in addition to jpeg/png
-    imageManifest: '/images/ejs-image-manifest.json', // relative to root dir
+    imageManifest: '/images/ejs-image-manifest.json', // relative to root dir or can be an async function to pull a manifest from a db.
     cacheFolder: '/images/sizes/', // relative to root dir
     scales: [],
     svg: false,
@@ -152,13 +228,99 @@ const plugin = {
     addVanillaLazy: true,
     vanillaLazyLocation: '/static/vanillaLazy.min.js', // vanillaLazy's location relative to the root of the site. The plugin will move it to your public folder for you.
   },
+  init: async (plugin) => {
+    plugin.externalManifest = false;
+
+    if (plugin.config.widths.length === 0) {
+      plugin.config.widths = defaultWidths;
+    }
+
+    if (plugin.config.scales.length === 0) {
+      plugin.config.scales = defaultScales;
+    }
+
+    plugin.imagesToProcess = []; // no images to process by default
+    plugin.manifest = {};
+
+    plugin.largestWidth = Math.max.apply(Math, plugin.config.widths);
+
+    if (typeof plugin.config.imageManifest === 'function' || (plugin.init && typeof plugin.init.then === 'function')) {
+      // fetch the external manifest
+      plugin.externalManifest = true;
+      plugin.manifest = await plugin.config.imageManifest(plugin.config);
+      console.log(`EXTERNAL MANIFEST`, plugin.manifest);
+    } else {
+      const manifestLoc = path.join(plugin.settings.rootDir, plugin.config.imageManifest);
+      if (fs.existsSync(manifestLoc)) {
+        try {
+          const manifest = fs.readFileSync(manifestLoc, { encoding: 'utf-8' });
+          plugin.manifest = JSON.parse(manifest);
+        } catch (e) {
+          console.log(e);
+        }
+      } else {
+        console.log(`elderjs-plugin-images: no manifest found at ${manifestLoc}`);
+      }
+
+      let folders = plugin.config.folders;
+      if (folders.length > 0) {
+        folders.forEach((folder) => {
+          if (!folder.src || !folder.output) {
+            throw new Error(
+              `elderjs-plugin-images: Both src and output keys are required for the 'folders' object or array.`,
+            );
+          }
+        });
+        plugin.crossPlatformRoot = plugin.settings.rootDir.replace(/\\/gim, '/');
+
+        const imagesToProcess = folders.reduce((out, folder) => {
+          const relGlob = folder.src.replace('.', '').replace(/\*/g, '');
+
+          fs.ensureDirSync(path.join(plugin.settings.distDir, folder.output));
+          const files = glob.sync(path.join(plugin.settings.rootDir, folder.src));
+          if (Array.isArray(files)) {
+            files
+              .filter((file) => imageFileTypes.includes(file.split('.').pop().toLowerCase()))
+              .filter((file) => !file.split('/').pop().includes('-ejs'))
+              .forEach((file) => {
+                const crossPlatformFile = file.replace(plugin.crossPlatformRoot, '');
+
+                const name = crossPlatformFile.replace(relGlob, '');
+
+                const rel = crossPlatformFile.replace(plugin.settings.rootDir, '').replace(relGlob, folder.output);
+
+                const [nameNoExt, ext] = name.split('.');
+
+                const [relNameNoExt] = rel.split('.');
+
+                const baseDir = path.join(plugin.settings.distDir, folder.output);
+                fs.ensureDirSync(baseDir);
+                out.push({
+                  src: file,
+                  rel,
+                  ext,
+                  publicPrefix: path.join(baseDir, nameNoExt),
+                  cachePrefix:
+                    plugin.config.cacheFolder &&
+                    path.join(plugin.settings.rootDir, relNameNoExt.replace(folder.output, plugin.config.cacheFolder)),
+                });
+              });
+          }
+          return out;
+        }, []);
+
+        plugin.imagesToProcess = imagesToProcess;
+      }
+    }
+
+    return plugin;
+  },
+
   shortcodes: [
     {
       shortcode: 'picture',
       run: ({ props, plugin, request }) => {
-        const { src, ...options } = {
-          ...props,
-        };
+        const { src, ...options } = props;
 
         if (!src) {
           throw new Error(`elderjs-plugin-images: picture shortcode requires src. ${JSON.stringify(request)}`);
@@ -176,134 +338,44 @@ const plugin = {
     {
       hook: 'bootstrap',
       name: 'processImages',
-      description: 'Add parsed .md content and data to the data object',
+      description: 'Process images and update manifest if not using an external manifest.',
       priority: 100,
-      run: async ({ plugin, settings, helpers }) => {
-        if (plugin.requestedImages) {
-          const workerpool = require('workerpool');
-          let resizeWorker = workerpool.pool(path.resolve(__dirname, './resizeWorker.js'));
+      run: async ({ plugin, settings }) => {
+        if (plugin.imagesToProcess && Array.isArray(plugin.imagesToProcess) && plugin.imagesToProcess.length > 0) {
+          console.log(`elderjs-plugin-image: Processing ${plugin.imagesToProcess.length} local source images.`);
+
           const { scales, widths } = plugin.config;
-
-          console.log(`elderjs-plugin-image: Processing ${plugin.requestedImages.length} source images.`);
-
-          let i = 0;
-
-          const toProcess = [];
-          const toProcessPlaceholders = [];
-          const toProcessSvgs = [];
-
-          for (const file of plugin.requestedImages) {
-            const fileTypes = [...plugin.config.fileTypes];
-            if (file.ext === 'png') {
-              fileTypes.push(file.ext);
-            } else if (file.ext === 'jpeg' || file.ext === 'jpg') {
-              fileTypes.push('jpeg');
-            }
-
-            if (!plugin.manifest[file.rel]) {
-              const original = await sharp(file.src).toBuffer({ resolveWithObject: true });
-              plugin.manifest[file.rel] = {
-                width: original.info.width,
-                height: original.info.height,
-                format: original.info.format,
-                original: file.rel,
-                sizes: [],
-              };
-            }
-
-            // copy to public folder if it doesn't exist
-            const publicFolderDest = `${file.publicPrefix}.${file.ext}`;
-            if (!fs.existsSync(publicFolderDest)) {
-              fs.copyFileSync(file.src, publicFolderDest);
-            }
-
-            const widthsToProcess = [...widths];
-
-            // if original isn't wider, buid one with a max width of the original.
-            if (plugin.manifest[file.rel].width < plugin.largestWidth) {
-              widthsToProcess.push(plugin.manifest[file.rel].width);
-            }
-
-            for (const width of widthsToProcess) {
-              if (plugin.manifest[file.rel].width < width) continue;
-              for (const scale of scales) {
-                if (plugin.manifest[file.rel].width < width * scale) continue;
-                for (const fileType of fileTypes) {
-                  // const resizeRelative = `${getPrefix(file.rel, file.publicPrefix)}${getSuffix(
-                  //   width,
-                  //   scale,
-                  //   fileType,
-                  // )}`;
-
-                  // // check to make sure we don't need to resize this again.
-                  // const sizeExsists = plugin.manifest[file.rel].sizes.find((size) => size.relative === resizeRelative);
-                  // if (sizeExsists) continue;
-
-                  const payload = [
-                    file.rel,
-                    file.src,
-                    file.publicPrefix,
-                    file.cachePrefix,
-                    width,
-                    scale,
-                    fileType,
-                    plugin.config.quality,
-                  ];
-                  toProcess.push(resizeWorker.exec('resize', payload));
-                  i += 1;
-                }
-              }
-            }
-
-            if (plugin.config.placeholder) {
-              if (!plugin.manifest[file.rel].placeholder) {
-                const payload = [file.rel, file.src, JSON.stringify(plugin.config.placeholder)];
-                toProcessPlaceholders.push(resizeWorker.exec('placeholder', payload));
-              }
-              if (plugin.config.svg && !plugin.manifest[file.rel].svg) {
-                const payloadSvg = [
-                  file.rel,
-                  file.src,
-                  file.publicPrefix,
-                  file.cachePrefix,
-                  JSON.stringify(plugin.config.svg),
-                ];
-                toProcessSvgs.push(resizeWorker.exec('svg', payloadSvg));
-              }
-            }
-          }
-
-          const processed = await Promise.all(toProcess);
-          const placeholders = await Promise.all(toProcessPlaceholders);
-          const svgs = await Promise.all(toProcessSvgs);
-
-          await resizeWorker.terminate();
-          processed.forEach(({ rel, ...resize }) => {
-            if (!plugin.manifest[rel].sizes.find((size) => size.relative === resize.relative)) {
-              plugin.manifest[rel].sizes.push(resize);
-            }
-          });
-
-          placeholders.forEach(({ rel, placeholder, error }) => {
-            if (error) throw error;
-            plugin.manifest[rel].placeholder = placeholder;
-          });
-
-          svgs.forEach(({ rel, svg, error }) => {
-            if (error) throw error;
-            plugin.manifest[rel].svg = svg;
+          plugin.manifest = await processImages({
+            manifest: plugin.manifest,
+            images: plugin.imagesToProcess,
+            widths,
+            scales,
+            s3: plugin.config.s3,
           });
 
           fs.writeJsonSync(path.join(settings.rootDir, plugin.config.imageManifest), plugin.manifest);
-          console.log(`elderjs-plugin-image: Done. Updated manifest.`);
+          console.log(`elderjs-plugin-image: Updated manifest.`);
 
+          return {
+            plugin,
+          };
+        }
+      },
+    },
+    {
+      hook: 'bootstrap',
+      name: 'processImages',
+      description: 'Populate image store and make it available on the plugin.',
+      priority: 99,
+      run: async ({ plugin, helpers }) => {
+        if (plugin.manifest) {
           plugin.imageStore = imageStore(plugin.manifest, plugin);
+          console.log(`elderjs-plugin-image: Done.`);
           return {
             helpers: {
               ...helpers,
-              images: imageStore(plugin.manifest, plugin),
+              images: plugin.imageStore,
             },
-            plugin,
           };
         }
       },
@@ -387,6 +459,7 @@ const plugin = {
       },
     },
   ],
+  processImages,
 };
 
 module.exports = plugin;

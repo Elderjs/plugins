@@ -31,12 +31,13 @@
     "vanilla-lazyload": "^17.1.2"
   },
   "dependencies": {
+    "aws-sdk": "^2.922.0",
     "fs-extra": "^9.0.1",
-    "svgo": "^1.3.2",
-    "sharp": "^0.26.0",
-    "potrace": "^2.1.8",
+    "glob": "^7.1.6",
     "mini-svg-data-uri": "^1.2.3",
-    "workerpool": "^6.0.0",
-    "glob": "^7.1.6"
+    "potrace": "^2.1.8",
+    "sharp": "^0.26.0",
+    "svgo": "^1.3.2",
+    "workerpool": "^6.0.0"
   }
 }

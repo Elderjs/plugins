@@ -39,9 +39,9 @@ const imageStore = (manifest, plugin) => {
 
         picture += `</picture>`;
 
-        let pictureWithWrap = `<div class="ejs" style="padding-bottom: ${
-          Math.round((file.height / file.width) * 10000) / 100
-        }%;">`;
+        let pictureWithWrap = `<div class="ejs" ${
+          plugin.addStyles ? `style="padding-bottom: ${Math.round((file.height / file.width) * 10000) / 100}%;"` : ''
+        }>`;
 
         if (plugin.config.placeholder) {
           pictureWithWrap += `<div class="placeholder" style="background-image: url('${

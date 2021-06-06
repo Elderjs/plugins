@@ -250,6 +250,9 @@ const plugin = {
       plugin.config.scales = defaultScales;
     }
 
+    // if false the plugin shouldn't add any of it's own styles.
+    plugin.addStyles = typeof plugin.cssString === 'string' && plugin.cssString.length > 0;
+
     plugin.imagesToProcess = []; // no images to process by default
     plugin.manifest = {};
 
@@ -443,7 +446,7 @@ const plugin = {
       priority: 50,
 
       run: async ({ cssStack, plugin }) => {
-        if (plugin.shouldAddCodeDependencies) {
+        if (plugin.shouldAddCodeDependencies && plugin.addStyles) {
           cssStack.push({
             source: 'elderPluginImages',
             string: plugin.config.cssString,

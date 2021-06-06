@@ -127,7 +127,8 @@ plugins: {
 
 ## FAQ:
 
-- Hpw to disable Placeholder: set `placeholder: false` in your config.
+- How to disable placeholder: set `placeholder: false` in your config.
+- How to disabled padding on the `.ejs` class. Set `cssString:false`. This will disable the plugin from generating any css which gives you full control and will help keep your site from being impacted by future css changes.
 
 ## Full Config:
 

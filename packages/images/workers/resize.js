@@ -1,97 +1,41 @@
 const sharp = require('sharp');
 const fs = require('fs-extra');
-const workerpool = require('workerpool');
-const getSuffix = require('./utils/getSuffix');
-const getPrefix = require('./utils/getPrefix');
-const svgPlaceholder = require('./utils/svgPlaceholder');
 const AWS = require('aws-sdk');
 
-const asyncS3PutObject = function (s3, params) {
-  return new Promise((resolve, reject) => {
-    // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    s3.putObject({ ...params }, (err, data) => {
-      resolve({ err, data });
-    });
-  });
-};
+const getSuffix = require('../utils/getSuffix');
+const getPrefix = require('../utils/getPrefix');
+const asyncS3PutObject = require('../utils/asyncS3PutObject');
+const getS3Params = require('../utils/getS3Params');
 
-const saveOrigionalToS3 = async (rel, src, s3String) => {
-  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL } = parseS3String(s3String);
-
-  const original = await sharp(src).toBuffer({ resolveWithObject: true });
-
-  const s3 = new AWS.S3({
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-    signatureVersion: 'v4',
-  });
-
-  const Key = `originals/${rel.substr(1)}`;
-  await asyncS3PutObject(s3, {
-    Body: original.data,
-    ContentType: `image/${original.info.format}`,
-    Bucket: S3_BUCKET,
-    Key,
-  });
-
-  return `${S3_BUCKET_URL}/${Key}`;
-};
-
-const svg = async (rel, src, publicPrefix, cachePrefix, opts = {}) => {
-  try {
-    const options = JSON.parse(opts);
-
-    const svgForResize = await resize(rel, src, publicPrefix, cachePrefix, 150, 1, 'jpeg', 70);
-
-    const svg = await svgPlaceholder(svgForResize.public, options);
-
-    return { rel, svg, error: null };
-  } catch (e) {
-    return { error: e };
-  }
-};
-
-const placeholder = async (rel, src, opts = {}) => {
-  try {
-    const options = JSON.parse(opts);
-
-    const place = await sharp(src).resize(options.resize).jpeg(options.jpeg).toBuffer({ resolveWithObject: false });
-
-    return { rel, placeholder: `data:image/jpeg;base64,${place.toString('base64')}`, error: null };
-  } catch (e) {
-    return { error: e };
-  }
-};
-
-const parseS3String = (s3String) => {
-  let s3Parsed;
-  try {
-    s3Parsed = JSON.parse(s3String);
-  } catch (e) {
-    // silence
-  }
-
-  return {
-    AWS_ACCESS_KEY_ID: s3Parsed.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: s3Parsed.AWS_SECRET_ACCESS_KEY,
-    S3_BUCKET: s3Parsed.S3_BUCKET,
-    S3_BUCKET_URL: s3Parsed.S3_BUCKET_URL,
-  };
-};
-
-// unfortunately workerpool makes you pass variables in an array.
-const resize = async (rel, src, publicPrefix, cachePrefix, width, scale, fileType, quality, s3String) => {
+const resize = async ({
+  rel,
+  src: uncheckedSrc,
+  publicPrefix = '',
+  cachePrefix = '',
+  width,
+  scale,
+  fileType,
+  quality,
+  s3: s3Params,
+  debug,
+}) => {
   // Prep common stuff
   const prefix = getPrefix(rel, publicPrefix);
   const suffix = getSuffix(width, scale, fileType);
   let cacheLocation = `${cachePrefix}${suffix}`;
   let publicLocation = `${publicPrefix}${suffix}`;
-  const relative = `${prefix}${suffix}`;
+  let relative = `${prefix}${suffix}`;
 
-  // check if we should use s3.
+  src = uncheckedSrc;
+  // convert Array buffer if needed.
+  if (typeof uncheckedSrc !== 'string') {
+    src = Buffer.from(uncheckedSrc);
+  }
+
   let s3;
 
-  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL } = parseS3String(s3String);
+  // check if we should use s3.
+  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL, USE_S3_HOSTING } = getS3Params(s3Params);
   if (AWS_ACCESS_KEY_ID && AWS_SECRET_ACCESS_KEY && S3_BUCKET && S3_BUCKET_URL) {
     s3 = new AWS.S3({
       accessKeyId: AWS_ACCESS_KEY_ID,
@@ -102,10 +46,11 @@ const resize = async (rel, src, publicPrefix, cachePrefix, width, scale, fileTyp
     //overwrite the cache and public prefix as they'll be going to the s3 bucket.
     publicLocation = `${S3_BUCKET_URL}${relative}`;
     cacheLocation = `${S3_BUCKET_URL}${relative}`;
+
+    if (USE_S3_HOSTING) relative = `${S3_BUCKET_URL}${relative}`;
   }
 
   let image;
-
   // check for a cached image on the local server.
   let cachedImage = false;
   if (!s3 && cachePrefix && fs.existsSync(cacheLocation)) {
@@ -206,14 +151,9 @@ const resize = async (rel, src, publicPrefix, cachePrefix, width, scale, fileTyp
     out.width = out.width / scale;
   }
 
-  console.log(`Completed ${relative}`);
+  if (debug) console.log(`Completed ${relative}`, out);
 
   return out;
 };
 
-workerpool.worker({
-  resize: resize,
-  placeholder: placeholder,
-  svg: svg,
-  saveOrigionalToS3: saveOrigionalToS3,
-});
+module.exports = resize;

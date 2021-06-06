@@ -28,16 +28,36 @@ const defaultScales = [1, 2];
 // },
 
 // extracted so that it can accept a buffer and be used in other contexts via importing.
-const processImages = async ({ manifest = {}, images = [], widths = defaultWidths, scales = defaultScales, s3 }) => {
+const processImages = async ({
+  manifest = {},
+  images = [],
+  widths = defaultWidths,
+  scales = defaultScales,
+  s3,
+  debug = false,
+}) => {
   try {
-    const workerpool = require('workerpool');
-    const s3String = JSON.stringify(s3 || {});
+    const WorkerNodes = require('worker-nodes');
+
+    const workerSettings = {
+      maxTasksPerWorker: 5,
+    };
+
+    const svgWorker = new WorkerNodes(path.resolve(__dirname, './workers/svg.js'), workerSettings);
+    const placeholderWorker = new WorkerNodes(path.resolve(__dirname, './workers/placeholder.js'), workerSettings);
+    const originalS3Worker = new WorkerNodes(path.resolve(__dirname, './workers/saveOriginalToS3.js'), {
+      ...workerSettings,
+      autoStart: false,
+    });
+    const resizeWorker = new WorkerNodes(path.resolve(__dirname, './workers/resize.js'), workerSettings);
+
+    const largestWidth = Math.max.apply(Math, widths);
 
     const toProcess = [];
     const toProcessPlaceholders = [];
     const toProcessSvgs = [];
 
-    let resizeWorker = workerpool.pool(path.resolve(__dirname, './resizeWorker.js'));
+    if (debug) console.log(`s3 settings`, s3);
 
     for (const file of images) {
       if (!s3) {
@@ -48,16 +68,17 @@ const processImages = async ({ manifest = {}, images = [], widths = defaultWidth
         }
       }
 
-      // if uploading to s3
-      let s3Rel;
-
-      if (s3) {
-        s3Rel = await resizeWorker.exec('saveOrigionalToS3', [file.rel, file.src, s3String]);
-      }
-
       if (!manifest[file.rel]) {
         // imageLocation
         const original = await sharp(file.src).toBuffer({ resolveWithObject: true });
+
+        // if uploading to s3
+        let s3Rel;
+        if (s3) {
+          s3Rel = await originalS3Worker.call({ rel: file.rel, src: original.data, s3, debug });
+        }
+
+        if (debug) console.log('s3Rel', s3Rel);
 
         manifest[file.rel] = {
           width: original.info.width,
@@ -78,8 +99,8 @@ const processImages = async ({ manifest = {}, images = [], widths = defaultWidth
 
       const widthsToProcess = [...widths];
 
-      // if original isn't wider, add one with a max width of the original.
-      if (manifest[file.rel].width < plugin.largestWidth) {
+      // if original isn't wider, add one with a max width desired.
+      if (manifest[file.rel].width < largestWidth) {
         widthsToProcess.push(manifest[file.rel].width);
       }
 
@@ -98,36 +119,19 @@ const processImages = async ({ manifest = {}, images = [], widths = defaultWidth
             // const sizeExsists = manifest[file.rel].sizes.find((size) => size.relative === resizeRelative);
             // if (sizeExsists) continue;
 
-            const payload = [
-              file.rel,
-              file.src,
-              file.publicPrefix,
-              file.cachePrefix,
-              width,
-              scale,
-              fileType,
-              plugin.config.quality,
-              s3String,
-            ];
-            toProcess.push(resizeWorker.exec('resize', payload));
+            toProcess.push(
+              resizeWorker.call({ ...file, width, scale, fileType, quality: plugin.config.quality, s3, debug }),
+            );
           }
         }
       }
 
       if (plugin.config.placeholder) {
         if (!manifest[file.rel].placeholder) {
-          const payload = [file.rel, file.src, JSON.stringify(plugin.config.placeholder)];
-          toProcessPlaceholders.push(resizeWorker.exec('placeholder', payload));
+          toProcessPlaceholders.push(placeholderWorker.call({ ...file, options: plugin.config.placeholder, debug }));
         }
         if (plugin.config.svg && !manifest[file.rel].svg) {
-          const payloadSvg = [
-            file.rel,
-            file.src,
-            file.publicPrefix,
-            file.cachePrefix,
-            JSON.stringify(plugin.config.svg),
-          ];
-          toProcessSvgs.push(resizeWorker.exec('svg', payloadSvg));
+          toProcessSvgs.push(svgWorker.call({ ...file, options: plugin.config.svg, debug }));
         }
       }
     }
@@ -136,7 +140,11 @@ const processImages = async ({ manifest = {}, images = [], widths = defaultWidth
     const placeholders = await Promise.all(toProcessPlaceholders);
     const svgs = await Promise.all(toProcessSvgs);
 
+    await svgWorker.terminate();
+    await placeholderWorker.terminate();
+    await originalS3Worker.terminate();
     await resizeWorker.terminate();
+
     processed.forEach(({ rel, ...resize }) => {
       if (!manifest[rel].sizes.find((size) => size.relative === resize.relative)) {
         manifest[rel].sizes.push(resize);
@@ -153,7 +161,7 @@ const processImages = async ({ manifest = {}, images = [], widths = defaultWidth
       manifest[rel].svg = svg;
     });
 
-    console.log(manifest);
+    if (debug) console.log('Generated Manifest', manifest);
 
     return manifest;
   } catch (e) {
@@ -166,6 +174,7 @@ const plugin = {
   name: '@elderjs/plugin-images',
   description: 'Resizes images. ',
   config: {
+    debug: false,
     s3: undefined,
     folders: [
       {
@@ -229,6 +238,7 @@ const plugin = {
     vanillaLazyLocation: '/static/vanillaLazy.min.js', // vanillaLazy's location relative to the root of the site. The plugin will move it to your public folder for you.
   },
   init: async (plugin) => {
+    console.log(plugin);
     plugin.externalManifest = false;
 
     if (plugin.config.widths.length === 0) {
@@ -242,13 +252,11 @@ const plugin = {
     plugin.imagesToProcess = []; // no images to process by default
     plugin.manifest = {};
 
-    plugin.largestWidth = Math.max.apply(Math, plugin.config.widths);
-
     if (typeof plugin.config.imageManifest === 'function' || (plugin.init && typeof plugin.init.then === 'function')) {
       // fetch the external manifest
       plugin.externalManifest = true;
       plugin.manifest = await plugin.config.imageManifest(plugin.config);
-      console.log(`EXTERNAL MANIFEST`, plugin.manifest);
+      console.log(`elderjs-plugin-images: loaded external manifest`);
     } else {
       const manifestLoc = path.join(plugin.settings.rootDir, plugin.config.imageManifest);
       if (fs.existsSync(manifestLoc)) {
@@ -342,7 +350,7 @@ const plugin = {
       priority: 100,
       run: async ({ plugin, settings }) => {
         if (plugin.imagesToProcess && Array.isArray(plugin.imagesToProcess) && plugin.imagesToProcess.length > 0) {
-          console.log(`elderjs-plugin-image: Processing ${plugin.imagesToProcess.length} local source images.`);
+          console.log(`elderjs-plugin-images: Processing ${plugin.imagesToProcess.length} local source images.`);
 
           const { scales, widths } = plugin.config;
           plugin.manifest = await processImages({
@@ -351,10 +359,13 @@ const plugin = {
             widths,
             scales,
             s3: plugin.config.s3,
+            debug: plugin.config.debug,
           });
 
-          fs.writeJsonSync(path.join(settings.rootDir, plugin.config.imageManifest), plugin.manifest);
-          console.log(`elderjs-plugin-image: Updated manifest.`);
+          if (!plugin.debug) {
+            fs.writeJsonSync(path.join(settings.rootDir, plugin.config.imageManifest), plugin.manifest);
+            console.log(`elderjs-plugin-images: Updated manifest.`);
+          }
 
           return {
             plugin,
@@ -400,7 +411,7 @@ const plugin = {
       hook: 'stacks',
       name: 'elderPluginImagesManagevanillaLazy',
       description: 'Adds vanillaLazy and makes sure it is in the public folder if requested by plugin.',
-      priority: 2, // we want it to be as soon as possible
+      priority: 99, // we want it to be as soon as possible
       run: async ({ customJsStack, plugin, settings }) => {
         if (plugin.config.addVanillaLazy) {
           //node_modules/vanilla-lazyload/dist/lazyload.min.js

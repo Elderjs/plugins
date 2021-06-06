@@ -322,6 +322,8 @@ const plugin = {
       }
     }
 
+    plugin.shouldAddCodeDependencies = false;
+
     return plugin;
   },
 
@@ -384,6 +386,7 @@ const plugin = {
         if (plugin.manifest) {
           plugin.imageStore = imageStore(plugin.manifest, plugin);
           console.log(`elderjs-plugin-images: Done.`);
+
           return {
             helpers: {
               ...helpers,
@@ -395,29 +398,13 @@ const plugin = {
       },
     },
     {
-      hook: 'stacks',
-      name: 'addElderPluginImagesCss',
-      description: 'Adds default css to the css stack',
-      priority: 50,
-
-      run: async ({ cssStack, plugin }) => {
-        cssStack.push({
-          source: 'elderPluginImages',
-          string: plugin.config.cssString,
-        });
-        return {
-          cssStack,
-        };
-      },
-    },
-    {
-      hook: 'stacks',
-      name: 'elderPluginImagesManagevanillaLazy',
-      description: 'Adds vanillaLazy and makes sure it is in the public folder if requested by plugin.',
-      priority: 99, // we want it to be as soon as possible
-      run: async ({ customJsStack, plugin, settings }) => {
+      hook: 'bootstrap',
+      name: 'processImages',
+      description:
+        'Populate image store and make it available on the plugin. Also make plugin internal helpers available.',
+      priority: 99,
+      run: async ({ plugin, settings }) => {
         if (plugin.config.addVanillaLazy) {
-          //node_modules/vanilla-lazyload/dist/lazyload.min.js
           const vanillaLazyNodeModules = path.join(
             settings.rootDir,
             'node_modules',
@@ -433,7 +420,47 @@ const plugin = {
               throw new Error(`Unable to add vanillaLazy to public. Not found at ${vanillaLazyNodeModules}`);
             }
           }
+        }
+      },
+    },
+    {
+      hook: 'request',
+      name: 'resetPluginUsed',
+      description:
+        'The plugin maintains a state that needs to be reset each request in order to intelligently add css/js.',
+      priority: 50,
+      run: async ({ plugin }) => {
+        plugin.shouldAddCodeDependencies = false;
+        return {
+          plugin,
+        };
+      },
+    },
+    {
+      hook: 'stacks',
+      name: 'addElderPluginImagesCss',
+      description: 'Adds default css to the css stack',
+      priority: 50,
 
+      run: async ({ cssStack, plugin }) => {
+        if (plugin.shouldAddCodeDependencies) {
+          cssStack.push({
+            source: 'elderPluginImages',
+            string: plugin.config.cssString,
+          });
+          return {
+            cssStack,
+          };
+        }
+      },
+    },
+    {
+      hook: 'stacks',
+      name: 'elderPluginImagesManagevanillaLazy',
+      description: 'Adds vanillaLazy and makes sure it is in the public folder if requested by plugin.',
+      priority: 99, // we want it to be as soon as possible
+      run: async ({ customJsStack, plugin, settings }) => {
+        if (plugin.config.addVanillaLazy && plugin.shouldAddCodeDependencies) {
           customJsStack.push({
             source: 'elderjs-plugin-images',
             string: `<script>

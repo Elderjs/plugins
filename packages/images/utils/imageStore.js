@@ -17,6 +17,8 @@ const imageStore = (manifest, plugin) => {
         const { maxWidth, class: classStr, alt, wrap } = { maxWidth: 2000, class: '', alt: '', ...opts };
         const file = manifest[path];
 
+        plugin.shouldAddCodeDependencies = true;
+
         //todo title
 
         const { sizes, srcsets } = getSrcsets({

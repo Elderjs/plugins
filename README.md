@@ -22,6 +22,8 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 
 - [elderjs-plugin-google-fonts](https://github.com/kevmodrome/elderjs-plugin-google-fonts): This plugin fetches fonts from google fonts, generates font-face definitions and inlines those in the head tag.
 
+- [elderjs-plugin-blog-pagination](https://github.com/noxasch/elderjs-plugin-blog-pagination): This plugin help you to easily generate your blog pagination that use @elderjs/plugin-markdown to generate post from markdown.
+
 - Have you written a plugin? If so, let us know we'd love to include it here.
 
 ## Writing A Plugin:

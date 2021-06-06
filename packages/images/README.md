@@ -125,6 +125,10 @@ plugins: {
 }
 ```
 
+## FAQ:
+
+- Hpw to disable Placeholder: set `placeholder: false` in your config.
+
 ## Full Config:
 
 ```javascript

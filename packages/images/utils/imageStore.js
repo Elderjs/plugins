@@ -41,9 +41,11 @@ const imageStore = (manifest, plugin) => {
           Math.round((file.height / file.width) * 10000) / 100
         }%;">`;
 
-        pictureWithWrap += `<div class="placeholder" style="background-image: url('${
-          plugin.config.svg ? file.svg : file.placeholder
-        }')"></div>`;
+        if (plugin.config.placeholder) {
+          pictureWithWrap += `<div class="placeholder" style="background-image: url('${
+            plugin.config.svg ? file.svg : file.placeholder
+          }')"></div>`;
+        }
 
         // if (plugin.config.svg && file.svg) {
         //   pictureWithWrap += `<img class="placeholder" src="${file.svg}" />`;

@@ -33,6 +33,7 @@ const resize = async ({
   }
 
   let s3;
+  let s3Location;
 
   // check if we should use s3.
   const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL, USE_S3_HOSTING } = getS3Params(s3Params);
@@ -47,7 +48,7 @@ const resize = async ({
     publicLocation = `${S3_BUCKET_URL}${relative}`;
     cacheLocation = `${S3_BUCKET_URL}${relative}`;
 
-    if (USE_S3_HOSTING) relative = `${S3_BUCKET_URL}${relative}`;
+    s3Location = `${S3_BUCKET_URL}${relative}`;
   }
 
   let image;
@@ -120,7 +121,7 @@ const resize = async ({
           Bucket: S3_BUCKET,
           Key: relative.substr(1),
         });
-        console.log(`s3Response`, r);
+        if (debug) console.log(`s3Response`, r);
       } catch (e) {
         console.error(e);
       }
@@ -150,6 +151,9 @@ const resize = async ({
     out.height = out.height / scale;
     out.width = out.width / scale;
   }
+
+  // support USE_S3_HOSTING
+  if (s3) out.s3 = s3Location;
 
   if (debug) console.log(`Completed ${relative}`, out);
 

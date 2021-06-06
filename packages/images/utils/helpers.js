@@ -1,4 +1,4 @@
-function getSrcsets(maxWidth, fileSizes) {
+function getSrcsets({ maxWidth, fileSizes, key = 'relative' }) {
   const sizes = [];
   const srcsets = fileSizes.reduce(
     (out, cv) => {
@@ -8,8 +8,8 @@ function getSrcsets(maxWidth, fileSizes) {
 
       let thisSrcSet = out[cv.format][cv.width] || '';
       // let thisSrcSet = '';
-      if (cv.scale === 1) thisSrcSet = `${cv.relative}${thisSrcSet}`;
-      if (cv.scale === 2 && thisSrcSet.length) thisSrcSet = `${thisSrcSet}, ${cv.relative} 2x`;
+      if (cv.scale === 1) thisSrcSet = `${cv[key]}${thisSrcSet}`;
+      if (cv.scale === 2 && thisSrcSet.length) thisSrcSet = `${thisSrcSet}, ${cv[key]} 2x`;
       out[cv.format][cv.width] = thisSrcSet;
       return out;
     },

@@ -19,7 +19,11 @@ const imageStore = (manifest, plugin) => {
 
         //todo title
 
-        const { sizes, srcsets } = getSrcsets(maxWidth, file.sizes);
+        const { sizes, srcsets } = getSrcsets({
+          maxWidth,
+          fileSizes: file.sizes,
+          key: plugin.config.s3 && plugin.config.s3.USE_S3_HOSTING ? 's3' : 'relative',
+        });
         const sources = getSources(sizes, srcsets);
 
         let picture = `<picture class="${classStr ? ` ${classStr}` : ''}">`;
@@ -54,9 +58,10 @@ const imageStore = (manifest, plugin) => {
         return pictureWithWrap;
       } catch (e) {
         if (e.message.includes("'sizes' of undefined")) {
-          throw new Error(`Cannot find source image with ${path}`);
+          console.log('manifest keys', Object.keys(manifest));
+          throw new Error(`Cannot find source image with ${path} in manifest. (logged above)`);
         } else {
-          throw new Error(e);
+          throw e;
         }
       }
     },

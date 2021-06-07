@@ -6,7 +6,5 @@ module.exports = (s3 = {}) => {
     S3_BUCKET_URL: s3['S3_BUCKET_URL'],
     USE_S3_HOSTING: s3['USE_S3_HOSTING'],
   };
-
-  console.log('getS3Params', s3, result);
   return result;
 };

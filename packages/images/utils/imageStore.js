@@ -17,9 +17,15 @@ const imageStore = (manifest, plugin) => {
         const { maxWidth, class: classStr, alt, wrap } = { maxWidth: 2000, class: '', alt: '', ...opts };
         const file = manifest[path];
 
+        plugin.shouldAddCodeDependencies = true;
+
         //todo title
 
-        const { sizes, srcsets } = getSrcsets(maxWidth, file.sizes);
+        const { sizes, srcsets } = getSrcsets({
+          maxWidth,
+          fileSizes: file.sizes,
+          key: plugin.config.s3 && plugin.config.s3.USE_S3_HOSTING ? 's3' : 'relative',
+        });
         const sources = getSources(sizes, srcsets);
 
         let picture = `<picture class="${classStr ? ` ${classStr}` : ''}">`;
@@ -33,13 +39,15 @@ const imageStore = (manifest, plugin) => {
 
         picture += `</picture>`;
 
-        let pictureWithWrap = `<div class="ejs" style="padding-bottom: ${
-          Math.round((file.height / file.width) * 10000) / 100
-        }%;">`;
+        let pictureWithWrap = `<div class="ejs" ${
+          plugin.addStyles ? `style="padding-bottom: ${Math.round((file.height / file.width) * 10000) / 100}%;"` : ''
+        }>`;
 
-        pictureWithWrap += `<div class="placeholder" style="background-image: url('${
-          plugin.config.svg ? file.svg : file.placeholder
-        }')"></div>`;
+        if (plugin.config.placeholder) {
+          pictureWithWrap += `<div class="placeholder" style="background-image: url('${
+            plugin.config.svg ? file.svg : file.placeholder
+          }')"></div>`;
+        }
 
         // if (plugin.config.svg && file.svg) {
         //   pictureWithWrap += `<img class="placeholder" src="${file.svg}" />`;
@@ -54,9 +62,10 @@ const imageStore = (manifest, plugin) => {
         return pictureWithWrap;
       } catch (e) {
         if (e.message.includes("'sizes' of undefined")) {
-          throw new Error(`Cannot find source image with ${path}`);
+          console.log('manifest keys', Object.keys(manifest));
+          throw new Error(`Cannot find source image with ${path} in manifest. (logged above)`);
         } else {
-          throw new Error(e);
+          throw e;
         }
       }
     },

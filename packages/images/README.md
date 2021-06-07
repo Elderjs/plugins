@@ -6,7 +6,7 @@ The core of this library offers much of the functionality of the well known `gat
 
 > **demo** For a demo of this plugin in action visit: [nicholasreese.com](https://nicholasreese.com) and look at the header and post images.
 
-> This plugin works on several production sites but hasn't been thoroughly tested for all edge cases. PRs are welcome.
+> This plugin works on several production sites but may still have rough edges. PRs are welcome.
 
 ## What This Plugin Does:
 

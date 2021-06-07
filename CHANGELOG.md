@@ -1,3 +1,17 @@
+# [1.0.0](https://github.com/Elderjs/plugins/compare/v0.1.44...v1.0.0) (2021-06-07)
+
+
+### Features
+
+* 🎸 allow for disabling of plugin styles ([08bf530](https://github.com/Elderjs/plugins/commit/08bf53021d9d86e437fc498a52dd6bdb7d3b5c7a))
+* 🎸 don't add js/css if picture shortcode hasn't run ([ea5ad76](https://github.com/Elderjs/plugins/commit/ea5ad761374d86a39e4bc8d90f2ad2bb1d7856f2))
+* 🎸 make placeholder optional ([0b28763](https://github.com/Elderjs/plugins/commit/0b287634203f4b7517535948aacf8942f27c8646))
+* 🎸 s3 support for display ([7131ea5](https://github.com/Elderjs/plugins/commit/7131ea5ecafff68f21bf76d8c524219d2382406e))
+* 🎸 S3 upload support, buffer support, library usage ([4a4f949](https://github.com/Elderjs/plugins/commit/4a4f949a6fb5cbc457068522873c5102d7bc4ad3))
+* 🎸 support s3 upload and external manifest files ([442da69](https://github.com/Elderjs/plugins/commit/442da69d9a120a92e0fca5bac2206a17de4c27c1))
+
+
+
 ## [0.1.44](https://github.com/Elderjs/plugins/compare/v0.1.43...v0.1.44) (2021-06-04)
 
 

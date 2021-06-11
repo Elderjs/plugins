@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-references",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Adds {{ref}} and {{referenceList}} shortcodes to Elder.js allowing you to add wikipedia style references to your content.",
   "keywords": [
     "elder.js",

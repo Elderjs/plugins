@@ -31,7 +31,7 @@ const plugin = {
         if (request.slug && request.realRoute) return `/random/${request.realRoute}/`;
         return `/random/`;
       },
-      all: async () => (notProduction ? [{ slug: '/random/' }] : []),
+      all: async ({ settings }) => (settings.server && notProduction ? [{ slug: '/random/' }] : []),
     },
   },
 

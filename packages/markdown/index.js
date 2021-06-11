@@ -53,7 +53,16 @@ const plugin = {
     if (plugin.config && Array.isArray(plugin.config.routes) && plugin.config.routes.length > 0) {
       for (const route of plugin.config.routes) {
         plugin.markdown[route] = [];
-        const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
+        const contentPath = plugin.config.contents[route] || null;
+        let mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
+        if (contentPath) {
+          mdsInRoute = path.resolve(plugin.settings.rootDir, contentPath);
+          if (!fs.existsSync(mdsInRoute)) {
+            throw new Error(`elderjs-plugin-markdown: Unable to load content path at ${mdsInRoute}`);
+          }
+        }
+        
+        // const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
         const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
 
         for (const file of mdFiles) {
@@ -124,6 +133,7 @@ const plugin = {
     //theme is the only option available - for now.
     useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
     createRoutes: true, // creates routes in allRequests based on collected md files.
+    contents: {}
   },
   shortcodes: [],
   hooks: [

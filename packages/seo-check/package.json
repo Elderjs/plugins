@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-seo-check",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Easily check your Elder.js site for common SEO issues. ",
   "keywords": [
     "seo",

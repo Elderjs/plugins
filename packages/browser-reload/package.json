@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-browser-reload",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reload your browser when your Elder.js server restarts.",
   "keywords": [
     "elder.js",

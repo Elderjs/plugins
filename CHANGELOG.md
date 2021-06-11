@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/Elderjs/plugins/compare/v1.0.0...v1.0.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* 🐛 no requests on production builds ([38c4880](https://github.com/Elderjs/plugins/commit/38c4880daa4111859d4a4c44d435c6c09214eefb))
+
+
+
 # [1.0.0](https://github.com/Elderjs/plugins/compare/v0.1.44...v1.0.0) (2021-06-07)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-critical-path-css",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easily generate critical path css for your Elder.js powered website.",
   "keywords": [
     "elder.js",

@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-images",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easily generate and manage responsive images for your Elder.js site.",
   "keywords": [
     "elderjs",

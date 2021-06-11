@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-random",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easily preview a random page of a route by visiting a single url. This plugin should be used exclusively for development.",
   "keywords": [
     "elderjs",

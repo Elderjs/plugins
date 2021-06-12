@@ -1,3 +1,21 @@
+## [1.0.2](https://github.com/Elderjs/plugins/compare/v1.0.1...v1.0.2) (2021-06-11)
+
+
+### Bug Fixes
+
+* 🐛 don't populate any routes for random in build mode ([9eb86e0](https://github.com/Elderjs/plugins/commit/9eb86e056f91749717155e0647f1d7324cbc132f))
+
+
+
+## [1.0.1](https://github.com/Elderjs/plugins/compare/v1.0.0...v1.0.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* 🐛 no requests on production builds ([38c4880](https://github.com/Elderjs/plugins/commit/38c4880daa4111859d4a4c44d435c6c09214eefb))
+
+
+
 # [1.0.0](https://github.com/Elderjs/plugins/compare/v0.1.44...v1.0.0) (2021-06-07)
 
 

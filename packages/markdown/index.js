@@ -62,7 +62,6 @@ const plugin = {
           }
         }
 
-        // const mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
         const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
 
         for (const file of mdFiles) {

@@ -27,6 +27,25 @@ plugins: {
 }
 ```
 
+## Example Config 
+```javascript
+plugins: {
+  '@elderjs/plugin-markdown': {
+    routes: ['articles'], // if all of your markdown lives in ./src/routes/blog/, you'd add 'blog' to this array.
+    contents: {
+      blog: 'src/contents/articles' // if you want to add custom path to your route relative to the root directory
+    }
+    slugFormatter: function(relativeFilePath, frontmatter) {
+      return false; // If needed, a custom slug for the url can be crafted from the relative path to the file and
+      // frontmatter in it (if any). slugFormatter must be a function and must return a string to be used.
+    },
+    useSyntaxHighlighting: false // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
+  }
+}
+```
+
+> **Caveat:** Currently, when your contents path  is outside of the src directory (eg: `rootdir/articles/` ) the dev server will not be able to pickup changes on your markdown files. However it can build just fine.
+
 ## Customizing the Defaults
 
 Below are the default settings of the plugin. You can adjust them to your needs.
@@ -36,6 +55,7 @@ plugins: {
 
   '@elderjs/plugin-markdown': {
     routes: [], // a list of routes, the plugin should look for markdown in.
+    contents: {}
     remarkPlugins: [
       frontmatter, // 'remark-frontmatter' package
       [extractFrontmatter, { name: 'frontmatter', yaml: yaml.parse }], // 'remark-extract-frontmatter' and 'yaml' packages.

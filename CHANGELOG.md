@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/Elderjs/plugins/compare/v1.0.2...v1.1.3) (2021-06-15)
+
+
+### Features
+
+* add markdown content route config ([#115](https://github.com/Elderjs/plugins/issues/115)) ([210e8e9](https://github.com/Elderjs/plugins/commit/210e8e9286ba31ee261628c882983024ae46b456)), closes [#61](https://github.com/Elderjs/plugins/issues/61)
+
+
+
 ## [1.0.2](https://github.com/Elderjs/plugins/compare/v1.0.1...v1.0.2) (2021-06-11)
 
 

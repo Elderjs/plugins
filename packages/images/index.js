@@ -286,15 +286,16 @@ const plugin = {
         plugin.crossPlatformRoot = plugin.settings.rootDir.replace(/\\/gim, '/');
 
         const imagesToProcess = folders.reduce((out, folder) => {
-          const relGlob = folder.src.replace('.', '').replace(/\*/g, '');
 
           fs.ensureDirSync(path.join(plugin.settings.distDir, folder.output));
-          const files = glob.sync(path.join(plugin.settings.rootDir, folder.src));
+          const files = glob.sync(path.join(plugin.settings.rootDir, folder.src + `.{${imageFileTypes.join(',')}}`));
           if (Array.isArray(files)) {
             files
-              .filter((file) => imageFileTypes.includes(file.split('.').pop().toLowerCase()))
               .filter((file) => !file.split('/').pop().includes('-ejs'))
               .forEach((file) => {
+                // fix manifest not found and wrong output folder when using **/*
+                const relGlob = file.replace(plugin.settings.rootDir, '').replace(file.split('/').pop(), '');
+
                 const crossPlatformFile = file.replace(plugin.crossPlatformRoot, '');
 
                 const name = crossPlatformFile.replace(relGlob, '');

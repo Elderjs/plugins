@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/Elderjs/plugins/compare/v1.1.3...v1.1.4) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 improve SEO check plugin ([b3add56](https://github.com/Elderjs/plugins/commit/b3add568aecc0068e6965719803165a450e3fdd1))
+
+
+
 ## [1.1.3](https://github.com/Elderjs/plugins/compare/v1.0.2...v1.1.3) (2021-06-15)
 
 

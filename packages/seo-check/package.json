@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.9",
-    "@nickreese/seo-lint": "^1.1.0"
+    "@nickreese/seo-lint": "^1.1.2"
   }
 }

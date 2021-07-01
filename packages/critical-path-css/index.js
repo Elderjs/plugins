@@ -134,6 +134,7 @@ const plugin = {
         }
       },
     },
+
     {
       hook: 'stacks',
       name: 'addCriticalPathCssToCssStack',

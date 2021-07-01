@@ -134,7 +134,6 @@ const plugin = {
         }
       },
     },
-
     {
       hook: 'stacks',
       name: 'addCriticalPathCssToCssStack',
@@ -157,7 +156,6 @@ const plugin = {
         }
       },
     },
-
     // above for including critical path css
 
     // below if for generating the critical path css

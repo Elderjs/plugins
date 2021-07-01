@@ -230,7 +230,6 @@ const plugin = {
               encoding: 'utf-8',
             });
           }
-
           return {
             plugin,
           };

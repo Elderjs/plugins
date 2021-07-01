@@ -219,7 +219,6 @@ const plugin = {
             ...plugin.config.critical,
             inline: false,
             html: htmlString,
-            minify: false,
             css: plugin.internal.cssLocations,
           });
 

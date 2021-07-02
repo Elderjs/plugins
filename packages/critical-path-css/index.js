@@ -137,20 +137,20 @@ const plugin = {
 
     {
       hook: 'stacks',
-      name: 'addCriticalPathCssToCssStack',
-      description: `If a route has a critical path css file it adds it to the cssStack so it is included. Highest priority because css after it will overwrite the critical path css.`,
+      name: 'addCriticalPathCssToHeadStack',
+      description: `If a route has a critical path css file it adds it to the headStack so it is included. Highest priority because css after it will overwrite the critical path css.`,
       priority: 100,
-      run: async ({ plugin, request, cssStack }) => {
+      run: async ({ plugin, request, headStack }) => {
         if (!plugin.internal.disable || !plugin.config.rebuilding) {
           const critCss = plugin.internal.criticalPathCss[request.route];
           if (critCss) {
-            cssStack.push({
-              source: 'hooksjs',
-              string: critCss,
-              priority: 100,
+            headStack.push({
+              source: 'criticalPathCss',
+              string: `<style type="text/css">${critCss}</style>`,
+              priority: 40,
             });
 
-            return { cssStack };
+            return { headStack };
           } else {
             console.error(`No critical path for ${request.route}`);
           }

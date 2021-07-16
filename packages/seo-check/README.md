@@ -63,7 +63,7 @@ These are only checked when Elder.js runs in build mode.
 - [x] H2 or H3 don't exist if an H1 is missing.
 - [x] H2 exists on the page
 - [x] h2 is less than 100 chars
-- [x] h2 is more than than 10 chars
+- [x] h2 is more than than 7 chars
 - [x] At least one of your h2s contains a single word from your
       title tag.
 - [x] h3 is less than 100 chars

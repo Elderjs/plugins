@@ -1,3 +1,25 @@
+## [1.1.6](https://github.com/Elderjs/plugins/compare/v1.1.5...v1.1.6) (2021-07-02)
+
+
+### Bug Fixes
+
+* 🐛 critical path css before elder.js's css ([8a923d3](https://github.com/Elderjs/plugins/commit/8a923d39c520c297e383475796ef293d45deee9b))
+
+
+
+## [1.1.5](https://github.com/Elderjs/plugins/compare/v1.1.4...v1.1.5) (2021-07-01)
+
+
+
+## [1.1.4](https://github.com/Elderjs/plugins/compare/v1.1.3...v1.1.4) (2021-06-28)
+
+
+### Bug Fixes
+
+* 🐛 improve SEO check plugin ([b3add56](https://github.com/Elderjs/plugins/commit/b3add568aecc0068e6965719803165a450e3fdd1))
+
+
+
 ## [1.1.3](https://github.com/Elderjs/plugins/compare/v1.0.2...v1.1.3) (2021-06-15)
 
 

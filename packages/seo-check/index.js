@@ -54,6 +54,7 @@ const plugin = {
       description: 'Check the elder.js response html for common SEO issues.',
       run: async ({ request, plugin, htmlString, settings }) => {
         if (notProd && settings.context !== 'build') {
+          plugin.tester.reset();
           const results = await plugin.tester.test(htmlString, request.permalink);
           if (results.length > 0) {
             // eslint-disable-next-line node/no-unsupported-features/node-builtins

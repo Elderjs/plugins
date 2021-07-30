@@ -24,6 +24,8 @@ In this repo you'll find [Elder.js](https://elderguide.com/tech/elderjs/) plugin
 
 - [elderjs-plugin-blog-pagination](https://github.com/noxasch/elderjs-plugin-blog-pagination): This plugin help you to easily generate your blog pagination that use @elderjs/plugin-markdown to generate post from markdown.
 
+- [RSS Feed](https://github.com/lukaskawerau/plugin-rss): Add an RSS feed to your Elder.js blog. Requires the [Markdown](https://github.com/Elderjs/plugins/tree/master/packages/markdown) Plugin.
+
 - Have you written a plugin? If so, let us know we'd love to include it here.
 
 ## Writing A Plugin:

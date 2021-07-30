@@ -34,6 +34,7 @@ const processImages = async ({
   images = [],
   widths = defaultWidths,
   scales = defaultScales,
+  plugin = {},
   s3,
   debug,
 }) => {
@@ -286,7 +287,6 @@ const plugin = {
         plugin.crossPlatformRoot = plugin.settings.rootDir.replace(/\\/gim, '/');
 
         const imagesToProcess = folders.reduce((out, folder) => {
-
           fs.ensureDirSync(path.join(plugin.settings.distDir, folder.output));
           const files = glob.sync(path.join(plugin.settings.rootDir, folder.src + `.{${imageFileTypes.join(',')}}`));
           if (Array.isArray(files)) {
@@ -365,6 +365,7 @@ const plugin = {
             images: plugin.imagesToProcess,
             widths,
             scales,
+            plugin,
             s3: plugin.config.s3,
             debug: plugin.config.debug,
           });

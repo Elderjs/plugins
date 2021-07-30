@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/Elderjs/plugins/compare/v1.1.6...v1.2.0) (2021-07-30)
+
+
+### Features
+
+* allow path/**/* usage for images src ([#118](https://github.com/Elderjs/plugins/issues/118)) ([a2e2688](https://github.com/Elderjs/plugins/commit/a2e2688457add5a725201f1599bb9c471997e92a)), closes [#61](https://github.com/Elderjs/plugins/issues/61) [#67](https://github.com/Elderjs/plugins/issues/67) [#119](https://github.com/Elderjs/plugins/issues/119)
+
+
+
 ## [1.1.6](https://github.com/Elderjs/plugins/compare/v1.1.5...v1.1.6) (2021-07-02)
 
 

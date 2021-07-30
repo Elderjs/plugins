@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-sitemap",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "Easily generate a sitemap for your Elder.js powered website.",
   "keywords": [
     "elder.js",

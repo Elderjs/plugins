@@ -39,7 +39,7 @@
     "remark-frontmatter": "^3.0.0",
     "remark-html": "^13.0.1",
     "remark-slug": "^6.0.0",
-    "shiki": "^0.2.6",
+    "shiki": "^0.9.6",
     "unist-util-visit": "^2.0.3",
     "yaml": "^1.10.0"
   }

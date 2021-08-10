@@ -149,7 +149,7 @@ const plugin = {
     routes: [],
     remarkPlugins: [], // if you define your own, you must define remarkHtml another html parser or you'll have issues. Order matters here.
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images it will replace all markdown images with the {{picture src="" alt="" /}} shortcode.
-    useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker.
+    useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/main/docs/themes.md - try dark-plus.
     //theme is the only option available - for now.
     useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
     createRoutes: true, // creates routes in allRequests based on collected md files.

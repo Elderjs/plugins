@@ -66,7 +66,7 @@ plugins: {
     // If you need to customize syntax highlighting, pass an options object instead of true
     // If you choose to pass your own remarkPlugins above, this feature is disabled - you can choose to copy out the code in rehype-shiki.js or roll your own syntax highlighting
     useSyntaxHighlighting: {
-      theme: 'nord' // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values - try material-theme-darker
+      theme: 'nord' // available themes: https://github.com/shikijs/shiki/blob/main/docs/themes.md - try dark-plus or github-light
       // theme is the only option available - for now.
     },
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.

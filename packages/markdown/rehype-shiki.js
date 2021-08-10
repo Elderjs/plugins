@@ -6,27 +6,16 @@ const visit = require('unist-util-visit');
 
 module.exports = (options) => {
   const settings = options || {};
-  const theme = settings.theme || 'nord';
-  let shikiTheme;
-
-  try {
-    shikiTheme = shiki.getTheme(theme);
-  } catch (_) {
-    try {
-      shikiTheme = shiki.loadTheme(theme);
-    } catch (_) {
-      throw new Error('Unable to load theme: ' + theme);
-    }
-  }
+  let theme = settings.theme || 'nord';
 
   const asyncHighlighter = shiki.getHighlighter({
-    theme: shikiTheme,
+    theme,
   });
 
   return async (tree) => {
     const highlighter = await asyncHighlighter;
     visit(tree, 'code', (node) => {
-      node.value = highlighter.codeToHtml(node.value, node.lang || 'text');
+      node.value = highlighter.codeToHtml(node.value, node.lang || 'js');
       node.type = 'html';
     });
     return tree;

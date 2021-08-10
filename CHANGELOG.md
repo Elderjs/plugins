@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/Elderjs/plugins/compare/v1.2.0...v1.2.1) (2021-08-10)
+
+
+### Features
+
+* 🎸 add in draft functionality to markdown plugin ([07d9bbe](https://github.com/Elderjs/plugins/commit/07d9bbeb7c37701c6e5e93dc851eb97add50207a))
+
+
+
 # [1.2.0](https://github.com/Elderjs/plugins/compare/v1.1.6...v1.2.0) (2021-07-30)
 
 

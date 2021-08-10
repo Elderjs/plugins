@@ -27,7 +27,8 @@ plugins: {
 }
 ```
 
-## Example Config 
+## Example Config
+
 ```javascript
 plugins: {
   '@elderjs/plugin-markdown': {
@@ -44,7 +45,7 @@ plugins: {
 }
 ```
 
-> **Caveat:** Currently, when your contents path  is outside of the src directory (eg: `rootdir/articles/` ) the dev server will not be able to pickup changes on your markdown files. However it can build just fine.
+> **Caveat:** Currently, when your contents path is outside of the src directory (eg: `rootdir/articles/` ) the dev server will not be able to pickup changes on your markdown files. However it can build just fine.
 
 ## Customizing the Defaults
 
@@ -109,3 +110,4 @@ The default remarkPlugins are exported for ease of use via the package. `const {
 
 - By default, if there is a `date` field in your frontmatter it will sort all of the markdown for that route by it.
 - If there is a `slug` field in your frontmatter it will use that for the slug, if not it falls back to the filename.
+- If `draft: true` is in a file's frontmatter or a slug is prefixed with `draft-` these markdown files will be hidden when `process.env.NODE_ENV === 'production'`. They will also be prefixed with `DRAFT: [Post Title Here]` to make this functionality more obvious.

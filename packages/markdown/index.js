@@ -106,7 +106,6 @@ const plugin = {
             html,
             data,
           });
-          plugin.requests.push({ slug, route });
         }
 
         // if there is a date in frontmatter, sort them by most recent
@@ -120,6 +119,28 @@ const plugin = {
           );
         }
       }
+
+      // Remove drafts on production. Add DRAFT: to the title on dev.
+      Object.keys(plugin.markdown).forEach((route) => {
+        if (process.env.NODE_ENV === 'production') {
+          plugin.markdown[route] = plugin.markdown[route].filter(
+            (md) => !md.frontmatter.draft && md.slug.indexOf('draft-') !== 0,
+          );
+        } else {
+          plugin.markdown[route].forEach((md) => {
+            if (md.frontmatter.draft || md.slug.indexOf('draft') === 0) {
+              md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
+            }
+          });
+        }
+      });
+
+      // loop through object to create requests
+      Object.keys(plugin.markdown).forEach((route) => {
+        plugin.markdown[route].forEach((md) => {
+          plugin.requests.push({ slug: md.slug, route });
+        });
+      });
     }
 
     return plugin;
@@ -132,7 +153,7 @@ const plugin = {
     //theme is the only option available - for now.
     useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
     createRoutes: true, // creates routes in allRequests based on collected md files.
-    contents: {}
+    contents: {},
   },
   shortcodes: [],
   hooks: [
@@ -168,7 +189,8 @@ const plugin = {
     {
       hook: 'allRequests',
       name: 'mdFilesToAllRequests',
-      description: 'Add collected md files to allRequests array using the frontmatter slug or filename as the slug.',
+      description:
+        'Add collected md files to allRequests array using the frontmatter slug or filename as the slug. Users can modify the plugin.requests before this hook to change generated requests.',
       priority: 50, // default
       run: async ({ allRequests, plugin }) => {
         if (plugin.config.routes.length > 0 && plugin.config.createRoutes) {

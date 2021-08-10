@@ -1,3 +1,7 @@
+# [1.3.0](https://github.com/Elderjs/plugins/compare/v1.2.1...v1.3.0) (2021-08-10)
+
+
+
 ## [1.2.1](https://github.com/Elderjs/plugins/compare/v1.2.0...v1.2.1) (2021-08-10)
 
 

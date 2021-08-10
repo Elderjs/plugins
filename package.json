@@ -14,6 +14,9 @@
     "prettier": "^2.0.5",
     "shipjs": "^0.23.2"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "release": "shipjs prepare"
   },

@@ -4,6 +4,8 @@ An extensible markdown parser for [Elder.js](https://github.com/Elderjs/elderjs/
 
 Use it to create a blog, or site, just configure and it'll parse your markdown and make it available in your Svelte templates.
 
+> **IMPORTANT**: Upstream Shiki changed the name of the themes available. This means if you are upgrading to 1.3.0 from a version before you may need to update your theme name.
+
 ## Install
 
 ```bash

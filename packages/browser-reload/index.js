@@ -7,7 +7,10 @@ const plugin = {
     const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
     plugin.run = !plugin.settings.build && notProd;
-    plugin.origin = plugin.settings.origin.includes('://') ? plugin.settings.origin : 'http://localhost';
+    plugin.origin =
+      plugin.settings.origin.includes('://') && !plugin.settings.origin.includes('example.com')
+        ? plugin.settings.origin
+        : 'http://localhost';
     plugin.prefix = plugin.settings.prefix;
 
     if (plugin.prefix) {

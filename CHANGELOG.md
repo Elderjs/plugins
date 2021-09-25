@@ -1,3 +1,12 @@
+## [1.3.2](https://github.com/Elderjs/plugins/compare/v1.3.1...v1.3.2) (2021-09-25)
+
+
+### Bug Fixes
+
+* 🐛 stop remark from santitizing html ([6852e3c](https://github.com/Elderjs/plugins/commit/6852e3c3bad3f1bc19ff8b63f1cc2500791f0d2a))
+
+
+
 ## [1.3.1](https://github.com/Elderjs/plugins/compare/v1.3.0...v1.3.1) (2021-09-13)
 
 

@@ -14,7 +14,7 @@ const remarkPlugins = [
   remarkFrontmatter,
   [extractFrontmatter, { name: 'frontmatter', yaml: yaml }],
   remarkSlug,
-  remarkHtml,
+  [remarkHtml, { sanitize: false }],
 ];
 
 const plugin = {

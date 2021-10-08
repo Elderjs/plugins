@@ -476,7 +476,6 @@ const plugin = {
               return el;
             }
 
-            // window.lazyLoadOptions ={}
           var vanillaLazyLoad = document.createElement("script");
           vanillaLazyLoad.src = "${plugin.config.vanillaLazyLocation}";
           vanillaLazyLoad.rel = "preload";

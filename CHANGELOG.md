@@ -1,3 +1,12 @@
+## [1.3.4](https://github.com/Elderjs/plugins/compare/v1.3.3...v1.3.4) (2021-10-08)
+
+
+### Bug Fixes
+
+* 🐛 revert bug introduced that caused css to be excluded ([31dfe29](https://github.com/Elderjs/plugins/commit/31dfe29ba263bf738c894befa4882618066c2fa9))
+
+
+
 ## [1.3.3](https://github.com/Elderjs/plugins/compare/v1.3.2...v1.3.3) (2021-10-08)
 
 

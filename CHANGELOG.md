@@ -1,3 +1,12 @@
+## [1.3.3](https://github.com/Elderjs/plugins/compare/v1.3.2...v1.3.3) (2021-10-08)
+
+
+### Bug Fixes
+
+* 🐛 remove // in images plugin that breaks compression ([f2b5daa](https://github.com/Elderjs/plugins/commit/f2b5daa22ce7d35d0aee7c0163ec026f64bad3a5))
+
+
+
 ## [1.3.2](https://github.com/Elderjs/plugins/compare/v1.3.1...v1.3.2) (2021-09-25)
 
 

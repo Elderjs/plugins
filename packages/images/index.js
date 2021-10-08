@@ -252,7 +252,7 @@ const plugin = {
     }
 
     // if false the plugin shouldn't add any of it's own styles.
-    plugin.addStyles = typeof plugin.cssString === 'string' && plugin.cssString.length > 0;
+    plugin.addStyles = typeof plugin.config.cssString === 'string' && plugin.config.cssString.length > 0;
 
     plugin.imagesToProcess = []; // no images to process by default
     plugin.manifest = {};

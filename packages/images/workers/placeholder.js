@@ -1,5 +1,5 @@
 const sharp = require('sharp');
-const { nanoid } = require('nanoid')
+const { nanoid } = require('nanoid');
 
 module.exports = async ({ rel, src: uncheckedSrc, options, debug }) => {
   try {
@@ -10,7 +10,7 @@ module.exports = async ({ rel, src: uncheckedSrc, options, debug }) => {
     }
 
     //Lighthouse makes it difficutl to tell which placeholders belong to which images, so this helps us know which one it belongs to
-    //We Stick it in the base64 image encoded URL in a place where it does not interfere with the image.
+    //much of the time, the id will actually be truncated in the Lighthouse report, but the important part is that you have enough to identify the image
     const id_string = `id:${nanoid()};`;
 
     const place = await sharp(src).resize(options.resize).jpeg(options.jpeg).toBuffer({ resolveWithObject: false });

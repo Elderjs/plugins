@@ -29,6 +29,7 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
+    await markdownOutput.prepareHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({})
   });
@@ -43,6 +44,7 @@ describe(`index.init()`, () => {
     plugin.config.useElderJsPluginImages = true;
     const pluginOutput = await plugin.init(plugin);
     const markdownOuput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    await markdownOuput.prepareHtml();
     expect(markdownOuput.html).toContain('<div class="md-img">');
   });
 
@@ -58,6 +60,7 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
+    await markdownOutput.prepareHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({});
   });

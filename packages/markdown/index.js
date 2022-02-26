@@ -82,7 +82,7 @@ const plugin = {
 
           const {
             contents: html,
-            data: { frontmatter, ...data },
+            data: { frontmatter = {}, ...data },
           } = await plugin.markdownParser.process(md);
           let slug;
 

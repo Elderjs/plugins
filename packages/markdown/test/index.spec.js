@@ -33,6 +33,11 @@ describe(`index.init()`, () => {
     expect(markdownOutput.data).toEqual({})
   });
 
+  it('plugin.init() with markdown without frontmatter', async () => {
+    plugin.config.routes = ['no-frontmatter'];
+    const pluginOutput = await plugin.init(plugin);
+  });
+
   it('@elderjs/plugin-images output', async () => {
     plugin.settings.plugins = { '@elderjs/plugin-images': {} }
     plugin.config.useElderJsPluginImages = true;

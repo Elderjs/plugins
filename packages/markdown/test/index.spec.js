@@ -76,7 +76,7 @@ describe(`index.init()`, () => {
 
   it('config.slugFormatter', async () => {
     plugin.config.slugFormatter = (file, frontmatter) =>
-      `${file.replace('.md', `-${frontmatter.author}`)}`.toLowerCase();
+      `${file.replace('.md', `-${frontmatter.author}`)}`.toLowerCase().replace(/\s/g, '-');
     const pluginOutput = await plugin.init(plugin);
     const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('getting-started-nick-reese');

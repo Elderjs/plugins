@@ -70,7 +70,7 @@ const plugin = {
             parser: plugin.markdownParser,
             useImagePlugin: plugin.settings.plugins['@elderjs/plugin-images'] && plugin.config.useElderJsPluginImages,
             shortcodes: plugin.settings.shortcodes,
-            slug: plugin.settings.slugFormatter,
+            slug: plugin.config.slugFormatter,
           });
           await markdown.prepareSlug();
           plugin.markdown[route].push(markdown);

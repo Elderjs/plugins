@@ -1,6 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 
-function compileImage(md, openPattern, closePattern) {
+function compileImage(md, openPattern = '{{', closePattern = '}}') {
   // replace md images if image plugin is being used
   const MDImgRegex = /!\[([A-Za-z-_ \d]*)\]\(([^)]*)\)/gm;
   let match;
@@ -23,8 +24,8 @@ function createMarkdownStore({
   file,
   slug,
   shortcodes: {
-    openPattern = '{{',
-    closePattern = '/}}'
+    openPattern,
+    closePattern
   } = {},
   parser,
   useImagePlugin = false,
@@ -48,7 +49,7 @@ function createMarkdownStore({
     await prepareFrontMatter();
 
     let result;
-    const relativePath = file.replace(`${root}/`, '');
+    const relativePath = path.relative(root, file).replace(/\\/g, '/')
     if (slug && typeof slug === 'function') {
       result = slug(relativePath, ret.frontmatter);
     }

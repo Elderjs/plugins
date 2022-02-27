@@ -8,6 +8,7 @@ beforeEach(() => {
   plugin.settings.srcDir = path.resolve(__dirname, 'fixtures');
   plugin.settings.shortcodes = { closePattern: '}}', openPattern: '{{' };
   plugin.config.routes = ['blog']
+  plugin.config.contents = {};
   plugin.settings.plugins = {}
 });
 
@@ -71,5 +72,13 @@ describe(`index.init()`, () => {
       blog: 'thisfolderdoesnotexist'
     }
     await expect(plugin.init(plugin)).rejects.toThrow(Error);
+  });
+
+  it('config.slugFormatter', async () => {
+    plugin.config.slugFormatter = (file, frontmatter) =>
+      `${file.replace('.md', `-${frontmatter.author}`)}`.toLowerCase();
+    const pluginOutput = await plugin.init(plugin);
+    const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    expect(markdownOutput.slug).toEqual('getting-started-nick-reese');
   });
 });

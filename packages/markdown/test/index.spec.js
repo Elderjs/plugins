@@ -30,7 +30,7 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
-    await markdownOutput.prepareHtml();
+    await markdownOutput.compileHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({})
   });
@@ -45,7 +45,7 @@ describe(`index.init()`, () => {
     plugin.config.useElderJsPluginImages = true;
     const pluginOutput = await plugin.init(plugin);
     const markdownOuput = pluginOutput.markdown[plugin.config.routes[0]][0];
-    await markdownOuput.prepareHtml();
+    await markdownOuput.compileHtml();
     expect(markdownOuput.html).toContain('<div class="md-img">');
   });
 
@@ -61,7 +61,7 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
-    await markdownOutput.prepareHtml();
+    await markdownOutput.compileHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({});
   });
@@ -80,5 +80,12 @@ describe(`index.init()`, () => {
     const pluginOutput = await plugin.init(plugin);
     const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('getting-started-nick-reese');
+  });
+
+  it('config.slugFormatter allows empty slug (index)', async () => {
+    plugin.config.slugFormatter = (file, frontmatter) => '';
+    const pluginOutput = await plugin.init(plugin);
+    const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    expect(markdownOutput.slug).toEqual('');
   });
 });

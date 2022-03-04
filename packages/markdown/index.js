@@ -64,7 +64,7 @@ const plugin = {
         const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
 
         for (const file of mdFiles) {
-          const markdown = createMarkdownStore({
+          const markdown = await createMarkdownStore({
             root: mdsInRoute,
             file,
             parser: plugin.markdownParser,
@@ -72,11 +72,9 @@ const plugin = {
             shortcodes: plugin.settings.shortcodes,
             slug: plugin.config.slugFormatter,
           });
-          await markdown.prepareSlug();
           plugin.markdown[route].push(markdown);
         }
 
-        // NOTE: frontmatter is prepared after preparing slug
         // if there is a date in frontmatter, sort them by most recent
         const haveDates = plugin.markdown[route].reduce((out, cv) => {
           return out && !!cv.frontmatter && !!cv.frontmatter.date;
@@ -187,7 +185,7 @@ const plugin = {
         if (data.markdown && data.markdown[request.route]) {
           const markdown = data.markdown[request.route].find((m) => m.slug === request.slug);
           if (markdown) {
-            await markdown.prepareHtml();
+            await markdown.compileHtml();
             let { html, frontmatter, data: addToData } = markdown;
 
             return {

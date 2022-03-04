@@ -19,7 +19,7 @@ function compileImage(md, openPattern = '{{', closePattern = '}}') {
   return result.join('');
 }
 
-function createMarkdownStore({
+async function createMarkdownStore({
   root,
   file,
   slug,
@@ -31,60 +31,42 @@ function createMarkdownStore({
   useImagePlugin = false,
   preserveFolderStructure = false
 }) {
-  let source;
   const ret = {
     slug: null,
     frontmatter: null,
     html: null,
     data: null,
-
-    prepareSlug,
-    prepareHtml
+    compileHtml
   };
-  return ret;
 
-  async function prepareSlug() {
-    if (ret.slug != null) return;
-
-    await prepareFrontMatter();
-
-    let result;
-    const relativePath = path.relative(root, file).replace(/\\/g, '/')
-    if (slug && typeof slug === 'function') {
-      result = slug(relativePath, ret.frontmatter);
-    }
-    if (typeof result !== 'string') {
-      if (ret.frontmatter.slug) {
-        result = ret.frontmatter.slug;
-      } else {
-        result = preserveFolderStructure ? relativePath : file.split('/').pop();
-        result = result.replace('.md', '').replace(/ /gim, '-');
-      }
-    }
-    ret.slug = result;
-  }
-
-  async function prepareFrontMatter() {
-    if (ret.frontmatter) return;
-    await prepareSource();
-    const header = source.match(/\s*^---[^\S\r\n]*\r?\n[\s\S]*?^---[^\S\r\n]*\r?(\n|$)/ym)?.[0];
-    if (!header) {
-      ret.frontmatter = {};
-      return;
-    }
+  let source = fs.readFileSync(file, 'utf-8');
+  const header = source.match(/\s*^---[^\S\r\n]*\r?\n[\s\S]*?^---[^\S\r\n]*\r?(\n|$)/ym)?.[0];
+  if (!header) {
+    ret.frontmatter = {};
+  } else {
     const result = await parser.process(header);
     ret.frontmatter = result.data.frontmatter || {};
   }
+  ret.slug = getSlug();
+  return ret;
 
-  async function prepareSource() {
-    if (source != null) return;
-    source = fs.readFileSync(file, 'utf-8');
+  function getSlug() {
+    const relativePath = path.relative(root, file).replace(/\\/g, '/')
+    if (slug && typeof slug === 'function') {
+      const result = slug(relativePath, ret.frontmatter);
+      if (typeof result === 'string') {
+        return result;
+      }
+    }
+    if (ret.frontmatter.slug) {
+      return ret.frontmatter.slug;
+    }
+    const fileName = preserveFolderStructure ? relativePath : file.split('/').pop();
+    return fileName.replace('.md', '').replace(/ /gim, '-');
   }
 
-  async function prepareHtml() {
+  async function compileHtml() {
     if (ret.html != null) return;
-
-    await prepareSource();
 
     if (useImagePlugin) {
       source = compileImage(source, openPattern, closePattern);

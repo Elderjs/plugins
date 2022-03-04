@@ -8,6 +8,7 @@ beforeEach(() => {
   plugin.settings.srcDir = path.resolve(__dirname, 'fixtures');
   plugin.settings.shortcodes = { closePattern: '}}', openPattern: '{{' };
   plugin.config.routes = ['blog']
+  plugin.config.contents = {};
   plugin.settings.plugins = {}
 });
 
@@ -29,8 +30,14 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
+    await markdownOutput.compileHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({})
+  });
+
+  it('plugin.init() with markdown without frontmatter', async () => {
+    plugin.config.routes = ['no-frontmatter'];
+    const pluginOutput = await plugin.init(plugin);
   });
 
   it('@elderjs/plugin-images output', async () => {
@@ -38,6 +45,7 @@ describe(`index.init()`, () => {
     plugin.config.useElderJsPluginImages = true;
     const pluginOutput = await plugin.init(plugin);
     const markdownOuput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    await markdownOuput.compileHtml();
     expect(markdownOuput.html).toContain('<div class="md-img">');
   });
 
@@ -53,6 +61,7 @@ describe(`index.init()`, () => {
     expect(pluginOutput.markdown[plugin.config.routes[0]].length).toBe(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
     expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
+    await markdownOutput.compileHtml();
     expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
     expect(markdownOutput.data).toEqual({});
   });
@@ -63,5 +72,20 @@ describe(`index.init()`, () => {
       blog: 'thisfolderdoesnotexist'
     }
     await expect(plugin.init(plugin)).rejects.toThrow(Error);
+  });
+
+  it('config.slugFormatter', async () => {
+    plugin.config.slugFormatter = (file, frontmatter) =>
+      `${file.replace('.md', `-${frontmatter.author}`)}`.toLowerCase().replace(/\s/g, '-');
+    const pluginOutput = await plugin.init(plugin);
+    const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    expect(markdownOutput.slug).toEqual('getting-started-nick-reese');
+  });
+
+  it('config.slugFormatter allows empty slug (index)', async () => {
+    plugin.config.slugFormatter = (file, frontmatter) => '';
+    const pluginOutput = await plugin.init(plugin);
+    const markdownOutput = pluginOutput.markdown[plugin.config.routes[0]][0];
+    expect(markdownOutput.slug).toEqual('');
   });
 });

@@ -5,6 +5,7 @@ const remarkHtml = require('remark-html');
 const remarkSlug = require('remark-slug');
 
 const prepareMarkdownParser = require('./utils/prepareMarkdownParser');
+const createMarkdownStore = require('./utils/markdownStore');
 
 const extractFrontmatter = require('remark-extract-frontmatter');
 const remarkFrontmatter = require('remark-frontmatter');
@@ -27,8 +28,6 @@ const plugin = {
     plugin.requests = [];
 
     plugin.references = {};
-
-    const { openPattern, closePattern } = plugin.settings.shortcodes;
 
     if (plugin.config.remarkPlugins.length === 0) {
       plugin.config.remarkPlugins = remarkPlugins;
@@ -65,47 +64,15 @@ const plugin = {
         const mdFiles = glob.sync(`${mdsInRoute}/**/*.md`);
 
         for (const file of mdFiles) {
-          let md = fs.readFileSync(file, 'utf-8');
-
-          // replace md images if image plugin is being used
-          if (plugin.settings.plugins['@elderjs/plugin-images'] && plugin.config.useElderJsPluginImages) {
-            const MDImgRegex = /!\[([A-Za-z-_ \d]*)\]\(([^)]*)\)/gm;
-            let match;
-            while ((match = MDImgRegex.exec(md)) !== null) {
-              const [fullMatch, alt, src] = match;
-              md = md.replace(
-                fullMatch,
-                `<div class="md-img">${openPattern}picture alt="${alt}" src="${src}" /${closePattern}</div>`,
-              );
-            }
-          }
-
-          const {
-            contents: html,
-            data: { frontmatter, ...data },
-          } = await plugin.markdownParser.process(md);
-          let slug;
-
-          if (plugin.config.slugFormatter && typeof plugin.config.slugFormatter === 'function') {
-            let relativePath = file.replace(`${mdsInRoute}/`, '');
-            slug = plugin.config.slugFormatter(relativePath, frontmatter);
-          }
-          if (typeof slug !== 'string') {
-            if (frontmatter && frontmatter.slug) {
-              slug = frontmatter.slug;
-            } else {
-              slug = file.replace('.md', '').split('/').pop();
-              if (slug.includes(' ')) {
-                slug = slug.replace(/ /gim, '-');
-              }
-            }
-          }
-          plugin.markdown[route].push({
-            slug,
-            frontmatter,
-            html,
-            data,
+          const markdown = await createMarkdownStore({
+            root: mdsInRoute,
+            file,
+            parser: plugin.markdownParser,
+            useImagePlugin: plugin.settings.plugins['@elderjs/plugin-images'] && plugin.config.useElderJsPluginImages,
+            shortcodes: plugin.settings.shortcodes,
+            slug: plugin.config.slugFormatter,
           });
+          plugin.markdown[route].push(markdown);
         }
 
         // if there is a date in frontmatter, sort them by most recent
@@ -218,6 +185,7 @@ const plugin = {
         if (data.markdown && data.markdown[request.route]) {
           const markdown = data.markdown[request.route].find((m) => m.slug === request.slug);
           if (markdown) {
+            await markdown.compileHtml();
             let { html, frontmatter, data: addToData } = markdown;
 
             return {

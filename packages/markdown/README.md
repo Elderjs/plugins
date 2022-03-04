@@ -63,7 +63,7 @@ plugins: {
       frontmatter, // 'remark-frontmatter' package
       [extractFrontmatter, { name: 'frontmatter', yaml: yaml.parse }], // 'remark-extract-frontmatter' and 'yaml' packages.
       remarkSlug, // 'remark-slug' package
-      remarkHtml, // 'remark-html' package
+      [remarkHtml, { sanitize: false }], // 'remark-html' package
     ],
     // If you need to customize syntax highlighting, pass an options object instead of true
     // If you choose to pass your own remarkPlugins above, this feature is disabled - you can choose to copy out the code in rehype-shiki.js or roll your own syntax highlighting

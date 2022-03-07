@@ -12,7 +12,7 @@ function compileImage(md, openPattern = '{{', closePattern = '}}') {
     result.push(
       md.slice(lastIndex, match.index),
       `<div class="md-img">${openPattern}picture alt="${alt}" src="${src}" /${closePattern}</div>`,
-    )
+    );
     lastIndex = MDImgRegex.lastIndex;
   }
   result.push(md.slice(lastIndex));
@@ -23,24 +23,22 @@ async function createMarkdownStore({
   root,
   file,
   slug,
-  shortcodes: {
-    openPattern,
-    closePattern
-  } = {},
+  shortcodes: { openPattern, closePattern } = {},
   parser,
   useImagePlugin = false,
-  preserveFolderStructure = false
+  preserveFolderStructure = false,
 }) {
   const ret = {
     slug: null,
     frontmatter: null,
     html: null,
     data: null,
-    compileHtml
+    compileHtml,
   };
 
   let source = fs.readFileSync(file, 'utf-8');
-  const header = source.match(/\s*^---[^\S\r\n]*\r?\n[\s\S]*?^---[^\S\r\n]*\r?(\n|$)/ym)?.[0];
+  const matches = source.match(/\s*^---[^\S\r\n]*\r?\n[\s\S]*?^---[^\S\r\n]*\r?(\n|$)/my);
+  const header = matches && matches[0];
   if (!header) {
     ret.frontmatter = {};
   } else {
@@ -51,7 +49,7 @@ async function createMarkdownStore({
   return ret;
 
   function getSlug() {
-    const relativePath = path.relative(root, file).replace(/\\/g, '/')
+    const relativePath = path.relative(root, file).replace(/\\/g, '/');
     if (slug && typeof slug === 'function') {
       const result = slug(relativePath, ret.frontmatter);
       if (typeof result === 'string') {

@@ -1,3 +1,12 @@
+## [1.3.8](https://github.com/Elderjs/plugins/compare/v1.3.7...v1.3.8) (2022-03-25)
+
+
+### Bug Fixes
+
+* cross platform root for images plugin ([4134f4c](https://github.com/Elderjs/plugins/commit/4134f4c03c2eb99fe776dd56b40b38471e2b3736))
+
+
+
 ## [1.3.7](https://github.com/Elderjs/plugins/compare/v1.3.6...v1.3.7) (2022-03-07)
 
 

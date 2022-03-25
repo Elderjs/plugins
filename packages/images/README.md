@@ -63,7 +63,7 @@ In addition to the `{{picture src='' alt='' /}}` shortcode. This plugin adds the
 
 Takes a relative path of the image and returns all the srcsets and data from the `ejs-image-manifest.json`.
 
-### `helpers.images.picture(path, {maxWidth: 2000, class:'', alt: ''})`
+### `helpers.images.picture(path, {maxWidth: 2000, class:'', alt: '', ignoreCssString: false})`
 
 Takes a `path` and `opts` object and outputs the `<picture>` tag similar to the shortcode.
 
@@ -72,6 +72,9 @@ Takes a `path` and `opts` object and outputs the `<picture>` tag similar to the 
 - `maxWidth` The largest responsive image to be included.
 - `class` a class added to the `<picture>`
 - `alt` alt tag added to the `<img>`.
+- `ignoreCssString` option to make the image ignore the default `cssString` styles.
+
+If you need to use custom styles for a specific image instance but don't want to disable the default styles (`cssString`), you can set the `ignoreCssString` option to `true`. It will change the wrapper class `.ejs` to be  `.custom-ejs` so that the default styles won't have an impact on this particular image instance.
 
 ### `helpers.images.largest(path, {maxWidth: 2000})`
 

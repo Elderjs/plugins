@@ -47,6 +47,15 @@ const plugin = {
       plugin.config.remarkPlugins.push(tableOfContents);
     }
 
+    if (plugin.config.useGitHubFriendlyMarkdown) {
+      const remarkGfm = require('remark-gfm');
+      let gfmConfig = {};
+      if (typeof plugin.config.useGitHubFriendlyMarkdown !== 'boolean') {
+        gfmConfig = plugin.config.useGitHubFriendlyMarkdown;
+      }
+      plugin.config.remarkPlugins.push([remarkGfm, gfmConfig]);
+    }
+
     plugin.markdownParser = prepareMarkdownParser(plugin.config.remarkPlugins);
 
     if (plugin.config && Array.isArray(plugin.config.routes) && plugin.config.routes.length > 0) {
@@ -119,6 +128,7 @@ const plugin = {
     useSyntaxHighlighting: false, // available themes: https://github.com/shikijs/shiki/blob/main/docs/themes.md - try dark-plus.
     //theme is the only option available - for now.
     useTableOfContents: false, // adds tocTree and tocHtml to each route's data object.
+    useGitHubFriendlyMarkdown: false, // adds support for GFM (autolink literals, strikethrough, tables, tasklists).
     createRoutes: true, // creates routes in allRequests based on collected md files.
     contents: {},
   },

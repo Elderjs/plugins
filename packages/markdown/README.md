@@ -42,7 +42,8 @@ plugins: {
       return false; // If needed, a custom slug for the url can be crafted from the relative path to the file and
       // frontmatter in it (if any). slugFormatter must be a function and must return a string to be used.
     },
-    useSyntaxHighlighting: false // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
+    useSyntaxHighlighting: false, // This plugin ships with syntax highlighting ability for your convenience. Recommend setting true for technical blogs. See below for customizing options
+    useGitHubFriendlyMarkdown: false, // adds support for GFM (autolink literals, strikethrough, tables, tasklists).
   }
 }
 ```
@@ -71,6 +72,9 @@ plugins: {
       theme: 'nord' // available themes: https://github.com/shikijs/shiki/blob/main/docs/themes.md - try dark-plus or github-light
       // theme is the only option available - for now.
     },
+    // If you need to customize the gfm plugin, pass an object instead of true
+    // Available options can be found in the remark-gfm repo: https://github.com/remarkjs/remark-gfm#options
+    useGitHubFriendlyMarkdown: false, // adds support for GFM (autolink literals, strikethrough, tables, tasklists).
     useElderJsPluginImages: true, // if you are using the @elderjs/plugin-images the plugin replace all markdown images with the {{picture src="" alt="" /}} shortcode.
     useTableOfContents: false, // adds tocTree to each route's data object.
     createRoutes: true, // creates routes in allRequests based on collected md files.

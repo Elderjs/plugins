@@ -294,7 +294,7 @@ const plugin = {
               .filter((file) => !file.split('/').pop().includes('-ejs'))
               .forEach((file) => {
                 // fix manifest not found and wrong output folder when using **/*
-                const relGlob = file.replace(plugin.settings.rootDir, '').replace(file.split('/').pop(), '');
+                const relGlob = file.replace(plugin.crossPlatformRoot, '').replace(file.split('/').pop(), '');
 
                 const crossPlatformFile = file.replace(plugin.crossPlatformRoot, '');
 

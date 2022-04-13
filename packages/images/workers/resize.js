@@ -103,9 +103,6 @@ const resize = async ({
     } else if (fileType === 'webp') {
       image = await image.webp({
         quality,
-        reductionEffort: 6,
-        nearLossless: true,
-        smartSubsample: true,
       });
     }
 

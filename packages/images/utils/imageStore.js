@@ -11,7 +11,7 @@ const imageStore = (manifest, plugin) => {
       const file = manifest[path];
       return getLargest(file.sizes, file.format, maxWidth);
     },
-    picture: function picture(path, opts) {
+    picture: function picture(path, opts = {}) {
       try {
         // maxWidth, the largest resolution this should ever display.
         const { maxWidth, class: classStr, alt, wrap } = { maxWidth: 2000, class: '', alt: '', ...opts };
@@ -40,7 +40,9 @@ const imageStore = (manifest, plugin) => {
         picture += `</picture>`;
 
         let pictureWithWrap = `<div class="${opts.ignoreCssString ? 'custom-ejs' : 'ejs'}" ${
-          plugin.addStyles && !opts.ignoreCssString ? `style="padding-bottom: ${Math.round((file.height / file.width) * 10000) / 100}%;"` : ''
+          plugin.addStyles && !opts.ignoreCssString
+            ? `style="padding-bottom: ${Math.round((file.height / file.width) * 10000) / 100}%;"`
+            : ''
         }>`;
 
         if (plugin.config.placeholder) {

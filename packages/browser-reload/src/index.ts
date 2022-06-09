@@ -30,6 +30,7 @@ const plugin: PluginOptions = {
   init: (plugin: PluginInitPayload & { config: typeof config }): PluginInitPayload & ElderjsPlugin => {
     // used to store the data in the plugin's closure so it is persisted between loads
 
+    console.log(plugin.config);
     const internal: ElderjsPlugin = {
       run: !plugin.settings.build && process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION',
       origin:
@@ -47,7 +48,11 @@ const plugin: PluginOptions = {
 
     if (internal.run) {
       internal.ws = createServer();
-      internal.io = new Server(internal.ws);
+      internal.io = new Server(internal.ws, {
+        cors: {
+          origin: '*',
+        },
+      });
       internal.io.on('connection', (client) => {
         client.emit('hi', true);
       });
@@ -101,7 +106,7 @@ const plugin: PluginOptions = {
             return checkServer(tryCount+1);
           }
           var socketio = document.createElement("script");
-          socketio.src = "https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js";
+          socketio.src = "https://cdn.jsdelivr.net/npm/socket.io-client@4.5.1/dist/socket.io.min.js";
           socketio.rel = "preload";
           socketio.onload = function() {
             if(document.location.search.indexOf('${plugin.config.preventReloadQS}') === -1){

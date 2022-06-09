@@ -1,8 +1,8 @@
-import { PluginOptions, PluginInitPayload, PluginClosure } from '@elderjs/elderjs';
+import { PluginOptions, PluginInitPayload } from '@elderjs/elderjs';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-export interface ElderjsPlugin {
+interface ElderjsPluginInternal {
   run: boolean;
   origin: string;
   prefix: string;
@@ -11,8 +11,8 @@ export interface ElderjsPlugin {
   io?: Server;
   config: typeof config;
 }
-
-type HookPlugin = PluginClosure & ElderjsPlugin;
+type InitFn = PluginInitPayload & { config: typeof config };
+type InitReturn = InitFn & { internal: ElderjsPluginInternal };
 
 const config = {
   port: 8080,
@@ -23,15 +23,13 @@ const config = {
 };
 
 const plugin: PluginOptions = {
-  name: 'elderjs-plugin-browser-reload',
+  name: '@elderjs/plugin-browser-reload',
   minimumElderjsVersion: '1.7.5',
   description:
     'Polls a websocket to make sure a server is up. If it is down, it keeps polling and restarts once the websocket is back up. Basically reloads the webpage automatically. ',
-  init: (plugin: PluginInitPayload & { config: typeof config }): PluginInitPayload & ElderjsPlugin => {
+  init: (plugin: InitFn): InitReturn => {
     // used to store the data in the plugin's closure so it is persisted between loads
-
-    console.log(plugin.config);
-    const internal: ElderjsPlugin = {
+    const internal: ElderjsPluginInternal = {
       run: !plugin.settings.build && process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION',
       origin:
         plugin.settings.origin.includes('://') && !plugin.settings.origin.includes('example.com')
@@ -59,7 +57,7 @@ const plugin: PluginOptions = {
       internal.ws.listen(internal.config.port);
     }
 
-    return { ...plugin, ...internal };
+    return { ...plugin, internal };
   },
   config,
   hooks: [
@@ -68,9 +66,9 @@ const plugin: PluginOptions = {
       name: 'addWeSocketClient',
       description: 'Adds websocket logic to footer.',
       priority: 50,
-      run: ({ customJsStack, ...rest }) => {
-        const plugin = rest.plugin as HookPlugin;
-        if (plugin.run) {
+      run: ({ customJsStack, plugin }) => {
+        const internal = plugin.internal as ElderjsPluginInternal;
+        if (internal.run) {
           customJsStack.push({
             source: 'socksjs',
             string: `
@@ -79,15 +77,15 @@ const plugin: PluginOptions = {
             return new Promise((resolve)=>{
               setTimeout(() => {
                 resolve();
-            }, ${plugin.config.delay});
+            }, ${internal.config.delay});
             });
           }
 
           async function checkServer(tryCount = 0){
             try {
-              var up = await fetch('${plugin.origin}:${plugin.serverPort}' + document.location.pathname);
+              var up = await fetch('${internal.origin}:${internal.serverPort}' + document.location.pathname);
               if(up.ok) {
-                if(${!plugin.config.reload}){
+                if(${!internal.config.reload}){
                   const text = await up.text();
                   let parser = new DOMParser();
                   const doc = parser.parseFromString(text, 'text/html');
@@ -99,7 +97,7 @@ const plugin: PluginOptions = {
             } catch(e) {
               // do nothing
             }
-            if(tryCount > ${plugin.config.retryCount}){
+            if(tryCount > ${internal.config.retryCount}){
               return false;
             }
             await wait();
@@ -109,9 +107,9 @@ const plugin: PluginOptions = {
           socketio.src = "https://cdn.jsdelivr.net/npm/socket.io-client@4.5.1/dist/socket.io.min.js";
           socketio.rel = "preload";
           socketio.onload = function() {
-            if(document.location.search.indexOf('${plugin.config.preventReloadQS}') === -1){
+            if(document.location.search.indexOf('${internal.config.preventReloadQS}') === -1){
               var disconnected = false;
-              var socket = io('${plugin.origin}:${plugin.config.port}');
+              var socket = io('${internal.origin}:${internal.config.port}');
               socket.on('connect', async function() {
                 if (disconnected) {
 
@@ -119,12 +117,12 @@ const plugin: PluginOptions = {
                   const serverUp = await checkServer();
                   if(serverUp){
                     disconnected = false;
-                    if(${plugin.config.reload}){
+                    if(${internal.config.reload}){
                       console.log('reloaded')
                       window.location.reload();
                     }
                   } else {
-                    console.error('Reloading failed after ${plugin.config.retryCount} retries to connect.')
+                    console.error('Reloading failed after ${internal.config.retryCount} retries to connect.')
                   }
                 }
               });

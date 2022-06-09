@@ -1,52 +1,72 @@
-const plugin = {
+import { PluginOptions, PluginInitPayload, PluginClosure } from '@elderjs/elderjs';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+
+export interface ReloadPlugin {
+  run: boolean;
+  origin: string;
+  prefix: string;
+  serverPort: number | string;
+  ws?: ReturnType<typeof createServer>;
+  io?: Server;
+  config: typeof config;
+}
+
+type HookPlugin = PluginClosure & ReloadPlugin;
+
+const config = {
+  port: 8080,
+  delay: 600,
+  preventReloadQS: 'noreload',
+  retryCount: 300,
+  reload: true, // whether a hard reload should be done in the browser. If false it will fetch and replace the document with the fetched document.
+};
+
+const plugin: PluginOptions = {
   name: 'elderjs-plugin-browser-reload',
   description:
     'Polls a websocket to make sure a server is up. If it is down, it keeps polling and restarts once the websocket is back up. Basically reloads the webpage automatically. ',
-  init: (plugin) => {
+  init: (plugin: PluginInitPayload & { config: typeof config }): PluginInitPayload & ReloadPlugin => {
     // used to store the data in the plugin's closure so it is persisted between loads
-    const notProd = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION';
 
-    plugin.run = !plugin.settings.build && notProd;
-    plugin.origin =
-      plugin.settings.origin.includes('://') && !plugin.settings.origin.includes('example.com')
-        ? plugin.settings.origin
-        : 'http://localhost';
-    plugin.prefix = plugin.settings.prefix;
+    const internal: ReloadPlugin = {
+      run: !plugin.settings.build && process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION',
+      origin:
+        plugin.settings.origin.includes('://') && !plugin.settings.origin.includes('example.com')
+          ? plugin.settings.origin
+          : 'http://localhost',
+      prefix: plugin.settings.prefix,
+      serverPort: process.env.SERVER_PORT || 3000,
+      config: plugin.config,
+    };
 
-    if (plugin.prefix) {
-      console.log('> Elder.js Auto Reload Plugin auto reloading prefix:', plugin.settings.prefix);
+    if (internal.prefix) {
+      console.log('> Elder.js Auto Reload Plugin auto reloading prefix:', internal.prefix);
     }
-    plugin.serverPort = process.env.SERVER_PORT || 3000;
 
-    if (plugin.run) {
-      plugin.ws = require('http').createServer();
-      plugin.io = require('socket.io')(plugin.ws);
-
-      plugin.io.on('connection', (client) => {
+    if (internal.run) {
+      internal.ws = createServer();
+      internal.io = new Server(internal.ws);
+      internal.io.on('connection', (client) => {
         client.emit('hi', true);
       });
-      plugin.ws.listen(plugin.config.port);
+      internal.ws.listen(internal.config.port);
     }
 
-    return plugin;
+    return { ...plugin, ...internal };
   },
-  config: {
-    port: 8080,
-    delay: 600,
-    preventReloadQS: 'noreload',
-    retryCount: 300,
-    reload: true, // whether a hard reload should be done in the browser. If false it will fetch and replace the document with the fetched document.
-  },
+  config,
   hooks: [
     {
       hook: 'stacks',
       name: 'addWeSocketClient',
       description: 'Adds websocket logic to footer.',
       priority: 50,
-      run: ({ customJsStack, plugin }) => {
+      run: ({ customJsStack, ...rest }) => {
+        const plugin = rest.plugin as HookPlugin;
         if (plugin.run) {
           customJsStack.push({
-            name: 'socksjs',
+            source: 'socksjs',
             string: `
           <script>
           function wait(){
@@ -124,5 +144,4 @@ const plugin = {
   ],
 };
 
-module.exports = plugin;
-exports.default = plugin;
+export default plugin;

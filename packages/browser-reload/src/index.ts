@@ -2,7 +2,7 @@ import { PluginOptions, PluginInitPayload, PluginClosure } from '@elderjs/elderj
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-export interface ReloadPlugin {
+export interface ElderjsPlugin {
   run: boolean;
   origin: string;
   prefix: string;
@@ -12,7 +12,7 @@ export interface ReloadPlugin {
   config: typeof config;
 }
 
-type HookPlugin = PluginClosure & ReloadPlugin;
+type HookPlugin = PluginClosure & ElderjsPlugin;
 
 const config = {
   port: 8080,
@@ -24,12 +24,13 @@ const config = {
 
 const plugin: PluginOptions = {
   name: 'elderjs-plugin-browser-reload',
+  minimumElderjsVersion: '1.7.5',
   description:
     'Polls a websocket to make sure a server is up. If it is down, it keeps polling and restarts once the websocket is back up. Basically reloads the webpage automatically. ',
-  init: (plugin: PluginInitPayload & { config: typeof config }): PluginInitPayload & ReloadPlugin => {
+  init: (plugin: PluginInitPayload & { config: typeof config }): PluginInitPayload & ElderjsPlugin => {
     // used to store the data in the plugin's closure so it is persisted between loads
 
-    const internal: ReloadPlugin = {
+    const internal: ElderjsPlugin = {
       run: !plugin.settings.build && process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'PRODUCTION',
       origin:
         plugin.settings.origin.includes('://') && !plugin.settings.origin.includes('example.com')

@@ -14,7 +14,8 @@
   "author": "Nick Reese <npm@nicholasreese.com>",
   "homepage": "https://elderguide.com/tech/elderjs/",
   "license": "MIT",
-  "main": "index.js",
+  "main": "/build/index.js",
+  "types": "/build.index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Elderjs/plugins.git"
@@ -23,10 +24,17 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w"
   },
   "bugs": {
     "url": "https://github.com/Elderjs/plugins/issues"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@elderjs/elderjs": "file:../../../elderjs",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.2"
+  }
 }

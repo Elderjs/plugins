@@ -118,7 +118,17 @@ importers:
       yaml: 1.10.2
 
   packages/random:
-    specifiers: {}
+    specifiers:
+      '@elderjs/elderjs': file:../../../elderjs
+      svelte: ^3.48.0
+      ts-node: ^9.1.1
+      typescript: ^4.0.2
+    dependencies:
+      svelte: 3.48.0
+    devDependencies:
+      '@elderjs/elderjs': file:../elderjs
+      ts-node: 9.1.1_typescript@4.7.3
+      typescript: 4.7.3
 
   packages/references:
     specifiers:
@@ -10482,7 +10492,6 @@ packages:
   /svelte/3.48.0:
     resolution: {integrity: sha512-fN2YRm/bGumvjUpu6yI3BpvZnpIm9I6A7HR4oUNYd7ggYyIwSA/BX7DJ+UXXffLp6XNcUijyLvttbPVCYa/3xQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /svgo/1.3.2:
     resolution: {integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==}

@@ -3,7 +3,6 @@ import fs from 'fs-extra';
 import path from 'path';
 
 interface ElderjsPluginInternal {
-  // references: Record<string, string[]>;
   config: typeof config;
   ready: boolean;
 }
@@ -69,6 +68,7 @@ const defaultSitemapDate = new Date(Date.now());
 const plugin: PluginOptions = {
   name: '@elderjs/plugin-sitemap',
   description: 'Builds a sitemap for all pages on your site.',
+  minimumElderjsVersion: '1.7.5',
   init: (plugin: InitFn): InitReturn => {
     // most of the bootstrap is not due to init() not being async.
     const internal: ElderjsPluginInternal = {
@@ -256,4 +256,4 @@ const plugin: PluginOptions = {
   config,
 };
 
-module.exports = plugin;
+export default plugin;

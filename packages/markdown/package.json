@@ -14,34 +14,46 @@
   "author": "Nick Reese <npm@nicholasreese.com>",
   "homepage": "https://elderguide.com/tech/elderjs/",
   "license": "MIT",
-  "main": "index.js",
+  "main": "/build/index.js",
+  "types": "/build/index.d.ts",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w"
   },
   "bugs": {
     "url": "https://github.com/Elderjs/plugins/issues"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=12.10.0"
   },
   "dependencies": {
-    "glob": "^7.1.6",
-    "hast-util-to-string": "^1.0.4",
-    "jest": "^26.6.3",
-    "rehype": "^11.0.0",
-    "rehype-slug": "^4.0.1",
-    "remark": "^13.0.0",
-    "remark-extract-frontmatter": "^3.0.0",
-    "remark-frontmatter": "^3.0.0",
-    "remark-gfm": "^1.0.0",
-    "remark-html": "13.0.1",
-    "remark-slug": "^6.0.0",
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
+    "hast-util-to-string": "^2.0.0",
+    "rehype": "^12.0.1",
+    "rehype-slug": "^5.0.1",
+    "remark": "^14.0.2",
+    "remark-extract-frontmatter": "^3.2.0",
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "remark-html": "^15.0.1",
+    "remark-slug": "^6.1.0",
     "shiki": "^0.9.6",
-    "unist-util-visit": "^2.0.3",
-    "yaml": "^1.10.0"
+    "unist-util-visit": "^4.1.0",
+    "yaml": "1.10.2"
+  },
+  "devDependencies": {
+    "@elderjs/elderjs": "file:../../../elderjs",
+    "@types/fs-extra": "^9.0.8",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3",
+    "vitest": "^0.14.2"
   }
 }

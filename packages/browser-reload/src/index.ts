@@ -47,6 +47,8 @@ const plugin: PluginOptions = {
     if (internal.run) {
       internal.ws = createServer();
       internal.io = new Server(internal.ws, {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         cors: {
           origin: '*',
         },

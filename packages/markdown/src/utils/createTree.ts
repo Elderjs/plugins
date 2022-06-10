@@ -1,4 +1,4 @@
-module.exports = function createTree(arr) {
+export default function createTree(arr) {
   // purposely mutating objs.
   const indexedTree = arr.map((v, i) => ({ ...v, i }));
   const itl = indexedTree.length;
@@ -51,4 +51,4 @@ module.exports = function createTree(arr) {
   });
 
   return parentArr;
-};
+}

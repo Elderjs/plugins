@@ -1,8 +1,17 @@
-const createTree = require('../utils/createTree');
+import { describe, it, expect } from 'vitest';
+
+import { readJsonSync } from 'fs-extra';
+import path from 'path';
+
+import createTree from '../src/utils/createTree.js';
+
+const h2s = readJsonSync(path.resolve('./test/fixtures/h2s.json'));
+const mixed = readJsonSync(path.resolve('./test/fixtures/mixedhs.json'));
+const json = readJsonSync(path.resolve('./test/fixtures/elderjs-headers.json'));
+const parsed = readJsonSync(path.resolve('./test/fixtures/elderjs-parsed.json'));
 
 describe('createTree', () => {
   it('Make a tree from an easy array of h2s', () => {
-    const h2s = require('./fixtures/h2s.json');
     expect(createTree(h2s)).toEqual([
       {
         children: [],
@@ -35,7 +44,6 @@ describe('createTree', () => {
   });
 
   it('Mixed Page with out of order headers', () => {
-    const mixed = require('./fixtures/mixedhs.json');
     expect(createTree(mixed)).toEqual([
       {
         depth: 2,
@@ -72,8 +80,6 @@ describe('createTree', () => {
   });
 
   it('It parses Elder.js', () => {
-    const json = require('./fixtures/elderjs-headers.json');
-    const parsed = require('./fixtures/elderjs-parsed.json');
     expect(createTree(json)).toEqual(parsed);
   });
 });

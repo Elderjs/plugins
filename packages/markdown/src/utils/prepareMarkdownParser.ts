@@ -1,6 +1,8 @@
-const remark = require('remark');
+import { remark } from 'remark';
 
-function prepareMarkdownParser(remarkPlugins = []) {
+type PrepareMarkdownParserReturn = ReturnType<typeof remark>;
+
+function prepareMarkdownParser(remarkPlugins: unknown[] | unknown[][] = []): PrepareMarkdownParserReturn {
   const processor = remark();
 
   if (remarkPlugins.length === 0) {
@@ -11,9 +13,9 @@ function prepareMarkdownParser(remarkPlugins = []) {
 
   remarkPlugins
     .filter((plugin) => !!plugin)
-    .forEach((plugin) => {
+    .forEach((plugin: unknown | unknown[]) => {
       if (Array.isArray(plugin)) {
-        processor.use(...plugin);
+        processor.use(plugin[0], plugin[1]);
       } else {
         processor.use(plugin);
       }
@@ -22,5 +24,4 @@ function prepareMarkdownParser(remarkPlugins = []) {
   return processor;
 }
 
-module.exports = prepareMarkdownParser;
-exports.default = prepareMarkdownParser;
+export default prepareMarkdownParser;

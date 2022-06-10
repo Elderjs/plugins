@@ -1,5 +1,5 @@
-const createTree = require('./createTree');
-const getHeaders = require('./getHeaders');
+import createTree from './createTree.js';
+import getHeaders from './getHeaders.js';
 
 function tableOfContents() {
   return function transformer(node, file) {
@@ -11,4 +11,4 @@ function tableOfContents() {
     return;
   };
 }
-module.exports = tableOfContents;
+export default tableOfContents;

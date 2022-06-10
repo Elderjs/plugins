@@ -1,0 +1,58 @@
+// Vitest Snapshot v1
+
+exports[`index.init() > plugin.init() with markdown without frontmatter 1`] = `
+{
+  "config": {
+    "contents": {},
+    "createRoutes": true,
+    "remarkPlugins": [
+      [Function],
+      [
+        [Function],
+        {
+          "name": "frontmatter",
+          "yaml": [Function],
+        },
+      ],
+      [Function],
+      [
+        [Function],
+        {
+          "sanitize": false,
+        },
+      ],
+    ],
+    "routes": [
+      "blog",
+    ],
+    "slugFormatter": undefined,
+    "useElderJsPluginImages": false,
+    "useGitHubFriendlyMarkdown": false,
+    "useSyntaxHighlighting": false,
+    "useTableOfContents": false,
+  },
+  "markdown": {
+    "blog": [
+      {
+        "compileHtml": [Function],
+        "data": null,
+        "frontmatter": {
+          "author": "Nick Reese",
+          "date": "2020-03-16T05:35:07.322Z",
+          "excerpt": "You have the starter template of Elder.js running. So what is next? This guide will help you explore the project.",
+          "title": "Getting Started with Elder.js",
+        },
+        "html": null,
+        "slug": "getting-started",
+      },
+    ],
+  },
+  "markdownParser": [Function],
+  "requests": [
+    {
+      "route": "blog",
+      "slug": "getting-started",
+    },
+  ],
+}
+`;

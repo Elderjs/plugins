@@ -1,7 +1,9 @@
-const rehype = require('rehype');
-const rehypeSlug = require('rehype-slug');
-const toString = require('hast-util-to-string');
-const visit = require('unist-util-visit');
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { rehype } from 'rehype';
+import rehypeSlug from 'rehype-slug';
+import { toString } from 'hast-util-to-string';
+import { visit } from 'unist-util-visit';
 
 const htmlParser = rehype()
   .data({ settings: { fragment: true } })
@@ -53,4 +55,4 @@ const getHeaders = (tree) => {
   return headers;
 };
 
-module.exports = getHeaders;
+export default getHeaders;

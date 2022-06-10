@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { rehype } from 'rehype';
 import rehypeSlug from 'rehype-slug';
 import { toString } from 'hast-util-to-string';
@@ -26,11 +24,11 @@ function getHtmlHeadings(tree) {
 
 const getHeadingsFromHtml = (node) => {
   const slugifiedHtml = htmlParser.processSync(node.value);
-  const htmlSyntaxTree = htmlParser.parse(slugifiedHtml.contents);
+  const htmlSyntaxTree = htmlParser.parse(slugifiedHtml.value);
   const headings = getHtmlHeadings(htmlSyntaxTree);
   // only if there are headings do we update the content of the mdast
   if (headings.length > 0) {
-    node.value = slugifiedHtml.contents;
+    node.value = slugifiedHtml.value;
   }
   return headings;
 };

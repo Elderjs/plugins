@@ -65,6 +65,7 @@ const remarkPlugins = [
 
 const plugin: PluginOptions = {
   name: '@elderjs/plugin-markdown',
+  minimumElderjsVersion: '1.7.5',
   description:
     'Reads and collects markdown content from specified routes. It automatically adds found markdown files as requests on allRequests. Includes a shortcode parser.',
   init: async (plugin: InitFn): Promise<InitReturn> => {

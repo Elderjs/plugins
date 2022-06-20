@@ -16,17 +16,6 @@ const imageFileTypes = ['jpg', 'jpeg', 'png'];
 const defaultWidths = [1280, 992, 768, 576, 400, 350, 200];
 const defaultScales = [1, 2];
 
-// "/images/site-images/dad-making-eye-contact.jpg": {
-//   "width": 1280,
-//   "height": 979,
-//   "format": "jpeg",
-//   "original": "https://egmedia.s3.us-east-2.amazonaws.com/originals/images/site-images/dad-making-eye-contact.jpg",
-//   "rel": "/images/site-images/dad-making-eye-contact.jpg",
-//   "sizes": [
-//   ],
-//   "placeholder": "data:image/jpeg;base64,/9j/2wBDAAwREhMUFBUUFBofGhUaHiIcGhohKC4jJB4hMzg/PTouKC5CRFpMPi5XRTc3VmBRVlpgZmRkQklveXFmeFtlaWf/2wBDAQgMDQwNDw8PDxFgEBIaVmBaYFpgY2NjY2BjYGBiY2NjY2NjY2NjY2NjY2JjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/aAAwDAQACEAMQAAAApZwKz//EAB0QAAICAQUAAAAAAAAAAAAAAAEDAhEABCEjYZL/2gAIAQEAAT8AeYzc1BIUkwFERrk7w6Pc05fsZ//EABYRAAMAAAAAAAAAAAAAAAAAAAABIf/aAAgBAgEBPwBw/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAgBAwEBPwB//9k="
-// },
-
 export interface ElderjsImageSize {
   width: number;
   height: number;
@@ -58,22 +47,6 @@ type ImageToProcess = {
   publicPrefix: string; // used for writing/reading to the public folder.
   cachePrefix: string; // used for writing/reading to the cache folder.
 };
-// images = [
-// {
-//     src,
-//     rel,
-//     ext,           // extension
-
-//   }
-// ]
-
-// allows for processImages to be used by other packages to upload to s3 and still get Elder.js Image support.
-// s3: {
-//   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-//   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-//   S3_BUCKET: process.env.S3_BUCKET,
-//   S3_BUCKET_URL: process.env.S3_BUCKET_URL,
-// },
 
 // extracted so that it can accept a buffer and be used in other contexts via importing.
 

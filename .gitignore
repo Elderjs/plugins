@@ -107,3 +107,7 @@ dist
 .DS_Store
 
 .npmrc
+
+tsconfig.tsbundleinfo
+
+node_modules

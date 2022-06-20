@@ -93,4 +93,4 @@ const plugin: PluginOptions = {
   ],
 };
 
-module.exports = plugin;
+export default plugin;

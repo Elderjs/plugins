@@ -14,7 +14,7 @@ import { PluginOptions, PluginInitPayload } from '@elderjs/elderjs';
 
 import prepareMarkdownParser from './utils/prepareMarkdownParser.js';
 import createMarkdownStore, { Ret } from './utils/markdownStore.js';
-import rehypeShiki from './rehype-shiki.js';
+import rehypeShiki from './utils/rehype-shiki.js';
 import tableOfContents from './utils/tableOfContents.js';
 
 type InitFn = PluginInitPayload & { config: typeof config };
@@ -49,6 +49,11 @@ export interface ElderjsPluginInternal {
   requests: { slug: string; route: string }[];
   config: typeof config;
   markdownParser: ReturnType<typeof prepareMarkdownParser>;
+  usesImagePlugin: boolean;
+  shortcodes: {
+    openPattern: string;
+    closePattern: string;
+  };
 }
 
 const remarkPlugins = [
@@ -91,70 +96,9 @@ const plugin: PluginOptions = {
       markdown: {},
       requests: [],
       markdownParser: prepareMarkdownParser(initialConfig.remarkPlugins),
+      usesImagePlugin: plugin.settings.plugins['@elderjs/plugin-images'] && initialConfig.useElderJsPluginImages,
+      shortcodes: plugin.settings.shortcodes,
     };
-
-    if (internal.config && Array.isArray(internal.config.routes) && internal.config.routes.length > 0) {
-      for (const route of internal.config.routes) {
-        internal.markdown[route] = [];
-        const contentPath = internal.config.contents[route] || null;
-        let mdsInRoute = path.resolve(plugin.settings.srcDir, './routes/', route);
-        if (contentPath) {
-          mdsInRoute = path.resolve(plugin.settings.rootDir, contentPath);
-          if (!fs.existsSync(mdsInRoute)) {
-            throw new Error(`elderjs-plugin-markdown: Unable to find path ${mdsInRoute}`);
-          }
-        }
-
-        const mdFiles = fg.sync(`${mdsInRoute}/**/*.md`);
-
-        for (const file of mdFiles) {
-          const markdown = await createMarkdownStore({
-            root: mdsInRoute,
-            file,
-            parser: internal.markdownParser,
-            useImagePlugin: plugin.settings.plugins['@elderjs/plugin-images'] && internal.config.useElderJsPluginImages,
-            shortcodes: plugin.settings.shortcodes,
-            slug: internal.config.slugFormatter,
-          });
-          internal.markdown[route].push(markdown);
-        }
-
-        // if there is a date in frontmatter, sort them by most recent
-        const haveDates = internal.markdown[route].reduce((out, cv) => {
-          return out && !!cv.frontmatter && !!cv.frontmatter.date;
-        }, true);
-
-        if (haveDates) {
-          internal.markdown[route] = internal.markdown[route].sort(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            /// @ts-expect-error
-            (a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date),
-          );
-        }
-      }
-
-      // Remove drafts on production. Add DRAFT: to the title on dev.
-      Object.keys(internal.markdown).forEach((route) => {
-        if (process.env.NODE_ENV === 'production') {
-          internal.markdown[route] = internal.markdown[route].filter(
-            (md) => !md.frontmatter.draft && md.slug.indexOf('draft-') !== 0,
-          );
-        } else {
-          internal.markdown[route].forEach((md) => {
-            if (md.frontmatter.draft || md.slug.indexOf('draft') === 0) {
-              md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
-            }
-          });
-        }
-      });
-
-      // loop through object to create requests
-      Object.keys(internal.markdown).forEach((route) => {
-        internal.markdown[route].forEach((md) => {
-          internal.requests.push({ slug: md.slug, route });
-        });
-      });
-    }
 
     return { ...plugin, internal };
   },
@@ -167,8 +111,72 @@ const plugin: PluginOptions = {
       description:
         'Adds markdown parser to helpers so that it can be used other Elder.js plugins, user defined hooks, or in templates. ',
       priority: 99,
-      run: async ({ helpers, plugin }) => {
+      run: async ({ helpers, plugin, settings }) => {
         const internal = plugin.internal as ElderjsPluginInternal;
+
+        if (internal.config && Array.isArray(internal.config.routes) && internal.config.routes.length > 0) {
+          for (const route of internal.config.routes) {
+            internal.markdown[route] = [];
+            const contentPath = internal.config.contents[route] || null;
+            let mdsInRoute = path.resolve(settings.srcDir, './routes/', route);
+            if (contentPath) {
+              mdsInRoute = path.resolve(settings.rootDir, contentPath);
+              if (!fs.existsSync(mdsInRoute)) {
+                throw new Error(`elderjs-plugin-markdown: Unable to find path ${mdsInRoute}`);
+              }
+            }
+
+            const mdFiles = fg.sync(`${mdsInRoute}/**/*.md`);
+
+            for (const file of mdFiles) {
+              const markdown = await createMarkdownStore({
+                root: mdsInRoute,
+                file,
+                parser: internal.markdownParser,
+                useImagePlugin: internal.usesImagePlugin,
+                shortcodes: internal.shortcodes,
+                slug: internal.config.slugFormatter,
+              });
+              internal.markdown[route].push(markdown);
+            }
+
+            // if there is a date in frontmatter, sort them by most recent
+            const haveDates = internal.markdown[route].reduce((out, cv) => {
+              return out && !!cv.frontmatter && !!cv.frontmatter.date;
+            }, true);
+
+            if (haveDates) {
+              internal.markdown[route] = internal.markdown[route].sort(
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                /// @ts-expect-error
+                (a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date),
+              );
+            }
+          }
+
+          // Remove drafts on production. Add DRAFT: to the title on dev.
+          Object.keys(internal.markdown).forEach((route) => {
+            if (process.env.NODE_ENV === 'production') {
+              internal.markdown[route] = internal.markdown[route].filter(
+                (md) => !md.frontmatter.draft && md.slug.indexOf('draft-') !== 0,
+              );
+            } else {
+              internal.markdown[route].forEach((md) => {
+                if (md.frontmatter.draft || md.slug.indexOf('draft') === 0) {
+                  md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
+                }
+              });
+            }
+          });
+
+          // loop through object to create requests
+          Object.keys(internal.markdown).forEach((route) => {
+            internal.markdown[route].forEach((md) => {
+              internal.requests.push({ slug: md.slug, route });
+            });
+          });
+        }
+
         return {
           helpers: {
             ...helpers,

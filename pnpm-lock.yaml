@@ -84,6 +84,7 @@ importers:
   packages/markdown:
     specifiers:
       '@elderjs/elderjs': file:../../../elderjs
+      '@elderjs/plugin-markdown': ^1.3.10
       '@types/fs-extra': ^9.0.8
       fast-glob: ^3.2.11
       fs-extra: ^10.1.0

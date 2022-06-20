@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { rehype } from 'rehype';
 import rehypeSlug from 'rehype-slug';
 import { toString } from 'hast-util-to-string';

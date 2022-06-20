@@ -1,5 +1,15 @@
-function getSrcsets({ maxWidth, fileSizes, key = 'relative' }) {
-  const sizes = [];
+import { ElderjsImageSize } from '..';
+
+export function getSrcsets({
+  maxWidth,
+  fileSizes,
+  key = 'relative',
+}: {
+  maxWidth: number;
+  fileSizes: ElderjsImageSize[];
+  key: string;
+}) {
+  const sizes: number[] = [];
   const srcsets = fileSizes.reduce(
     (out, cv) => {
       // skip sizes larger than our max;
@@ -25,7 +35,12 @@ function getSrcsets({ maxWidth, fileSizes, key = 'relative' }) {
   };
 }
 
-function getSources(sizes, srcsets) {
+type ReturnGetSrcsets = ReturnType<typeof getSrcsets>;
+
+export function getSources(
+  sizes: ReturnGetSrcsets['sizes'],
+  srcsets: ReturnGetSrcsets['srcsets'],
+): { webp: string[]; jpeg: string[]; png: string[] } {
   const sources = {
     webp: [],
     jpeg: [],
@@ -53,10 +68,10 @@ function getSources(sizes, srcsets) {
   return sources;
 }
 
-function getLargest(fileSizes, orgFormat, maxWidth) {
+export function getLargest(fileSizes: ElderjsImageSize[], orgFormat: string, maxWidth: number) {
   return fileSizes
     .filter((p) => p.format === orgFormat)
-    .find((p, i, arr) => {
+    .find((p, _i, arr) => {
       let largest = true;
       arr.forEach((a) => {
         if (a.width > maxWidth) return;
@@ -66,10 +81,10 @@ function getLargest(fileSizes, orgFormat, maxWidth) {
     });
 }
 
-function getSmallest(fileSizes, orgFormat) {
+export function getSmallest(fileSizes: ElderjsImageSize[], orgFormat: string) {
   return fileSizes
     .filter((p) => p.format === orgFormat)
-    .find((p, i, arr) => {
+    .find((p, _i, arr) => {
       let smallest = true;
       arr.forEach((a) => {
         if (a.width < p.width) smallest = false;
@@ -77,10 +92,3 @@ function getSmallest(fileSizes, orgFormat) {
       return smallest;
     });
 }
-
-module.exports = {
-  getSrcsets,
-  getSources,
-  getLargest,
-  getSmallest,
-};

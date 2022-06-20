@@ -74,7 +74,7 @@ Takes a `path` and `opts` object and outputs the `<picture>` tag similar to the 
 - `alt` alt tag added to the `<img>`.
 - `ignoreCssString` option to make the image ignore the default `cssString` styles.
 
-If you need to use custom styles for a specific image instance but don't want to disable the default styles (`cssString`), you can set the `ignoreCssString` option to `true`. It will change the wrapper class `.ejs` to be  `.custom-ejs` so that the default styles won't have an impact on this particular image instance.
+If you need to use custom styles for a specific image instance but don't want to disable the default styles (`cssString`), you can set the `ignoreCssString` option to `true`. It will change the wrapper class `.ejs` to be `.custom-ejs` so that the default styles won't have an impact on this particular image instance.
 
 ### `helpers.images.largest(path, {maxWidth: 2000})`
 
@@ -160,7 +160,6 @@ plugins: {
     imageManifest: '/images/ejs-image-manifest.json', // relative to root dir or an async function
     cacheFolder: '/images/sizes/', // relative to root dir
     scales: [1, 2], // 1x, 2x sizes
-    svg: false, // experimental... you can play with it.
     placeholder: { // placeholder settings. See sharp.
       resize: {
         width: 10,

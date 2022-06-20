@@ -1,4 +1,4 @@
-const getSuffix = (width, scale, fileType) => {
+export default function getSuffix(width, scale, fileType) {
   let suffix = `-ejs-${width}`;
 
   if (scale > 1) {
@@ -6,7 +6,4 @@ const getSuffix = (width, scale, fileType) => {
   }
   suffix += `.${fileType}`;
   return suffix;
-};
-
-module.exports = getSuffix;
-exports.default = getSuffix;
+}

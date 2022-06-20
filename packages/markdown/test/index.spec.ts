@@ -1,7 +1,8 @@
-import plugin, { ElderjsPluginInternal } from '../src/index.js';
+import plugin, { ElderjsMarkdownPluginInternal } from '../src/index.js';
 import gettingStartedOutput from './fixtures/getting-started-output.js';
 import { SettingsOptions } from '@elderjs/elderjs';
 import { describe, it, expect, afterEach } from 'vitest';
+import { EventEmitter } from 'stream';
 
 const settings: SettingsOptions = {
   context: 'server',
@@ -28,7 +29,6 @@ const settings: SettingsOptions = {
     hooks: false,
     performance: false,
     build: false,
-    automagic: false,
     shortcodes: false,
     props: false,
   },
@@ -52,7 +52,17 @@ const settings: SettingsOptions = {
       client: '',
       iife: '',
     }),
-    publicCssFile: '/_elderjs/assets/svelte-5029f7ac4396c102400e3ff4538301dc.css',
+    files: {
+      client: ['string'],
+      server: ['string'],
+      routes: ['string'],
+      hooks: 'string',
+      all: ['string'],
+      shortcodes: 'string',
+      publicCssFile: '/_elderjs/assets/svelte-5029f7ac4396c102400e3ff4538301dc.css',
+    },
+    watcher: new EventEmitter(),
+    production: true,
   },
 };
 
@@ -83,7 +93,7 @@ describe(`index.init()`, () => {
 
   it('plugin.init() standard output formatting', async () => {
     const pluginOutput = await pluginPayloadDefault.init(pluginPayload);
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(internal.markdown[pluginPayload.config.routes[0]]).toHaveLength(1);
     expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
@@ -96,7 +106,7 @@ describe(`index.init()`, () => {
   it('plugin.init() with markdown without frontmatter', async () => {
     pluginPayload.config.routes = ['no-frontmatter'];
     const pluginOutput = await pluginPayloadDefault.init({ ...pluginPayloadDefault });
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     expect(internal).toMatchSnapshot();
   });
 
@@ -109,7 +119,7 @@ describe(`index.init()`, () => {
       },
       config: { ...pluginPayloadDefault.config, useElderJsPluginImages: true },
     });
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     const markdownOuput = internal.markdown[pluginPayloadDefault.config.routes[0]][0];
     await markdownOuput.compileHtml();
     expect(markdownOuput.html).toContain('<div class="md-img">');
@@ -126,7 +136,7 @@ describe(`index.init()`, () => {
         },
       },
     });
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
 
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(pluginPayload.settings.srcDir).toBeDefined();
@@ -158,7 +168,7 @@ describe(`index.init()`, () => {
           `${file.replace('.md', `-${frontmatter.author}`)}`.toLowerCase().replace(/\s/g, '-'),
       },
     });
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('getting-started-nick-reese');
   });
@@ -173,7 +183,7 @@ describe(`index.init()`, () => {
         slugFormatter: (file, frontmatter) => '',
       },
     });
-    const internal = pluginOutput.internal as ElderjsPluginInternal;
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('');
   });

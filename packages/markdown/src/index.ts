@@ -18,7 +18,7 @@ import rehypeShiki from './utils/rehype-shiki.js';
 import tableOfContents from './utils/tableOfContents.js';
 
 type InitFn = PluginInitPayload & { config: typeof config };
-type InitReturn = InitFn & { internal: ElderjsPluginInternal };
+type InitReturn = InitFn & { internal: ElderjsMarkdownPluginInternal };
 
 type Config = {
   routes: string[];
@@ -44,7 +44,7 @@ const config: Config = {
   contents: {},
 };
 
-export interface ElderjsPluginInternal {
+export interface ElderjsMarkdownPluginInternal {
   markdown: Record<string, Ret[]>;
   requests: { slug: string; route: string }[];
   config: typeof config;
@@ -91,7 +91,7 @@ const plugin: PluginOptions = {
       initialConfig.remarkPlugins.push([remarkGfm, gfmConfig]);
     }
 
-    const internal: ElderjsPluginInternal = {
+    const internal: ElderjsMarkdownPluginInternal = {
       config: initialConfig,
       markdown: {},
       requests: [],
@@ -112,7 +112,7 @@ const plugin: PluginOptions = {
         'Adds markdown parser to helpers so that it can be used other Elder.js plugins, user defined hooks, or in templates. ',
       priority: 99,
       run: async ({ helpers, plugin, settings }) => {
-        const internal = plugin.internal as ElderjsPluginInternal;
+        const internal = plugin.internal as ElderjsMarkdownPluginInternal;
 
         if (internal.config && Array.isArray(internal.config.routes) && internal.config.routes.length > 0) {
           for (const route of internal.config.routes) {
@@ -192,7 +192,7 @@ const plugin: PluginOptions = {
       description: 'Add parsed .md content and data to the data object',
       priority: 99,
       run: async ({ data, plugin }) => {
-        const internal = plugin.internal as ElderjsPluginInternal;
+        const internal = plugin.internal as ElderjsMarkdownPluginInternal;
         if (internal.config.routes.length > 0) {
           return {
             data: { ...data, markdown: internal.markdown },
@@ -207,7 +207,7 @@ const plugin: PluginOptions = {
         'Add collected md files to allRequests array using the frontmatter slug or filename as the slug. Users can modify the plugin. requests before this hook to change generated requests.',
       priority: 50, // default
       run: async ({ allRequests, plugin }) => {
-        const internal = plugin.internal as ElderjsPluginInternal;
+        const internal = plugin.internal as ElderjsMarkdownPluginInternal;
         if (internal.config.routes.length > 0 && internal.config.createRoutes) {
           return {
             allRequests: [...allRequests, ...internal.requests],

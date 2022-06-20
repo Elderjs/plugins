@@ -1,10 +1,21 @@
-const AWS = require('aws-sdk');
-const sharp = require('sharp');
+import AWS from 'aws-sdk';
+import sharp from 'sharp';
+import { ElderjsImagesS3Config, GenericWorker } from '../index.js';
 
-const asyncS3PutObject = require('../utils/asyncS3PutObject');
-const getS3Params = require('../utils/getS3Params');
+import asyncS3PutObject from '../utils/asyncS3PutObject.js';
+import getS3Params from '../utils/getS3Params.js';
 
-const saveOriginalToS3 = async ({ src, rel, s3: s3Params, debug }) => {
+export default async function saveOriginalToS3({
+  src,
+  rel,
+  s3: s3Params,
+  debug,
+}: {
+  src: Buffer;
+  rel: string;
+  s3: ElderjsImagesS3Config;
+  debug: boolean;
+}) {
   if (debug) console.log('saveOrigionalToS3Params', s3Params);
   const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL } = getS3Params(s3Params);
 
@@ -27,6 +38,5 @@ const saveOriginalToS3 = async ({ src, rel, s3: s3Params, debug }) => {
   if (debug) console.log('saveOriginalToS3', s3r, `${S3_BUCKET_URL}/${Key}`, S3_BUCKET);
 
   return `${S3_BUCKET_URL}/${Key}`;
-};
-
-module.exports = saveOriginalToS3;
+}
+export type SaveOriginalToS3Worker = GenericWorker<typeof saveOriginalToS3>;

@@ -1,13 +1,14 @@
-const sharp = require('sharp');
-const fs = require('fs-extra');
-const AWS = require('aws-sdk');
+import sharp from 'sharp';
+import fs from 'fs-extra';
+import AWS from 'aws-sdk';
 
-const getSuffix = require('../utils/getSuffix');
-const getPrefix = require('../utils/getPrefix');
-const asyncS3PutObject = require('../utils/asyncS3PutObject');
-const getS3Params = require('../utils/getS3Params');
+import getSuffix from '../utils/getSuffix.js';
+import getPrefix from '../utils/getPrefix.js';
+import asyncS3PutObject from '../utils/asyncS3PutObject.js';
+import getS3Params from '../utils/getS3Params.js';
+import { ElderjsImageSize, ElderjsImagesS3Config, GenericWorker } from '../index.js';
 
-const resize = async ({
+export default async function resize({
   rel,
   src: uncheckedSrc,
   publicPrefix = '',
@@ -18,7 +19,18 @@ const resize = async ({
   quality,
   s3: s3Params,
   debug,
-}) => {
+}: {
+  rel: string;
+  src: string | Buffer;
+  publicPrefix: string;
+  cachePrefix: string;
+  scale: number;
+  width: number;
+  fileType: string;
+  quality: number;
+  s3?: ElderjsImagesS3Config;
+  debug?: boolean;
+}): Promise<ElderjsImageSize> {
   // Prep common stuff
   const prefix = getPrefix(rel, publicPrefix);
   const suffix = getSuffix(width, scale, fileType);
@@ -26,7 +38,7 @@ const resize = async ({
   let publicLocation = `${publicPrefix}${suffix}`;
   let relative = `${prefix}${suffix}`;
 
-  src = uncheckedSrc;
+  let src = uncheckedSrc;
   // convert Array buffer if needed.
   if (typeof uncheckedSrc !== 'string') {
     src = Buffer.from(uncheckedSrc);
@@ -36,7 +48,7 @@ const resize = async ({
   let s3Location;
 
   // check if we should use s3.
-  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL, USE_S3_HOSTING } = getS3Params(s3Params);
+  const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_BUCKET_URL } = getS3Params(s3Params);
   if (AWS_ACCESS_KEY_ID && AWS_SECRET_ACCESS_KEY && S3_BUCKET && S3_BUCKET_URL) {
     s3 = new AWS.S3({
       accessKeyId: AWS_ACCESS_KEY_ID,
@@ -132,7 +144,7 @@ const resize = async ({
     }
   }
 
-  const out = {
+  const out: ElderjsImageSize = {
     width: image.info.width,
     height: image.info.height,
     format: image.info.format,
@@ -141,6 +153,7 @@ const resize = async ({
     rel,
     cache: cacheLocation,
     public: publicLocation,
+    s3: s3 ? s3Location : undefined,
   };
 
   // handle scaled images
@@ -149,12 +162,9 @@ const resize = async ({
     out.width = out.width / scale;
   }
 
-  // support USE_S3_HOSTING
-  if (s3) out.s3 = s3Location;
-
   if (debug) console.log(`Completed ${relative}`, out);
 
   return out;
-};
+}
 
-module.exports = resize;
+export type ResizeWorker = GenericWorker<typeof resize>;

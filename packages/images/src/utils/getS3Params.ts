@@ -1,4 +1,6 @@
-module.exports = (s3 = {}) => {
+import { ElderjsImagesS3Config } from '../index.js';
+
+export default function (s3 = {}): ElderjsImagesS3Config {
   const result = {
     AWS_ACCESS_KEY_ID: s3['AWS_ACCESS_KEY_ID'],
     AWS_SECRET_ACCESS_KEY: s3['AWS_SECRET_ACCESS_KEY'],
@@ -7,4 +9,4 @@ module.exports = (s3 = {}) => {
     USE_S3_HOSTING: s3['USE_S3_HOSTING'],
   };
   return result;
-};
+}

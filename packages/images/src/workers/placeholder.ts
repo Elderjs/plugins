@@ -1,8 +1,19 @@
-const sharp = require('sharp');
+import sharp from 'sharp';
+import { GenericWorker } from '../index.js';
 
-module.exports = async ({ rel, src: uncheckedSrc, options, debug }) => {
+export default async function placeholder({
+  rel,
+  src: uncheckedSrc,
+  options,
+  debug,
+}: {
+  rel: string;
+  src: string | Buffer;
+  options: any;
+  debug: boolean;
+}) {
   try {
-    src = uncheckedSrc;
+    let src = uncheckedSrc;
     // convert Array buffer if needed.
     if (typeof uncheckedSrc !== 'string') {
       src = Buffer.from(uncheckedSrc);
@@ -16,4 +27,6 @@ module.exports = async ({ rel, src: uncheckedSrc, options, debug }) => {
   } catch (e) {
     return { error: e };
   }
-};
+}
+
+export type PlaceholderWorker = GenericWorker<typeof placeholder>;

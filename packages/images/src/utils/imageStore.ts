@@ -1,23 +1,32 @@
-const { getLargest, getSrcsets, getSmallest, getSources } = require('./helpers');
+import { ElderjsImageManifest, InitReturn } from '../index.js';
+import { getLargest, getSrcsets, getSources } from './helpers.js';
 
-const imageStore = (manifest, plugin) => {
+export type ElderjsImageStoreOpts = {
+  maxWidth?: number;
+  wrap?: string;
+  alt?: string;
+  class?: string;
+  ignoreCssString?: boolean;
+};
+
+export default function (manifest: ElderjsImageManifest, plugin: InitReturn) {
   return {
     src: function src(path) {
       // outputs img tag
       return manifest[path];
     },
-    largest: function largest(path, opts) {
+    largest: function largest(path: string, opts: ElderjsImageStoreOpts) {
       const { maxWidth } = { maxWidth: 2000, ...opts };
       const file = manifest[path];
       return getLargest(file.sizes, file.format, maxWidth);
     },
-    picture: function picture(path, opts = {}) {
+    picture: function picture(path: string, opts: ElderjsImageStoreOpts = {}) {
       try {
         // maxWidth, the largest resolution this should ever display.
         const { maxWidth, class: classStr, alt, wrap } = { maxWidth: 2000, class: '', alt: '', ...opts };
         const file = manifest[path];
 
-        plugin.shouldAddCodeDependencies = true;
+        plugin.internal.shouldAddCodeDependencies = true;
 
         //todo title
 
@@ -40,15 +49,13 @@ const imageStore = (manifest, plugin) => {
         picture += `</picture>`;
 
         let pictureWithWrap = `<div class="${opts.ignoreCssString ? 'custom-ejs' : 'ejs'}" ${
-          plugin.addStyles && !opts.ignoreCssString
+          plugin.internal.addStyles && !opts.ignoreCssString
             ? `style="padding-bottom: ${Math.round((file.height / file.width) * 10000) / 100}%;"`
             : ''
         }>`;
 
         if (plugin.config.placeholder) {
-          pictureWithWrap += `<div class="placeholder" style="background-image: url('${
-            plugin.config.svg ? file.svg : file.placeholder
-          }')"></div>`;
+          pictureWithWrap += `<div class="placeholder" style="background-image: url('${file.placeholder}')"></div>`;
         }
 
         // if (plugin.config.svg && file.svg) {
@@ -77,7 +84,4 @@ const imageStore = (manifest, plugin) => {
     //   return { src: manifest[file] };
     // },
   };
-};
-
-module.exports = imageStore;
-exports.default = imageStore;
+}

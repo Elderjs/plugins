@@ -163,7 +163,7 @@ const plugin: PluginOptions = {
               );
             } else {
               internal.markdown[route].forEach((md) => {
-                if (md.frontmatter.draft || md.slug.indexOf('draft') === 0) {
+                if (md.frontmatter.draft || md.slug.indexOf('draft-') === 0) {
                   md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
                 }
               });

@@ -14,6 +14,7 @@ import { PluginOptions, PluginInitPayload } from '@elderjs/elderjs';
 
 import prepareMarkdownParser from './utils/prepareMarkdownParser.js';
 import createMarkdownStore, { Ret } from './utils/markdownStore.js';
+import isDraft from './utils/isDraft.ts';
 import rehypeShiki from './utils/rehype-shiki.js';
 import tableOfContents from './utils/tableOfContents.js';
 
@@ -159,11 +160,11 @@ const plugin: PluginOptions = {
           Object.keys(internal.markdown).forEach((route) => {
             if (process.env.NODE_ENV === 'production') {
               internal.markdown[route] = internal.markdown[route].filter(
-                (md) => !md.frontmatter.draft && md.slug.indexOf('draft-') !== 0,
+                (md) => !isDraft(md),
               );
             } else {
               internal.markdown[route].forEach((md) => {
-                if (md.frontmatter.draft || md.slug.indexOf('draft-') === 0) {
+                if (isDraft(md)) {
                   md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
                 }
               });

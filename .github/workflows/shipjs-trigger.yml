@@ -17,8 +17,8 @@ jobs:
         with:
           registry-url: 'https://registry.npmjs.org'
       - run: |
-          if [ -f "pnpm-lock.yaml" ]; then
-            pnpm install
+          if [ -f "yarn.lock" ]; then
+            yarn install
           else
             npm install
           fi

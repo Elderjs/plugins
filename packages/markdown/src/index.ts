@@ -16,6 +16,7 @@ import prepareMarkdownParser from './utils/prepareMarkdownParser.js';
 import createMarkdownStore, { Ret } from './utils/markdownStore.js';
 import rehypeShiki from './utils/rehype-shiki.js';
 import tableOfContents from './utils/tableOfContents.js';
+import isDraft from './utils/isDraft.js';
 
 type InitFn = PluginInitPayload & { config: typeof config };
 type InitReturn = InitFn & { internal: ElderjsMarkdownPluginInternal };
@@ -102,12 +103,10 @@ export async function bootstrap({ helpers, plugin, settings }: IBootstrapHook['r
     // Remove drafts on production. Add DRAFT: to the title on dev.
     Object.keys(internal.markdown).forEach((route) => {
       if (process.env.NODE_ENV === 'production') {
-        internal.markdown[route] = internal.markdown[route].filter(
-          (md) => !md.frontmatter.draft && md.slug.indexOf('draft-') !== 0,
-        );
+        internal.markdown[route] = internal.markdown[route].filter((md) => !isDraft(md));
       } else {
         internal.markdown[route].forEach((md) => {
-          if (md.frontmatter.draft || md.slug.indexOf('draft') === 0) {
+          if (isDraft(md)) {
             md.frontmatter.title = `DRAFT: ${md.frontmatter.title || 'MISSING TITLE'}`;
           }
         });

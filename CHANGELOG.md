@@ -1,3 +1,7 @@
+# [1.8.0-beta.4](https://github.com/Elderjs/plugins/compare/v1.3.10...v1.8.0-beta.4) (2022-07-14)
+
+
+
 # [1.8.0-beta.3](https://github.com/Elderjs/plugins/compare/v1.3.10...v1.8.0-beta.3) (2022-07-14)
 
 

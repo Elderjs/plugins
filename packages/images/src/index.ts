@@ -582,7 +582,7 @@ const plugin: PluginOptions = {
           vanillaLazyLoad.onload = function() {
             var ll = new LazyLoad({
               callback_loaded: function (element) {
-                var ejsEl = findAncestor(element, 'ejsEl');
+                var ejsEl = findAncestor(element, 'ejs');
                 if(ejsEl){
                   var elements = ejsEl.getElementsByClassName("placeholder");
                   if(elements.length > 0){

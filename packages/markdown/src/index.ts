@@ -194,7 +194,7 @@ const plugin: PluginOptions = {
       hook: 'bootstrap',
       name: 'addMdFilesToDataObject',
       description: 'Add parsed .md content and data to the data object',
-      priority: 99,
+      priority: 98,
       run: async ({ data, plugin }) => {
         const internal = plugin.internal as ElderjsMarkdownPluginInternal;
         if (internal.config.routes.length > 0) {

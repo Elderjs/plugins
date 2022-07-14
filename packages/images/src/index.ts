@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
 import glob from 'glob';
 import path from 'path';
 import sharp from 'sharp';
@@ -74,7 +73,7 @@ export interface ElderjsImagesConfig {
   vanillaLazyLocation: string;
 }
 
-const config: ElderjsImagesConfig = {
+const config = {
   debug: false,
   s3: undefined,
   folders: [
@@ -202,6 +201,7 @@ export const processImages = async ({
       workerSettings,
     ) as ResizeWorker;
 
+    // eslint-disable-next-line prefer-spread
     const largestWidth = Math.max.apply(Math, widths);
 
     const toProcess = [];
@@ -388,7 +388,7 @@ const plugin: PluginOptions = {
         const settings = payload.settings;
         const plugin = payload.plugin as InitReturn;
 
-        let folders = config.folders;
+        const folders = config.folders;
         if (folders.length > 0) {
           folders.forEach((folder) => {
             if (!folder.src || !folder.output) {
@@ -485,7 +485,7 @@ const plugin: PluginOptions = {
             helpers: {
               ...helpers,
               ...pluginHelpers,
-              images: plugin.imageStore,
+              images: plugin.internal.imageStore,
             },
           };
         }
@@ -604,7 +604,6 @@ const plugin: PluginOptions = {
       },
     },
   ],
-  processImages,
 };
 
 export default plugin;

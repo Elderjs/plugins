@@ -64,6 +64,10 @@ async function createMarkdownStore({
   return ret;
 
   function getSlug() {
+    if (ret.frontmatter.slug) {
+      return ret.frontmatter.slug;
+    }
+
     const relativePath = relative(root, file).replace(/\\/g, '/');
     if (slug && typeof slug === 'function') {
       const result = slug(relativePath, ret.frontmatter);
@@ -71,9 +75,7 @@ async function createMarkdownStore({
         return result;
       }
     }
-    if (ret.frontmatter.slug) {
-      return ret.frontmatter.slug;
-    }
+
     const fileName = preserveFolderStructure ? relativePath : file.split('/').pop();
     return fileName.replace('.md', '').replace(/ /gim, '-');
   }

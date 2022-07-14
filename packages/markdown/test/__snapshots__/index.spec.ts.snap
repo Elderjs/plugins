@@ -23,36 +23,35 @@ exports[`index.init() > plugin.init() with markdown without frontmatter 1`] = `
       ],
     ],
     "routes": [
-      "blog",
+      "no-frontmatter",
     ],
-    "slugFormatter": undefined,
     "useElderJsPluginImages": false,
     "useGitHubFriendlyMarkdown": false,
     "useSyntaxHighlighting": false,
     "useTableOfContents": false,
   },
   "markdown": {
-    "blog": [
+    "no-frontmatter": [
       {
         "compileHtml": [Function],
         "data": null,
-        "frontmatter": {
-          "author": "Nick Reese",
-          "date": "2020-03-16T05:35:07.322Z",
-          "excerpt": "You have the starter template of Elder.js running. So what is next? This guide will help you explore the project.",
-          "title": "Getting Started with Elder.js",
-        },
+        "frontmatter": {},
         "html": null,
-        "slug": "getting-started",
+        "slug": "no-frontmatter",
       },
     ],
   },
   "markdownParser": [Function],
   "requests": [
     {
-      "route": "blog",
-      "slug": "getting-started",
+      "route": "no-frontmatter",
+      "slug": "no-frontmatter",
     },
   ],
+  "shortcodes": {
+    "closePattern": "}}",
+    "openPattern": "{{",
+  },
+  "usesImagePlugin": false,
 }
 `;

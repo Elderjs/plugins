@@ -30,7 +30,7 @@
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.19.0"
   },
   "scripts": {
     "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",

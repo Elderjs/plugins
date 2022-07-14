@@ -15,7 +15,12 @@
   "homepage": "https://elderguide.com/tech/elderjs/",
   "license": "MIT",
   "main": "/build/index.js",
+  "module": "./build/index.mjs",
   "types": "/build/index.d.ts",
+  "exports": {
+    "require": "./build/index.js",
+    "import": "./build/index.mjs"
+  },
   "type": "module",
   "repository": {
     "type": "git",
@@ -24,14 +29,15 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "tsc -p tsconfig.json",
+    "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",
+    "build": "pnpm run build-fast -- --dts-resolve ",
     "dev": "tsc -p tsconfig.json -w"
   },
   "bugs": {
     "url": "https://github.com/Elderjs/plugins/issues"
   },
   "engines": {
-    "node": ">=12.10.0"
+    "node": ">=14.19.0"
   },
   "dependencies": {
     "fast-glob": "^3.2.11",
@@ -54,6 +60,7 @@
     "@types/fs-extra": "^9.0.8",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3",
+    "tsup": "6.0.1",
     "vitest": "^0.14.2"
   }
 }

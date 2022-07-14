@@ -30,6 +30,9 @@
     "require": "./build/index.js",
     "import": "./build/index.mjs"
   },
+  "engines": {
+    "node": ">=14.19.0"
+  },
   "scripts": {
     "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",
     "build": "pnpm run build-fast -- --dts-resolve ",

@@ -26,6 +26,9 @@
     "type": "git",
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
+  "engines": {
+    "node": ">=14.19.0"
+  },
   "scripts": {
     "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",
     "build": "pnpm run build-fast -- --dts-resolve ",
@@ -41,7 +44,7 @@
   "devDependencies": {
     "@elderjs/elderjs": "file:../../../elderjs",
     "ts-node": "^9.1.1",
-    "typescript": "^4.0.2",
-    "tsup": "6.0.1"
+    "tsup": "6.0.1",
+    "typescript": "^4.0.2"
   }
 }

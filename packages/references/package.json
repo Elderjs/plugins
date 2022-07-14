@@ -26,11 +26,12 @@
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
   "engines": {
-    "node": ">=12.10.0"
+    "node": ">=14.19.0"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "tsc -p tsconfig.json",
+    "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",
+    "build": "pnpm run build-fast -- --dts-resolve ",
     "dev": "tsc -p tsconfig.json -w"
   },
   "bugs": {
@@ -40,7 +41,7 @@
   "devDependencies": {
     "@elderjs/elderjs": "file:../../../elderjs",
     "ts-node": "^9.1.1",
-    "typescript": "^4.0.2",
-    "tsup": "6.0.1"
+    "tsup": "6.0.1",
+    "typescript": "^4.0.2"
   }
 }

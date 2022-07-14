@@ -1,8 +1,12 @@
-import plugin, { ElderjsMarkdownPluginInternal } from '../src/index.js';
+import url from 'url';
+
+import plugin, { ElderjsMarkdownPluginInternal, bootstrap } from '../src/index.js';
 import gettingStartedOutput from './fixtures/getting-started-output.js';
 import { SettingsOptions } from '@elderjs/elderjs';
 import { describe, it, expect, afterEach } from 'vitest';
 import { EventEmitter } from 'stream';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const settings: SettingsOptions = {
   context: 'server',
@@ -11,6 +15,9 @@ const settings: SettingsOptions = {
   srcDir: process.cwd() + '/test/fixtures',
   distDir: process.cwd() + '/public',
   rootDir: process.cwd() + '',
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  /// @ts-ignore
   build: false,
   prefix: '',
   server: {
@@ -41,6 +48,9 @@ const settings: SettingsOptions = {
   css: 'file',
   version: '1.7.5',
   worker: false,
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  /// @ts-ignore
   $$internal: {
     ssrComponents: process.cwd() + '/___ELDER___/compiled',
     clientComponents: process.cwd() + '/public/_elderjs/svelte',
@@ -91,21 +101,13 @@ describe(`index.init()`, () => {
     expect(pluginPayloadDefault.settings.shortcodes).toBeDefined();
   });
 
-  it('plugin.init() standard output formatting', async () => {
-    const pluginOutput = await pluginPayloadDefault.init(pluginPayload);
-    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
-    const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
-    expect(internal.markdown[pluginPayload.config.routes[0]]).toHaveLength(1);
-    expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
-    expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
-    await markdownOutput.compileHtml();
-    expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
-    expect(markdownOutput.data).toEqual({});
-  });
-
   it('plugin.init() with markdown without frontmatter', async () => {
     pluginPayload.config.routes = ['no-frontmatter'];
-    const pluginOutput = await pluginPayloadDefault.init({ ...pluginPayloadDefault });
+    const pluginOutput = await pluginPayloadDefault.init({ ...pluginPayload });
+
+    const helpers = {};
+    await bootstrap({ helpers, plugin: pluginOutput, settings });
+
     const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
     expect(internal).toMatchSnapshot();
   });
@@ -120,6 +122,10 @@ describe(`index.init()`, () => {
       config: { ...pluginPayloadDefault.config, useElderJsPluginImages: true },
     });
     const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
+
+    const helpers = {};
+    await bootstrap({ helpers, plugin: pluginOutput, settings });
+
     const markdownOuput = internal.markdown[pluginPayloadDefault.config.routes[0]][0];
     await markdownOuput.compileHtml();
     expect(markdownOuput.html).toContain('<div class="md-img">');
@@ -138,6 +144,9 @@ describe(`index.init()`, () => {
     });
     const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
 
+    const helpers = {};
+    await bootstrap({ helpers, plugin: pluginOutput, settings });
+
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(pluginPayload.settings.srcDir).toBeDefined();
     expect(internal.markdown[pluginPayload.config.routes[0]]).toHaveLength(1);
@@ -150,13 +159,14 @@ describe(`index.init()`, () => {
 
   it('config.contents error', async () => {
     pluginPayload.settings.rootDir = __dirname;
+    const pluginOutput = await plugin.init({
+      ...pluginPayload,
+      config: { ...pluginPayload.config, contents: { blog: 'thisfolderdoesnotexist' } },
+    });
 
-    await expect(
-      plugin.init({
-        ...pluginPayload,
-        config: { ...pluginPayload.config, contents: { blog: 'thisfolderdoesnotexist' } },
-      }),
-    ).rejects.toThrow(Error);
+    const helpers = {};
+
+    await expect(bootstrap({ helpers, plugin: pluginOutput, settings })).rejects.toThrow(Error);
   });
 
   it('config.slugFormatter', async () => {
@@ -169,13 +179,15 @@ describe(`index.init()`, () => {
       },
     });
     const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
+
+    const helpers = {};
+    await bootstrap({ helpers, plugin: pluginOutput, settings });
+
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('getting-started-nick-reese');
   });
 
   it('config.slugFormatter allows empty slug (index)', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    plugin.config.slugFormatter = (_file, _frontmatter) => '';
     const pluginOutput = await pluginPayloadDefault.init({
       ...pluginPayload,
       config: {
@@ -184,7 +196,32 @@ describe(`index.init()`, () => {
       },
     });
     const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
+
+    const helpers = {};
+    await bootstrap({ helpers, plugin: pluginOutput, settings });
+
     const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
     expect(markdownOutput.slug).toEqual('');
+  });
+
+  it('Parses markdown on the bootstrap hook as expected', async () => {
+    const pluginOutput = await pluginPayloadDefault.init(pluginPayload);
+
+    const helpers = {};
+    const output = await bootstrap({ helpers, plugin: pluginOutput, settings });
+
+    const internal = pluginOutput.internal as ElderjsMarkdownPluginInternal;
+
+    const markdownOutput = internal.markdown[pluginPayload.config.routes[0]][0];
+    expect(internal.markdown[pluginPayload.config.routes[0]]).toHaveLength(1);
+    expect(markdownOutput.slug).toEqual(gettingStartedOutput.slug);
+    expect(markdownOutput.frontmatter).toEqual(gettingStartedOutput.frontmatter);
+    await markdownOutput.compileHtml();
+    expect(markdownOutput.html).toEqual(gettingStartedOutput.html);
+    expect(markdownOutput.data).toEqual({});
+
+    expect(output.helpers).toBeDefined();
+    expect(output.helpers.markdownParser).toBeDefined();
+    expect(output.helpers.markdownParser.process).toBeTypeOf('function');
   });
 });

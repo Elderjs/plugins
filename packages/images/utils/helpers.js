@@ -58,6 +58,7 @@ function getLargest(fileSizes, orgFormat, maxWidth) {
     .filter((p) => p.format === orgFormat)
     .find((p, i, arr) => {
       let largest = true;
+      if (p.width > maxWidth) return false;
       arr.forEach((a) => {
         if (a.width > maxWidth) return;
         if (a.width > p.width) largest = false;

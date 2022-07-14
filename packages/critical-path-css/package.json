@@ -48,7 +48,7 @@
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "file:../../../elderjs",
+    "@elderjs/elderjs": "^1.8.0-beta.4",
     "@types/clean-css": "^4.2.5",
     "tsup": "6.0.1",
     "typescript": "4.5.4"

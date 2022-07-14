@@ -56,7 +56,7 @@
     "yaml": "1.10.2"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "file:../../../elderjs",
+    "@elderjs/elderjs": "^1.8.0-beta.4",
     "@types/fs-extra": "^9.0.8",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3",

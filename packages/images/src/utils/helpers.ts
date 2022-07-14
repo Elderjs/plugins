@@ -73,6 +73,7 @@ export function getLargest(fileSizes: ElderjsImageSize[], orgFormat: string, max
     .filter((p) => p.format === orgFormat)
     .find((p, _i, arr) => {
       let largest = true;
+      if (p.width > maxWidth) return false;
       arr.forEach((a) => {
         if (a.width > maxWidth) return;
         if (a.width > p.width) largest = false;

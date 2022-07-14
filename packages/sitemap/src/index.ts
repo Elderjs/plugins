@@ -149,8 +149,11 @@ const plugin: PluginOptions = {
                     req.lastUpdate = dateFromFn;
                   } else {
                     console.error(
-                      `lastUpdate function on ${req.route} didn't return a date. Instead saw: ${dateFromFn}. Request: ${req}`,
+                      `@elderjs/plugin-sitemap: lastUpdate function on ${
+                        req.route
+                      } didn't return a date. Instead saw: ${dateFromFn}. Request: ${JSON.stringify(req)}`,
                     );
+                    req.lastUpdate = defaultSitemapDate;
                   }
                 } else if (typeof dateEntry === 'string') {
                   // must be YYYY-MM-DD;

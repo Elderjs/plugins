@@ -88,6 +88,7 @@ async function createMarkdownStore({
     }
 
     const result = await parser.process(source);
+
     source = null;
 
     ret.html = result.value;

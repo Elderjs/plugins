@@ -4,7 +4,7 @@
 import * as shiki from 'shiki';
 import { visit } from 'unist-util-visit';
 
-export default (options) => {
+function rehypeShiki(options) {
   const settings = options || {};
   const theme = settings.theme || 'nord';
 
@@ -19,4 +19,6 @@ export default (options) => {
     });
     return tree;
   };
-};
+}
+
+export default rehypeShiki;

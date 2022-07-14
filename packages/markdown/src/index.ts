@@ -10,7 +10,7 @@ import yaml from 'yaml';
 
 import remarkGfm from 'remark-gfm';
 
-import { PluginOptions, PluginInitPayload } from '@elderjs/elderjs';
+import { PluginOptions, PluginInitPayload, IBootstrapHook } from '@elderjs/elderjs';
 
 import prepareMarkdownParser from './utils/prepareMarkdownParser.js';
 import createMarkdownStore, { Ret } from './utils/markdownStore.js';
@@ -56,7 +56,7 @@ export interface ElderjsMarkdownPluginInternal {
   };
 }
 
-export async function bootstrap({ helpers, plugin, settings }) {
+export async function bootstrap({ helpers, plugin, settings }: IBootstrapHook['run']['arguments']) {
   const internal = plugin.internal as ElderjsMarkdownPluginInternal;
 
   if (internal.config && Array.isArray(internal.config.routes) && internal.config.routes.length > 0) {

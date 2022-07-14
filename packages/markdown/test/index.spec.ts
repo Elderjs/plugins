@@ -1,10 +1,12 @@
 import url from 'url';
+import fs from 'fs-extra';
 
 import plugin, { ElderjsMarkdownPluginInternal, bootstrap } from '../src/index.js';
 import gettingStartedOutput from './fixtures/getting-started-output.js';
 import { SettingsOptions } from '@elderjs/elderjs';
 import { describe, it, expect, afterEach } from 'vitest';
 import { EventEmitter } from 'stream';
+import path from 'node:path';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -223,5 +225,80 @@ describe(`index.init()`, () => {
     expect(output.helpers).toBeDefined();
     expect(output.helpers.markdownParser).toBeDefined();
     expect(output.helpers.markdownParser.process).toBeTypeOf('function');
+  });
+
+  it('Parses with just the markdown parser helper', async () => {
+    const md = `
+    ## Putting It All Together
+
+    Now that we’ve summarized all of the options, we wanted to put it all together to paint a full picture of the continuum of care in senior living. The first option many seniors look into may be a traditional retirement community. We really don’t consider these communities to be senior living because the level of services are too low and selection of these communities is based more on the amenities. Below is an overview of the full continuum of care:
+
+    *   *Independent Living*: Independent living is much like staying at home, but residents get the convenience of 3 meals a day and having a maintenance free lifestyle.CCRC’s are the senior living industry’s attempt to allow a senior to enjoy the full continuum of care in a single community. A CCRC’s residents begin their stay in the independent living section and progress as necessary through higher levels of care that follow below.
+    *   *Assisted Living*: Assisted living is often very similar to independent living, only these communities provide more supervision and are better suited to assisting residents with activities of daily living and medication management.Home healthcare services are typically an alternative to assisted living for seniors who would prefer to remain in their homes. 
+    *   *Nursing Homes*: Nursing homes are the first level of care on the continuum where the decision is likely being driven more by healthcare needs than personal needs.These facilities look more like hospitals and are staffed by licensed nurses. Within nursing homes, they typically have more specialized units such as skilled nursing facilities for rehabilitation and memory care units for caring for residents with Alzheimer’s or dementia.
+  `;
+
+    const pluginOutput = await pluginPayloadDefault.init(pluginPayload);
+
+    const helpers = {};
+    const output = await bootstrap({ helpers, plugin: pluginOutput, settings });
+
+    expect(await output.helpers.markdownParser.process(md)).toMatchSnapshot();
+  });
+
+  it('Parses and includes ToC', async () => {
+    const md = fs.readFileSync(path.resolve('./test/fixtures/contents/getting-started.md'), { encoding: 'utf-8' });
+    const pluginOutput = await pluginPayloadDefault.init({
+      ...pluginPayload,
+      config: {
+        ...pluginPayload.config,
+        useTableOfContents: true,
+      },
+    });
+
+    const helpers = {};
+    const output = await bootstrap({ helpers, plugin: pluginOutput, settings });
+
+    expect(await output.helpers.markdownParser.process(md)).toMatchSnapshot();
+  });
+
+  it('Parses with Shiki', async () => {
+    const md = fs.readFileSync(path.resolve('./test/fixtures/contents/getting-started.md'), { encoding: 'utf-8' });
+    const pluginOutput = await pluginPayloadDefault.init({
+      ...pluginPayload,
+      config: {
+        ...pluginPayload.config,
+        useSyntaxHighlighting: {
+          theme: 'github-dark-dimmed', // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values
+        },
+      },
+    });
+
+    const helpers = {};
+    const output = await bootstrap({ helpers, plugin: pluginOutput, settings });
+
+    expect(await output.helpers.markdownParser.process(md)).toMatchSnapshot();
+  });
+
+  it('Parses like on ElderGuide', async () => {
+    const md = fs.readFileSync(path.resolve('./test/fixtures/problem-markdown.md'), { encoding: 'utf-8' });
+    const pluginOutput = await pluginPayloadDefault.init({
+      ...pluginPayload,
+      config: {
+        ...pluginPayload.config,
+        useTableOfContnets: true,
+        useSyntaxHighlighting: {
+          theme: 'github-dark-dimmed', // available themes: https://github.com/shikijs/shiki/blob/master/packages/themes/README.md#literal-values
+        },
+      },
+    });
+
+    const helpers = {};
+    const output = await bootstrap({ helpers, plugin: pluginOutput, settings });
+
+    const result = await output.helpers.markdownParser.process(md);
+    console.log(result.value);
+    expect(result.data.tocTree).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
   });
 });

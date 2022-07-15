@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-random",
-  "version": "1.8.0-beta.4",
+  "version": "1.8.0-beta.5",
   "description": "Easily preview a random page of a route by visiting a single url. This plugin should be used exclusively for development.",
   "keywords": [
     "elderjs",
@@ -46,7 +46,7 @@
     "svelte": "^3.48.0"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "^1.8.0-beta.4",
+    "@elderjs/elderjs": "^1.8.0-beta.5",
     "ts-node": "^9.1.1",
     "tsup": "6.0.1",
     "typescript": "^4.0.2"

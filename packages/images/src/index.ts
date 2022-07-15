@@ -340,7 +340,7 @@ const plugin: PluginOptions = {
       // fetch the external manifest
       internal.externalManifest = true;
       internal.manifest = await plugin.config.imageManifest(plugin.config);
-      console.log(`elderjs-plugin-images: loaded external manifest`);
+      if (!plugin.settings.worker) console.log(`elderjs-plugin-images: loaded external manifest`);
     } else {
       const manifestLoc = path.join(plugin.settings.rootDir, plugin.config.imageManifest);
       if (fs.existsSync(manifestLoc)) {
@@ -479,7 +479,7 @@ const plugin: PluginOptions = {
         const plugin = payload.plugin as InitReturn;
         if (plugin.internal.manifest) {
           plugin.internal.imageStore = imageStore(plugin.internal.manifest, plugin);
-          console.log(`elderjs-plugin-images: Done.`);
+          if (!payload.settings.worker) console.log(`elderjs-plugin-images: Done.`);
 
           return {
             helpers: {
@@ -559,7 +559,7 @@ const plugin: PluginOptions = {
     },
     {
       hook: 'stacks',
-      name: 'elderPluginImagesManagevanillaLazy',
+      name: 'elderPluginImagesManageVanillaLazy',
       description: 'Adds vanillaLazy and makes sure it is in the public folder if requested by plugin.',
       priority: 99, // we want it to be as soon as possible
       run: async (payload) => {

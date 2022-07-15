@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-images",
-  "version": "1.8.0-beta.4",
+  "version": "1.8.0-beta.5",
   "description": "Easily generate and manage responsive images for your Elder.js site.",
   "keywords": [
     "elderjs",
@@ -51,7 +51,7 @@
     "worker-nodes": "^2.3.1"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "^1.8.0-beta.4",
+    "@elderjs/elderjs": "^1.8.0-beta.5",
     "tsup": "6.0.1",
     "typescript": "4.5.4"
   }

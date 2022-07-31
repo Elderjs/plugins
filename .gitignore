@@ -111,3 +111,5 @@ dist
 tsconfig.tsbundleinfo
 
 node_modules
+
+**/build

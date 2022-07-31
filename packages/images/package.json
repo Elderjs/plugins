@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-images",
-  "version": "1.8.0-beta.5",
+  "version": "1.8.0-beta.8",
   "description": "Easily generate and manage responsive images for your Elder.js site.",
   "keywords": [
     "elderjs",
@@ -17,6 +17,7 @@
   "author": "Nick Reese <npm@nicholasreese.com>",
   "homepage": "https://elderguide.com/tech/elderjs/",
   "license": "MIT",
+  "type": "module",
   "main": "./build/index.js",
   "module": "./build/index.mjs",
   "types": "/build/index.d.ts",
@@ -29,8 +30,7 @@
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
   "scripts": {
-    "build-fast": "tsup src/index.ts --outDir build --format cjs,esm",
-    "build": "pnpm run build-fast -- --dts-resolve ",
+    "build": "tsup",
     "prepublishOnly": "pnpm run build",
     "dev": "tsc -p tsconfig.json -w"
   },
@@ -38,7 +38,7 @@
     "url": "https://github.com/Elderjs/plugins/issues"
   },
   "engines": {
-    "node": ">=14.19.0"
+    "node": ">=16.16.0"
   },
   "peerDependencies": {
     "vanilla-lazyload": "^17.1.2"
@@ -51,8 +51,28 @@
     "worker-nodes": "^2.3.1"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "^1.8.0-beta.5",
+    "@elderjs/elderjs": "^1.8.0-beta.7",
+    "@types/fs-extra": "^9.0.13",
     "tsup": "6.0.1",
     "typescript": "4.5.4"
+  },
+  "tsup": {
+    "outDir": "build",
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "dts": {
+      "resolve": true
+    },
+    "entry": {
+      "index": "src/index.ts",
+      "workers/placeholder": "src/workers/placeholder.ts",
+      "workers/resize": "src/workers/resize.ts",
+      "workers/saveOriginalToS3": "src/workers/saveOriginalToS3.ts"
+    },
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true
   }
 }

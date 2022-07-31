@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-references",
-  "version": "1.8.0-beta.5",
+  "version": "1.8.0-beta.7",
   "description": "Adds {{ref}} and {{referenceList}} shortcodes to Elder.js allowing you to add wikipedia style references to your content.",
   "keywords": [
     "elder.js",
@@ -26,7 +26,7 @@
     "url": "git+https://github.com/Elderjs/plugins.git"
   },
   "engines": {
-    "node": ">=14.19.0"
+    "node": ">=16.16.0"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
@@ -39,7 +39,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@elderjs/elderjs": "^1.8.0-beta.5",
+    "@elderjs/elderjs": "^1.8.0-beta.7",
     "ts-node": "^9.1.1",
     "tsup": "6.0.1",
     "typescript": "^4.0.2"

@@ -2,6 +2,8 @@ import glob from 'glob';
 import path from 'path';
 import sharp from 'sharp';
 import fs from 'fs-extra';
+import url from 'url';
+
 import imageStore from './utils/imageStore.js';
 import * as pluginHelpers from './utils/helpers.js';
 import WorkerNodes from 'worker-nodes';
@@ -10,6 +12,8 @@ import { PluginOptions, PluginInitPayload } from '@elderjs/elderjs';
 import { ResizeWorker } from './workers/resize.js';
 import { PlaceholderWorker } from './workers/placeholder.js';
 import { SaveOriginalToS3Worker } from './workers/saveOriginalToS3.js';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const imageFileTypes = ['jpg', 'jpeg', 'png'];
 const defaultWidths = [1280, 992, 768, 576, 400, 350, 200];
@@ -74,6 +78,7 @@ export interface ElderjsImagesConfig {
 }
 
 const config = {
+  packageType: undefined,
   debug: false,
   s3: undefined,
   folders: [
@@ -188,16 +193,18 @@ export const processImages = async ({
       maxTasksPerWorker: 5,
     };
 
+    const ext = getFileExtension(plugin.config);
+
     const placeholderWorker = new WorkerNodes(
-      path.resolve(__dirname, './workers/placeholder.js'),
+      path.resolve(__dirname, `./workers/placeholder.${ext}`),
       workerSettings,
     ) as PlaceholderWorker;
-    const originalS3Worker = new WorkerNodes(path.resolve(__dirname, './workers/saveOriginalToS3.js'), {
+    const originalS3Worker = new WorkerNodes(path.resolve(__dirname, `./workers/saveOriginalToS3.${ext}`), {
       ...workerSettings,
       autoStart: false,
     }) as SaveOriginalToS3Worker;
     const resizeWorker = new WorkerNodes(
-      path.resolve(__dirname, './workers/resize.js'),
+      path.resolve(__dirname, `./workers/resize.${ext}`),
       workerSettings,
     ) as ResizeWorker;
 
@@ -311,6 +318,20 @@ export const processImages = async ({
     return {};
   }
 };
+
+function getFileExtension(config) {
+  if (config.packageType === 'commonjs') return 'cjs';
+  if (config.packageType === 'module') return 'js';
+  try {
+    const pkg = fs.readJsonSync(path.resolve('./package.json'));
+    if (pkg.type === 'commonjs') return 'cjs';
+    if (pkg.type === 'module') return 'js';
+    return 'cjs';
+  } catch (e) {
+    console.error(`elderjs-plugin-images: Could not determine package type from ${path.resolve('./package.json')}`);
+    return 'cjs';
+  }
+}
 
 const plugin: PluginOptions = {
   name: '@elderjs/plugin-images',

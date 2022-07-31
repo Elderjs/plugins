@@ -1,6 +1,6 @@
 {
   "name": "@elderjs/plugin-markdown",
-  "version": "1.8.0-beta.5",
+  "version": "1.8.0-beta.7",
   "description": "Easily create routes from your markdown files on your Elder.js site using the remark ecosystem.",
   "keywords": [
     "elder.js",
@@ -37,7 +37,7 @@
     "url": "https://github.com/Elderjs/plugins/issues"
   },
   "engines": {
-    "node": ">=14.19.0"
+    "node": ">=16.16.0"
   },
   "dependencies": {
     "fast-glob": "^3.2.11",
@@ -56,7 +56,7 @@
     "yaml": "1.10.2"
   },
   "devDependencies": {
-    "@elderjs/elderjs": "^1.8.0-beta.5",
+    "@elderjs/elderjs": "^1.8.0-beta.7",
     "@types/fs-extra": "^9.0.8",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3",
